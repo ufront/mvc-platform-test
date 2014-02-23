@@ -1,0 +1,3 @@
+neko out/requestresponsetester.n http://uftest.dev/neko_nocache out/neko_nocache/
+neko out/requestresponsetester.n http://uftest.dev/neko_cache out/neko_cache/
+neko out/requestresponsetester.n http://uftest.dev/php out/php/

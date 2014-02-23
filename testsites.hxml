@@ -1,0 +1,34 @@
+#
+# Main compile
+#
+
+###
+
+-lib ufront-mvc
+-cp src 
+-D server 
+
+-main testsite.Server
+
+--each
+
+# Neko, no caching
+
+--remap php:neko
+-neko out/neko_nocache/index.n
+
+--next 
+
+# Neko, with caching
+
+--remap php:neko
+-neko out/neko_cache/index.n
+-D cachemodule
+
+--next 
+
+# PHP
+
+--remap neko:php
+--php-lib php/
+-php out/php/
