@@ -197,6 +197,25 @@ class RequestResponseTest {
 			cookieName: "sessionid",
 			cookieVal: "123456"
 		});
+
+		var data = {
+			status: 201,
+			poweredBy: "Ufront",
+			contentType: "text/plain",
+			charSet: "ucs-2",
+			content: "some plain text",
+			language: "en-gb",
+			cookieName: "sessionid",
+			cookieVal: "123456"
+		}
+		var h = new Http( base()+'/testresponse/${data.status}/${data.charSet}' );
+		h.setParameter( "language", data.language );
+		h.setParameter( "contentType", data.contentType );
+		h.setParameter( "content", data.content );
+		h.setParameter( "cookieName", data.cookieName );
+		h.setParameter( "cookieVal", data.cookieVal );
+
+		assertResponseDetails( h, data );
 	}
 
 	//
@@ -227,13 +246,15 @@ class RequestResponseTest {
 			Assert.equals( expected.status, status );
 			Assert.equals( expected.poweredBy, http.responseHeaders.get("X-Powered-By") );
 			Assert.equals( '${expected.contentType}; charset=${expected.charSet}', http.responseHeaders.get("Content-Type") );
-			Assert.equals( '${expected.content.length}', http.responseHeaders.get("Content-Length") );
 			Assert.equals( expected.language, http.responseHeaders.get("Content-Language") );
+			Assert.equals( '${expected.content.length}', http.responseHeaders.get("Content-Length") );
+			Assert.equals( expected.content, responseData );
 			
 			// Displaying a semicolon at the end is optional and differs between platforms
 			var cookieHeader = http.responseHeaders.get("Set-Cookie");
 			var semiColonAtEnd = StringTools.endsWith(cookieHeader,";") ? ";" : "";
-			Assert.equals( "sessionid=123456; expires=Thu, 01-Jan-2015 00:00:00 GMT; domain=/testresponse/"+semiColonAtEnd, cookieHeader );
+			var expectedCookieHeader = '${expected.cookieName}=${expected.cookieVal}; expires=Thu, 01-Jan-2015 00:00:00 GMT; domain=/testresponse/'+semiColonAtEnd;
+			Assert.equals( expectedCookieHeader, cookieHeader );
 		});
 		http.onStatus = function(s) {
 			status = s;

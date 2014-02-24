@@ -78,20 +78,20 @@ class Routes extends Controller {
 	// multipart - callback
 
 	@:route("/testresponse/$status/$charset")
-	public function testResponse( status:Int, charset:String, ?args:{ sessionID:String, testGroup:String, language:String, contentType:String, content:String } ) {
+	public function testResponse( status:Int, charset:String, ?args:{ language:String, contentType:String, content:String, cookieName:String, cookieVal:String } ) {
 		
 		if ( args.language==null ) args.language = "en-au";
-		if ( args.sessionID==null ) args.sessionID = "123456";
-		if ( args.testGroup==null ) args.testGroup = "group a";
 		if ( args.contentType==null ) args.contentType = "text/html";
 		if ( args.content==null ) args.content = "response content";
+		if ( args.cookieName==null ) args.cookieName = "sessionid";
+		if ( args.cookieVal==null ) args.cookieVal = "123456";
 
 		context.response.status = status;
 		context.response.charset = charset;
 		context.response.contentType = args.contentType;
 
 		var expiryDate = new Date(2015,00,01,0,0,0);
-		var c1 = new HttpCookie( "sessionid", args.sessionID, expiryDate, '/testresponse/' );
+		var c1 = new HttpCookie( args.cookieName, args.cookieVal, expiryDate, '/testresponse/' );
 		context.response.setCookie( c1 );
 		
 		// haxe.Http can only show one HTTP header of each name,

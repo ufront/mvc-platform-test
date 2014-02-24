@@ -3,6 +3,7 @@ package test;
 import sys.FileSystem;
 import utest.Runner;
 import utest.ui.Report;
+using haxe.io.Path;
 
 class RequestResponseTester {
 	static function main() {
@@ -22,7 +23,7 @@ class RequestResponseTester {
 			var protocol = regex.matched(1);
 			var domain = regex.matched(2);
 			var portStr = regex.matched(3);
-			var dir = regex.matched(4);
+			var dir = regex.matched(4).removeTrailingSlash();
 
 			if ( portStr==null ) portStr = "";
 			scriptDir = FileSystem.fullPath( scriptDir );

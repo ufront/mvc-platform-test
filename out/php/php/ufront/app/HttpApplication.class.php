@@ -174,7 +174,7 @@ class ufront_app_HttpApplication {
 	}
 	public function addUrlFilter($filter) {
 		if(null === $filter) {
-			throw new HException(new thx_error_NullArgument("filter", "invalid null argument '{0}' for method {1}.{2}()", _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 420, "className" => "ufront.app.HttpApplication", "methodName" => "addUrlFilter"))));
+			throw new HException(new thx_error_NullArgument("filter", "invalid null argument '{0}' for method {1}.{2}()", _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 419, "className" => "ufront.app.HttpApplication", "methodName" => "addUrlFilter"))));
 		}
 		$this->urlFilters->push($filter);
 	}
@@ -274,7 +274,7 @@ function ufront_app_HttpApplication_6(&$_g, &$httpContext, &$reqHandModules, &$r
 	{
 		$b3 = null;
 		{
-			$args3 = (new _hx_array(array("{HttpContext}", _hx_anonymous(array("pos" => _hx_anonymous(array("fileName" => "/home/jason/workspace/ufront/mvc/src/ufront/app/HttpApplication.hx", "lineNumber" => 295, "className" => "")), "expr" => haxe_macro_ExprDef::EConst(haxe_macro_Constant::CIdent("messages")))))));
+			$args3 = (new _hx_array(array("{HttpContext}", _hx_anonymous(array("pos" => _hx_anonymous(array("fileName" => "/home/jason/workspace/ufront/mvc/src/ufront/app/HttpApplication.hx", "lineNumber" => 294, "className" => "")), "expr" => haxe_macro_ExprDef::EConst(haxe_macro_Constant::CIdent("messages")))))));
 			$b3 = _hx_anonymous(array("methodName" => "log", "lineNumber" => -1, "fileName" => "", "customParams" => (($args3 !== null) ? $args3 : (new _hx_array(array()))), "className" => Type::getClassName(Type::getClass($m3))));
 		}
 		return new tink_core__Pair_Data(ufront_app_HttpApplication_15($__hx__this, $_g, $b3, $httpContext, $m3, $reqHandModules, $reqMidModules, $resMidModules), $b3);
@@ -333,7 +333,7 @@ function ufront_app_HttpApplication_9(&$_g, &$ctx, &$done, &$flag, &$modules, &$
 					$e = $_ex_;
 					{
 						$pos = $m->b;
-						$ctx->messages->push(_hx_anonymous(array("msg" => "ufLog", "pos" => _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 359, "className" => "ufront.app.HttpApplication", "methodName" => "executeModules")), "type" => ufront_log_MessageType::$Log)));
+						$ctx->messages->push(_hx_anonymous(array("msg" => "ufLog", "pos" => _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 358, "className" => "ufront.app.HttpApplication", "methodName" => "executeModules")), "type" => ufront_log_MessageType::$Log)));
 						$moduleResult = tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(ufront_web_HttpError::wrap($e, null, $pos)));
 					}
 				}
@@ -346,7 +346,7 @@ function ufront_app_HttpApplication_10(&$ctx, &$doneTrigger, &$err, $m) {
 	{
 		$b = null;
 		{
-			$args = (new _hx_array(array(_hx_anonymous(array("pos" => _hx_anonymous(array("fileName" => "/home/jason/workspace/ufront/mvc/src/ufront/app/HttpApplication.hx", "lineNumber" => 383, "className" => "")), "expr" => haxe_macro_ExprDef::EConst(haxe_macro_Constant::CIdent("err")))))));
+			$args = (new _hx_array(array(_hx_anonymous(array("pos" => _hx_anonymous(array("fileName" => "/home/jason/workspace/ufront/mvc/src/ufront/app/HttpApplication.hx", "lineNumber" => 382, "className" => "")), "expr" => haxe_macro_ExprDef::EConst(haxe_macro_Constant::CIdent("err")))))));
 			$b = _hx_anonymous(array("methodName" => "handleError", "lineNumber" => -1, "fileName" => "", "customParams" => (($args !== null) ? $args : (new _hx_array(array()))), "className" => Type::getClassName(Type::getClass($m))));
 		}
 		return new tink_core__Pair_Data(ufront_app_HttpApplication_18($__hx__this, $b, $ctx, $doneTrigger, $err, $m), $b);

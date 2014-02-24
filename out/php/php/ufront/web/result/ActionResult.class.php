@@ -11,7 +11,7 @@ class ufront_web_result_ActionResult {
 		} else {
 			$actionResultValue = Types::has($resultValue, _hx_qtype("ufront.web.result.ActionResult"));
 			if($actionResultValue === null) {
-				$actionResultValue = new ufront_web_result_ContentResult(Std::string($resultValue), "text/html");
+				$actionResultValue = new ufront_web_result_ContentResult(Std::string($resultValue), null);
 			}
 			return $actionResultValue;
 		}

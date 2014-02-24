@@ -64,23 +64,23 @@ class testsite_Routes extends ufront_web_Controller {
 		if($args->language === null) {
 			$args->language = "en-au";
 		}
-		if($args->sessionID === null) {
-			$args->sessionID = "123456";
-		}
-		if($args->testGroup === null) {
-			$args->testGroup = "group a";
-		}
 		if($args->contentType === null) {
 			$args->contentType = "text/html";
 		}
 		if($args->content === null) {
 			$args->content = "response content";
 		}
+		if($args->cookieName === null) {
+			$args->cookieName = "sessionid";
+		}
+		if($args->cookieVal === null) {
+			$args->cookieVal = "123456";
+		}
 		$this->context->httpContext->response->status = $status;
 		$this->context->httpContext->response->charset = $charset;
 		$this->context->httpContext->response->set_contentType($args->contentType);
 		$expiryDate = new Date(2015, 0, 1, 0, 0, 0);
-		$c1 = new ufront_web_HttpCookie("sessionid", $args->sessionID, $expiryDate, "/testresponse/", null, null);
+		$c1 = new ufront_web_HttpCookie($args->cookieName, $args->cookieVal, $expiryDate, "/testresponse/", null, null);
 		$this->context->httpContext->response->setCookie($c1);
 		$this->context->httpContext->response->setHeader("X-Powered-By", "Ufront");
 		$this->context->httpContext->response->setHeader("Content-Language", $args->language);
@@ -216,12 +216,12 @@ class testsite_Routes extends ufront_web_Controller {
 																		throw new HException(new ufront_web_HttpError(400, "Bad Request", _hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 567, "className" => "testsite.Routes", "methodName" => "execute"))));
 																	}
 																	$charset = $uriParts[2];
-																	$_param_tmp_sessionID = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "sessionID");
-																	$_param_tmp_testGroup = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "testGroup");
 																	$_param_tmp_language = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "language");
 																	$_param_tmp_contentType = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "contentType");
 																	$_param_tmp_content = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "content");
-																	$args = _hx_anonymous(array("sessionID" => $_param_tmp_sessionID, "testGroup" => $_param_tmp_testGroup, "language" => $_param_tmp_language, "contentType" => $_param_tmp_contentType, "content" => $_param_tmp_content));
+																	$_param_tmp_cookieName = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "cookieName");
+																	$_param_tmp_cookieVal = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "cookieVal");
+																	$args = _hx_anonymous(array("language" => $_param_tmp_language, "contentType" => $_param_tmp_contentType, "content" => $_param_tmp_content, "cookieName" => $_param_tmp_cookieName, "cookieVal" => $_param_tmp_cookieVal));
 																	$this->context->action = "testResponse";
 																	$this->context->args = (new _hx_array(array($status, $charset, $args)));
 																	$this->context->get_uriParts()->splice(0, 3);
