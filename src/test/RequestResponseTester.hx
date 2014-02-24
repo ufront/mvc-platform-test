@@ -6,6 +6,10 @@ import utest.ui.Report;
 
 class RequestResponseTester {
 	static function main() {
+		runTests();
+	}
+
+	static function runTests() {
 		var runner = new Runner();
 
 		var args = Sys.args();
@@ -23,8 +27,7 @@ class RequestResponseTester {
 			if ( portStr==null ) portStr = "";
 			scriptDir = FileSystem.fullPath( scriptDir );
 
-			var responseTest = new RequestTest(protocol, domain, portStr, dir, scriptDir);
-
+			var responseTest = new RequestResponseTest(protocol, domain, portStr, dir, scriptDir);
 			runner.addCase( responseTest );
 
 			Report.create(runner);
@@ -33,7 +36,5 @@ class RequestResponseTester {
 		else {
 			Sys.println( "Usage: neko requestresponsetester.n http://localhost:2000/ufrontsite/ /home/user/ufrontsite/out/" );
 		}
-
-
 	}
 }

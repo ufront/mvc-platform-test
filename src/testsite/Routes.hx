@@ -77,26 +77,28 @@ class Routes extends Controller {
 	// multipart - params
 	// multipart - callback
 
-	@:route("/testresponse/$status/$charset/$contentType")
-	public function testResponse( status:Int, charset:String, contentType:String, ?args:{ sessionID:String, testGroup:String, language:String, content:String } ) {
+	@:route("/testresponse/$status/$charset")
+	public function testResponse( status:Int, charset:String, ?args:{ sessionID:String, testGroup:String, language:String, contentType:String, content:String } ) {
 		
 		if ( args.language==null ) args.language = "en-au";
 		if ( args.sessionID==null ) args.sessionID = "123456";
 		if ( args.testGroup==null ) args.testGroup = "group a";
-		if ( args.content==null ) args.testGroup = "response content";
+		if ( args.contentType==null ) args.contentType = "text/html";
+		if ( args.content==null ) args.content = "response content";
 
 		context.response.status = status;
 		context.response.charset = charset;
-		context.response.contentType = contentType;
+		context.response.contentType = args.contentType;
 
 		var expiryDate = new Date(2015,00,01,0,0,0);
-		var c1 = new HttpCookie( "sessionid", args.sessionID );
-		var c2 = new HttpCookie( "test-group", args.testGroup, expiryDate, '/textresponse/' );
+		var c1 = new HttpCookie( "sessionid", args.sessionID, expiryDate, '/testresponse/' );
 		context.response.setCookie( c1 );
-		context.response.setCookie( c2 );
+		
+		// haxe.Http can only show one HTTP header of each name,
+		// but it is best to output each cookie on a different header line.
+		// Therefore, we can only test one cookie at a time, sadly.
 
 		context.response.setHeader( "X-Powered-By", "Ufront" );
-		context.response.setHeader( "X-Powered-By", "Haxe" );
 		context.response.setHeader( "Content-Language", args.language );
 
 		return Utf8.encode( args.content );

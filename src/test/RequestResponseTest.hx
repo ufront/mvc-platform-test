@@ -7,7 +7,7 @@ import sys.net.Host;
 import utest.Assert;
 using haxe.io.Path;
 
-class RequestTest {
+class RequestResponseTest {
 
 	var protocol:String;
 	var server:String;
@@ -33,25 +33,20 @@ class RequestTest {
 
 	public function testIndex() {
 		var h = new Http( base()+'/' );
-		trace( base()+'/' );
 		assertResponseEquals( "Index", h );
 	}
 
 	public function testQueryString() {
 		var h = new Http( base()+'/querystring?query' );
-		trace( base()+'/querystring?query' );
 		assertResponseEquals( "query", h );
 
 		var h = new Http( base()+'/querystring?a=1&b=2&b=3' );
-		trace( base()+'/querystring?a=1&b=2&b=3' );
 		assertResponseEquals( "a=1&b=2&b=3", h );
 
 		var h = new Http( base()+'/querystring?includeshash#nohash' );
-		trace( base()+'/querystring?includeshash#nohash' );
 		assertResponseEquals( "includeshash", h );
 
 		var h = new Http( base()+'/querystring' );
-		trace( base()+'/querystring' );
 		h.setParameter( 'drink', 'coffee' );
 		h.addParameter( 'game', 'football' );
 		h.addParameter( 'game', 'baseball' );
@@ -64,15 +59,12 @@ class RequestTest {
 
 	public function testPostString() {
 		var h = new Http( base()+'/poststring?query' );
-		trace( base()+'/poststring?query' );
 		assertResponseEquals( "", h, false );
 
 		var h = new Http( base()+'/poststring' );
-		trace( base()+'/poststring' );
 		assertResponseEquals( "", h, true );
 
 		var h = new Http( base()+'/poststring?drink=cola' );
-		trace( base()+'/poststring?drink=cola' );
 		h.setParameter( 'drink', 'coffee' );
 		h.addParameter( 'game', 'football' );
 		h.addParameter( 'game', 'baseball' );
@@ -84,22 +76,18 @@ class RequestTest {
 		}, h, true );
 
 		var h = new Http( base()+'/poststring' );
-		trace( base()+'/poststring' );
 		h.setPostData( "{see}" );
 		assertResponseEquals( "{see}", h, true );
 	}
 
 	public function testQuery() {
 		var h = new Http( base()+'/query?a=1&b=2&b=3' );
-		trace( base()+'/query?a=1&b=2&b=3' );
 		assertResponseEquals( "a=1\nb=2,3", h );
 
 		var h = new Http( base()+'/query?page=home#nohash' );
-		trace( base()+'/query?page=home#nohash' );
 		assertResponseEquals( "page=home", h );
 
 		var h = new Http( base()+'/query' );
-		trace( base()+'/query' );
 		h.setParameter( 'drink', 'coffee' );
 		h.addParameter( 'game', 'football' );
 		h.addParameter( 'game', 'baseball' );
@@ -110,30 +98,26 @@ class RequestTest {
 	public function testPost() {
 
 		var h = new Http( base()+'/post?a=1&b=2&b=3' );
-		trace( base()+'/post?a=1&b=2&b=3' );
 		assertResponseEquals( "", h, true );
 
 		var h = new Http( base()+'/post' );
-		trace( base()+'/post' );
 		h.setParameter( 'drink', 'coffee' );
 		h.addParameter( 'game', 'football' );
 		h.addParameter( 'game', 'baseball' );
 		var expected = 'drink=coffee\ngame=baseball,football';
 		assertResponseEquals( expected, h, true );
 
-		// Test multipart data
-		var h = new Http( base()+'/post' );
-		trace( base()+'/post' );
-		h.setPostData( CompileTime.readFile('test/SamplePostData.txt') );
-		h.setHeader( "Content-Type", "multipart/form-data" );
-		h.setHeader( "boundary", "AaB03x" );
-		var expected = 'age=43,name=Larry';
-		assertResponseEquals( expected, h, true );
+		// // Test multipart data
+		// var h = new Http( base()+'/post' );
+		// h.setPostData( CompileTime.readFile('test/SamplePostData.txt') );
+		// h.setHeader( "Content-Type", "multipart/form-data" );
+		// h.setHeader( "boundary", "AaB03x" );
+		// var expected = 'age=43,name=Larry';
+		// assertResponseEquals( expected, h, true );
 	}
 
 	public function testCookies() {
 		var h = new Http( base()+'/cookies' );
-		trace( base()+'/cookies' );
 		h.addHeader( "Cookie", "SessionID=12345; Name=Jason; Age=26" );
 		var expected = "Age=26\nName=Jason\nSessionID=12345";
 		assertResponseEquals( expected, h );
@@ -141,7 +125,6 @@ class RequestTest {
 
 	public function testClientHeaders() {
 		var h = new Http( base()+'/clientheaders' );
-		trace( base()+'/clientheaders' );
 		h.setHeader( "User-Agent", "Ufront Request Tester" );
 		h.addHeader( "Accept", "text/html" );
 		h.addHeader( "Accept", "application/xhtml+xml" );
@@ -154,7 +137,6 @@ class RequestTest {
 
 	public function testHostname() {
 		var h = new Http( base()+'/hostname' );
-		trace( base()+'/hostname' );
 		assertResponse( function(data) {
 			var host = new Host( data );
 			var hostFromBaseUrl = ~/^https?:\/\/([a-z_.]+)[:\/]/;
@@ -167,7 +149,6 @@ class RequestTest {
 
 	public function testClientIP() {
 		var h = new Http( base()+'/clientip' );
-		trace( base()+'/clientip' );
 		assertResponse( function(data) {
 			var ipRegex = ~/^([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})$/;
 			Assert.isTrue( ipRegex.match(data), 'Invalid IP address $data' );
@@ -176,39 +157,46 @@ class RequestTest {
 
 	public function testUri() {
 		var h1 = new Http( base()+'/uri/' );
-		trace( base()+'/uri/' );
 		assertResponseEquals( baseUrl+"/uri/", h1 );
 
 		var h2 = new Http( base()+'/uri/somesuch.html' );
-		trace( base()+'/uri/somesuch.html' );
 		assertResponseEquals( baseUrl+"/uri/somesuch.html", h2 );
 
 		var h3 = new Http( base()+'/uri/this?that#there' );
-		trace( base()+'/uri/this?that#there' );
 		assertResponseEquals( baseUrl+"/uri/this", h3 );
 	}
 
 	public function testHttpMethod() {
 		var h = new Http( base()+'/httpmethod' );
-		trace( base()+'/httpmethod' );
 		assertResponseEquals( "GET", h, false );
 
 		var h = new Http( base()+'/httpmethod' );
-		trace( base()+'/httpmethod' );
 		assertResponseEquals( "POST", h, true );
 	}
 
 	public function testScriptDirectory() {
 		var h = new Http( base()+'/scriptdirectory' );
-		trace( base()+'/scriptdirectory' );
 		assertResponseEquals( scriptDir.addTrailingSlash(), h );
 	}
 
 	public function testAuth() {
 		var h = new Http( base()+'/authorization' );
-		trace( base()+'/authorization' );
 		h.setHeader( "Authorization", "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" );
 		assertResponseEquals( "Aladdin:open sesame", h, true );
+	}
+
+	public function testResponse() {
+		var h = new Http( base()+'/testresponse/200/utf-8' );
+		assertResponseDetails( h, {
+			status: 200,
+			poweredBy: "Ufront",
+			contentType: "text/html",
+			charSet: "utf-8",
+			content: "response content",
+			language: "en-au",
+			cookieName: "sessionid",
+			cookieVal: "123456"
+		});
 	}
 
 	//
@@ -225,11 +213,40 @@ class RequestTest {
 			async();
 		};
 		http.onError = function(data:String) {
-			Assert.fail( 'Error with Http request: '+data, pos );
-			trace ('Error with HTTP Request');
+			Assert.fail( 'Error with Http request @ ${http.url}: '+data, pos );
+			trace ('Error with HTTP Request @ ${http.url}');
 			trace (http.responseData);
 		}
 		http.request( post );
+	}
+
+	function assertResponseDetails( http:Http, expected:{ status:Int, poweredBy:String, contentType:String, charSet:String, content:String, language:String, cookieName:String, cookieVal:String } ) {
+		var responseData:String = null;
+		var status:Null<Int> = null;
+		var async = Assert.createAsync(function() {
+			Assert.equals( expected.status, status );
+			Assert.equals( expected.poweredBy, http.responseHeaders.get("X-Powered-By") );
+			Assert.equals( '${expected.contentType}; charset=${expected.charSet}', http.responseHeaders.get("Content-Type") );
+			Assert.equals( '${expected.content.length}', http.responseHeaders.get("Content-Length") );
+			Assert.equals( expected.language, http.responseHeaders.get("Content-Language") );
+			
+			// Displaying a semicolon at the end is optional and differs between platforms
+			var cookieHeader = http.responseHeaders.get("Set-Cookie");
+			var semiColonAtEnd = StringTools.endsWith(cookieHeader,";") ? ";" : "";
+			Assert.equals( "sessionid=123456; expires=Thu, 01-Jan-2015 00:00:00 GMT; domain=/testresponse/"+semiColonAtEnd, cookieHeader );
+		});
+		http.onStatus = function(s) {
+			status = s;
+		}
+		http.onData = function(data) {
+			responseData = data;
+			async();
+		};
+		http.onError = function(data:String) {
+			responseData = data;
+			async();
+		}
+		http.request();
 	}
 
 	function assertResponseEquals( expectedResponse:String, http:Http, ?post=false, ?msg:String, ?pos:PosInfos ) {

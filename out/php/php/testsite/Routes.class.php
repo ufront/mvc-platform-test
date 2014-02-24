@@ -60,7 +60,7 @@ class testsite_Routes extends ufront_web_Controller {
 		$auth = $this->context->httpContext->request->get_authorization();
 		return _hx_string_or_null($auth->user) . ":" . _hx_string_or_null($auth->pass);
 	}
-	public function testResponse($status, $charset, $contentType, $args = null) {
+	public function testResponse($status, $charset, $args = null) {
 		if($args->language === null) {
 			$args->language = "en-au";
 		}
@@ -70,19 +70,19 @@ class testsite_Routes extends ufront_web_Controller {
 		if($args->testGroup === null) {
 			$args->testGroup = "group a";
 		}
+		if($args->contentType === null) {
+			$args->contentType = "text/html";
+		}
 		if($args->content === null) {
-			$args->testGroup = "response content";
+			$args->content = "response content";
 		}
 		$this->context->httpContext->response->status = $status;
 		$this->context->httpContext->response->charset = $charset;
-		$this->context->httpContext->response->set_contentType($contentType);
+		$this->context->httpContext->response->set_contentType($args->contentType);
 		$expiryDate = new Date(2015, 0, 1, 0, 0, 0);
-		$c1 = new ufront_web_HttpCookie("sessionid", $args->sessionID, null, null, null, null);
-		$c2 = new ufront_web_HttpCookie("test-group", $args->testGroup, $expiryDate, "/textresponse/", null, null);
+		$c1 = new ufront_web_HttpCookie("sessionid", $args->sessionID, $expiryDate, "/testresponse/", null, null);
 		$this->context->httpContext->response->setCookie($c1);
-		$this->context->httpContext->response->setCookie($c2);
 		$this->context->httpContext->response->setHeader("X-Powered-By", "Ufront");
-		$this->context->httpContext->response->setHeader("X-Powered-By", "Haxe");
 		$this->context->httpContext->response->setHeader("Content-Language", $args->language);
 		return haxe_Utf8::encode($args->content);
 	}
@@ -210,23 +210,23 @@ class testsite_Routes extends ufront_web_Controller {
 																$this->setContextActionResultWhenFinished($result12);
 																return $result12;
 															} else {
-																if(4 === $uriParts->length && $uriParts[0] === "testresponse" && strlen($uriParts[1]) > 0 && strlen($uriParts[2]) > 0 && strlen($uriParts[3]) > 0) {
+																if(3 === $uriParts->length && $uriParts[0] === "testresponse" && strlen($uriParts[1]) > 0 && strlen($uriParts[2]) > 0) {
 																	$status = Std::parseInt($uriParts[1]);
 																	if($status === null) {
 																		throw new HException(new ufront_web_HttpError(400, "Bad Request", _hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 567, "className" => "testsite.Routes", "methodName" => "execute"))));
 																	}
 																	$charset = $uriParts[2];
-																	$contentType = $uriParts[3];
 																	$_param_tmp_sessionID = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "sessionID");
 																	$_param_tmp_testGroup = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "testGroup");
 																	$_param_tmp_language = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "language");
+																	$_param_tmp_contentType = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "contentType");
 																	$_param_tmp_content = ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "content");
-																	$args = _hx_anonymous(array("sessionID" => $_param_tmp_sessionID, "testGroup" => $_param_tmp_testGroup, "language" => $_param_tmp_language, "content" => $_param_tmp_content));
+																	$args = _hx_anonymous(array("sessionID" => $_param_tmp_sessionID, "testGroup" => $_param_tmp_testGroup, "language" => $_param_tmp_language, "contentType" => $_param_tmp_contentType, "content" => $_param_tmp_content));
 																	$this->context->action = "testResponse";
-																	$this->context->args = (new _hx_array(array($status, $charset, $contentType, $args)));
-																	$this->context->get_uriParts()->splice(0, 4);
+																	$this->context->args = (new _hx_array(array($status, $charset, $args)));
+																	$this->context->get_uriParts()->splice(0, 3);
 																	$wrappingRequired13 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->testResponse->wrapResult[0];
-																	$result13 = $this->wrapResult($this->testResponse($status, $charset, $contentType, $args), $wrappingRequired13);
+																	$result13 = $this->wrapResult($this->testResponse($status, $charset, $args), $wrappingRequired13);
 																	$this->setContextActionResultWhenFinished($result13);
 																	return $result13;
 																}
