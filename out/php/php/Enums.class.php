@@ -3,6 +3,8 @@
 class Enums {
 	public function __construct(){}
 	static function string($e) {
+		$GLOBALS['%s']->push("Enums::string");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$cons = Type::enumConstructor($e);
 		$params = (new _hx_array(array()));
 		{
@@ -15,14 +17,27 @@ class Enums {
 				unset($param);
 			}
 		}
-		return _hx_string_or_null($cons) . _hx_string_or_null((Enums_0($cons, $e, $params)));
+		{
+			$tmp = _hx_string_or_null($cons) . _hx_string_or_null((Enums_0($cons, $e, $params)));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function compare($a, $b) {
+		$GLOBALS['%s']->push("Enums::compare");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$v = null;
 		if(($v = Enums_1($a, $b, $v) - Enums_2($a, $b, $v)) !== 0) {
+			$GLOBALS['%s']->pop();
 			return $v;
 		}
-		return Arrays::compare(Type::enumParameters($a), Type::enumParameters($b));
+		{
+			$tmp = Arrays::compare(Type::enumParameters($a), Type::enumParameters($b));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'Enums'; }
 }

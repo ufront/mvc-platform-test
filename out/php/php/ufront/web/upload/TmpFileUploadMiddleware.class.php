@@ -3,12 +3,17 @@
 class ufront_web_upload_TmpFileUploadMiddleware implements ufront_app_UFMiddleware{
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->files = (new _hx_array(array()));
+		$GLOBALS['%s']->pop();
 	}}
 	public $files;
 	public function requestIn($ctx) {
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::requestIn");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$_g = $this;
-		try {
+		if(strtolower($ctx->request->get_httpMethod()) === "post" && $ctx->request->isMultipart()) {
 			$file = null;
 			$postName = null;
 			$origFileName = null;
@@ -16,77 +21,60 @@ class ufront_web_upload_TmpFileUploadMiddleware implements ufront_app_UFMiddlewa
 			$tmpFilePath = null;
 			$dateStr = Dates::format(Date::now(), "%Y%m%d-%H%M", null, null);
 			$dir = _hx_string_or_null($ctx->get_contentDirectory()) . _hx_string_or_null(haxe_io_Path::addTrailingSlash(ufront_web_upload_TmpFileUploadMiddleware::$subDir));
-			if(!file_exists($dir)) {
-				try {
-					$path = haxe_io_Path::addTrailingSlash($dir);
-					$parts = null;
-					{
-						$_g1 = (new _hx_array(array()));
-						while(($path = haxe_io_Path::directory($path)) !== "") {
-							$_g1->push($path);
-						}
-						$parts = $_g1;
-					}
-					$parts->reverse();
-					{
-						$_g11 = 0;
-						while($_g11 < $parts->length) {
-							$part = $parts[$_g11];
-							++$_g11;
-							if(_hx_char_code_at($part, strlen($part) - 1) !== 58 && !file_exists($part)) {
-								@mkdir($part, 493);
-							}
-							unset($part);
-						}
-					}
-				}catch(Exception $__hx__e) {
-					$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-					$e = $_ex_;
-					{
-						throw new HException("Failed to create upload directory: " . Std::string($e));
-					}
-				}
-			}
+			ufront_sys_SysUtil::mkdir($dir);
 			$onPart = array(new _hx_lambda(array(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$origFileName, &$postName, &$size, &$tmpFilePath), "ufront_web_upload_TmpFileUploadMiddleware_0"), 'execute');
 			$onData = array(new _hx_lambda(array(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath), "ufront_web_upload_TmpFileUploadMiddleware_1"), 'execute');
 			$onEndPart = array(new _hx_lambda(array(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onData, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath), "ufront_web_upload_TmpFileUploadMiddleware_2"), 'execute');
-			return tink_core__Future_Future_Impl_::map($ctx->request->parseMultipart($onPart, $onData, $onEndPart), array(new _hx_lambda(array(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onData, &$onEndPart, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath), "ufront_web_upload_TmpFileUploadMiddleware_3"), 'execute'), null);
-		}catch(Exception $__hx__e) {
-			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-			$e1 = $_ex_;
 			{
-				return ufront_core_Sync::httpError("Failed to process multipart form data in TmpFileUploadMiddleware.requestIn()", $e1, _hx_anonymous(array("fileName" => "TmpFileUploadMiddleware.hx", "lineNumber" => 93, "className" => "ufront.web.upload.TmpFileUploadMiddleware", "methodName" => "requestIn")));
+				$tmp = tink_core__Future_Future_Impl_::map($ctx->request->parseMultipart($onPart, $onData, $onEndPart), array(new _hx_lambda(array(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onData, &$onEndPart, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath), "ufront_web_upload_TmpFileUploadMiddleware_3"), 'execute'), null);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}
+		} else {
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function responseOut($ctx) {
-		$errors = (new _hx_array(array()));
-		{
-			$_g = 0;
-			$_g1 = $this->files;
-			while($_g < $_g1->length) {
-				$f = $_g1[$_g];
-				++$_g;
-				{
-					$_g2 = $f->deleteTemporaryFile();
-					switch($_g2->index) {
-					case 1:{
-						$e = $_g2->params[0];
-						$errors->push($e);
-					}break;
-					default:{
-					}break;
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::responseOut");
+		$__hx__spos = $GLOBALS['%s']->length;
+		if(strtolower($ctx->request->get_httpMethod()) === "post" && $ctx->request->isMultipart()) {
+			$errors = (new _hx_array(array()));
+			{
+				$_g = 0;
+				$_g1 = $this->files;
+				while($_g < $_g1->length) {
+					$f = $_g1[$_g];
+					++$_g;
+					{
+						$_g2 = $f->deleteTemporaryFile();
+						switch($_g2->index) {
+						case 1:{
+							$e = $_g2->params[0];
+							$errors->push($e);
+						}break;
+						default:{
+						}break;
+						}
+						unset($_g2);
 					}
-					unset($_g2);
+					unset($f);
 				}
-				unset($f);
+			}
+			if($errors->length > 0) {
+				$tmp = ufront_core_Sync::httpError("Failed to delete one or more temporary upload files", $errors, _hx_anonymous(array("fileName" => "TmpFileUploadMiddleware.hx", "lineNumber" => 127, "className" => "ufront.web.upload.TmpFileUploadMiddleware", "methodName" => "responseOut")));
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}
 		}
-		if($errors->length > 0) {
-			return ufront_core_Sync::httpError("Failed to delete one or more temporary upload files", $errors, _hx_anonymous(array("fileName" => "TmpFileUploadMiddleware.hx", "lineNumber" => 108, "className" => "ufront.web.upload.TmpFileUploadMiddleware", "methodName" => "responseOut")));
-		} else {
-			return ufront_core_Sync::success();
+		{
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -103,6 +91,8 @@ class ufront_web_upload_TmpFileUploadMiddleware implements ufront_app_UFMiddlewa
 }
 function ufront_web_upload_TmpFileUploadMiddleware_0(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$origFileName, &$postName, &$size, &$tmpFilePath, $pName, $fName) {
 	{
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::requestIn@66");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		$postName = $pName;
 		$origFileName = $fName;
 		$size = 0;
@@ -112,36 +102,68 @@ function ufront_web_upload_TmpFileUploadMiddleware_0(&$_g, &$ctx, &$dateStr, &$d
 				$file = sys_io_File::write($tmpFilePath, null);
 			}
 		}
-		return ufront_core_Sync::success();
+		{
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_web_upload_TmpFileUploadMiddleware_1(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath, $bytes, $pos, $len) {
 	{
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::requestIn@83");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		$size += $len;
 		$file->writeBytes($bytes, $pos, $len);
-		return ufront_core_Sync::success();
+		{
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_web_upload_TmpFileUploadMiddleware_2(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onData, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath) {
 	{
-		$file->close();
-		$tmpFile = new ufront_web_upload_TmpFileUploadSync($tmpFilePath, $postName, $origFileName, $size);
-		ufront_core__MultiValueMap_MultiValueMap_Impl_::set($ctx->request->get_files(), $postName, $tmpFile);
-		$_g->files->push($tmpFile);
-		return ufront_core_Sync::success();
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::requestIn@89");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		if($file !== null) {
+			$file->close();
+			$tmpFile = new ufront_web_upload_TmpFileUploadSync($tmpFilePath, $postName, $origFileName, $size);
+			ufront_core__MultiValueMap_MultiValueMap_Impl_::add($ctx->request->get_files(), $postName, $tmpFile);
+			$_g->files->push($tmpFile);
+		}
+		{
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_web_upload_TmpFileUploadMiddleware_3(&$_g, &$ctx, &$dateStr, &$dir, &$file, &$onData, &$onEndPart, &$onPart, &$origFileName, &$postName, &$size, &$tmpFilePath, $result) {
 	{
+		$GLOBALS['%s']->push("ufront.web.upload.TmpFileUploadMiddleware::requestIn@101");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		switch($result->index) {
 		case 0:{
 			$s = $result->params[0];
-			return tink_core_Outcome::Success($s);
+			{
+				$tmp = tink_core_Outcome::Success($s);
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}break;
 		case 1:{
 			$f = $result->params[0];
-			return tink_core_Outcome::Failure(ufront_web_HttpError::wrap($f, null, _hx_anonymous(array("fileName" => "TmpFileUploadMiddleware.hx", "lineNumber" => 90, "className" => "ufront.web.upload.TmpFileUploadMiddleware", "methodName" => "requestIn"))));
+			{
+				$tmp = tink_core_Outcome::Failure(ufront_web_HttpError::wrap($f, null, _hx_anonymous(array("fileName" => "TmpFileUploadMiddleware.hx", "lineNumber" => 104, "className" => "ufront.web.upload.TmpFileUploadMiddleware", "methodName" => "requestIn"))));
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 }

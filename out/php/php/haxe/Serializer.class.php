@@ -3,12 +3,15 @@
 class haxe_Serializer {
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("haxe.Serializer::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->buf = new StringBuf();
 		$this->cache = new _hx_array(array());
 		$this->useCache = haxe_Serializer::$USE_CACHE;
 		$this->useEnumIndex = haxe_Serializer::$USE_ENUM_INDEX;
 		$this->shash = new haxe_ds_StringMap();
 		$this->scount = 0;
+		$GLOBALS['%s']->pop();
 	}}
 	public $buf;
 	public $cache;
@@ -17,14 +20,26 @@ class haxe_Serializer {
 	public $useCache;
 	public $useEnumIndex;
 	public function toString() {
-		return $this->buf->b;
+		$GLOBALS['%s']->push("haxe.Serializer::toString");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $this->buf->b;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function serializeString($s) {
+		$GLOBALS['%s']->push("haxe.Serializer::serializeString");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$x = $this->shash->get($s);
 		if($x !== null) {
 			$this->buf->add("R");
 			$this->buf->add($x);
-			return;
+			{
+				$GLOBALS['%s']->pop();
+				return;
+			}
 		}
 		$this->shash->set($s, $this->scount++);
 		$this->buf->add("y");
@@ -32,8 +47,11 @@ class haxe_Serializer {
 		$this->buf->add(strlen($s));
 		$this->buf->add(":");
 		$this->buf->add($s);
+		$GLOBALS['%s']->pop();
 	}
 	public function serializeRef($v) {
+		$GLOBALS['%s']->push("haxe.Serializer::serializeRef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g1 = 0;
 			$_g = $this->cache->length;
@@ -42,15 +60,24 @@ class haxe_Serializer {
 				if(_hx_equal($this->cache[$i], $v)) {
 					$this->buf->add("r");
 					$this->buf->add($i);
-					return true;
+					{
+						$GLOBALS['%s']->pop();
+						return true;
+					}
 				}
 				unset($i);
 			}
 		}
 		$this->cache->push($v);
-		return false;
+		{
+			$GLOBALS['%s']->pop();
+			return false;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function serializeFields($v) {
+		$GLOBALS['%s']->push("haxe.Serializer::serializeFields");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = 0;
 			$_g1 = Reflect::fields($v);
@@ -63,8 +90,11 @@ class haxe_Serializer {
 			}
 		}
 		$this->buf->add("g");
+		$GLOBALS['%s']->pop();
 	}
 	public function serialize($v) {
+		$GLOBALS['%s']->push("haxe.Serializer::serialize");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = Type::typeof($v);
 			switch($_g->index) {
@@ -72,22 +102,27 @@ class haxe_Serializer {
 				$this->buf->add("n");
 			}break;
 			case 1:{
-				if(_hx_equal($v, 0)) {
+				$v1 = $v;
+				if($v1 === 0) {
 					$this->buf->add("z");
-					return;
+					{
+						$GLOBALS['%s']->pop();
+						return;
+					}
 				}
 				$this->buf->add("i");
-				$this->buf->add($v);
+				$this->buf->add($v1);
 			}break;
 			case 2:{
-				if(Math::isNaN($v)) {
+				$v2 = $v;
+				if(Math::isNaN($v2)) {
 					$this->buf->add("k");
 				} else {
-					if(!Math::isFinite($v)) {
-						$this->buf->add((($v < 0) ? "m" : "p"));
+					if(!Math::isFinite($v2)) {
+						$this->buf->add((($v2 < 0) ? "m" : "p"));
 					} else {
 						$this->buf->add("d");
-						$this->buf->add($v);
+						$this->buf->add($v2);
 					}
 				}
 			}break;
@@ -99,9 +134,13 @@ class haxe_Serializer {
 				{
 					if((is_object($_t = $c) && !($_t instanceof Enum) ? $_t === _hx_qtype("String") : $_t == _hx_qtype("String"))) {
 						$this->serializeString($v);
-						return;
+						{
+							$GLOBALS['%s']->pop();
+							return;
+						}
 					}
 					if($this->useCache && $this->serializeRef($v)) {
+						$GLOBALS['%s']->pop();
 						return;
 					}
 					switch($c) {
@@ -142,10 +181,11 @@ class haxe_Serializer {
 					}break;
 					case _hx_qtype("List"):{
 						$this->buf->add("l");
-						$v1 = $v;
-						if(null == $v1) throw new HException('null iterable');
-						$__hx__it = $v1->iterator();
+						$v3 = $v;
+						if(null == $v3) throw new HException('null iterable');
+						$__hx__it = $v3->iterator();
 						while($__hx__it->hasNext()) {
+							unset($i1);
 							$i1 = $__hx__it->next();
 							$this->serialize($i1);
 						}
@@ -158,63 +198,66 @@ class haxe_Serializer {
 					}break;
 					case _hx_qtype("haxe.ds.StringMap"):{
 						$this->buf->add("b");
-						$v2 = $v;
-						if(null == $v2) throw new HException('null iterable');
-						$__hx__it = $v2->keys();
+						$v4 = $v;
+						if(null == $v4) throw new HException('null iterable');
+						$__hx__it = $v4->keys();
 						while($__hx__it->hasNext()) {
+							unset($k);
 							$k = $__hx__it->next();
 							$this->serializeString($k);
-							$this->serialize($v2->get($k));
+							$this->serialize($v4->get($k));
 						}
 						$this->buf->add("h");
 					}break;
 					case _hx_qtype("haxe.ds.IntMap"):{
 						$this->buf->add("q");
-						$v3 = $v;
-						if(null == $v3) throw new HException('null iterable');
-						$__hx__it = $v3->keys();
+						$v5 = $v;
+						if(null == $v5) throw new HException('null iterable');
+						$__hx__it = $v5->keys();
 						while($__hx__it->hasNext()) {
+							unset($k1);
 							$k1 = $__hx__it->next();
 							$this->buf->add(":");
 							$this->buf->add($k1);
-							$this->serialize($v3->get($k1));
+							$this->serialize($v5->get($k1));
 						}
 						$this->buf->add("h");
 					}break;
 					case _hx_qtype("haxe.ds.ObjectMap"):{
 						$this->buf->add("M");
-						$v4 = $v;
-						$__hx__it = new _hx_array_iterator(array_values($v4->hk));
+						$v6 = $v;
+						$__hx__it = new _hx_array_iterator(array_values($v6->hk));
 						while($__hx__it->hasNext()) {
+							unset($k2);
 							$k2 = $__hx__it->next();
 							$this->serialize($k2);
-							$this->serialize($v4->get($k2));
+							$this->serialize($v6->get($k2));
 						}
 						$this->buf->add("h");
 					}break;
 					case _hx_qtype("haxe.io.Bytes"):{
-						$v5 = $v;
+						$v7 = $v;
 						$i2 = 0;
-						$max = $v5->length - 2;
+						$max = $v7->length - 2;
 						$charsBuf = new StringBuf();
 						$b64 = haxe_Serializer::$BASE64;
 						while($i2 < $max) {
 							$b1 = null;
 							{
 								$pos = $i2++;
-								$b1 = ord($v5->b[$pos]);
+								$b1 = ord($v7->b[$pos]);
 								unset($pos);
 							}
 							$b2 = null;
 							{
 								$pos1 = $i2++;
-								$b2 = ord($v5->b[$pos1]);
+								$b2 = ord($v7->b[$pos1]);
 								unset($pos1);
 							}
 							$b3 = null;
 							{
 								$pos2 = $i2++;
-								$b3 = ord($v5->b[$pos2]);
+								$b3 = ord($v7->b[$pos2]);
 								unset($pos2);
 							}
 							$charsBuf->add(_hx_char_at($b64, $b1 >> 2));
@@ -227,12 +270,12 @@ class haxe_Serializer {
 							$b11 = null;
 							{
 								$pos3 = $i2++;
-								$b11 = ord($v5->b[$pos3]);
+								$b11 = ord($v7->b[$pos3]);
 							}
 							$b21 = null;
 							{
 								$pos4 = $i2++;
-								$b21 = ord($v5->b[$pos4]);
+								$b21 = ord($v7->b[$pos4]);
 							}
 							$charsBuf->add(_hx_char_at($b64, $b11 >> 2));
 							$charsBuf->add(_hx_char_at($b64, ($b11 << 4 | $b21 >> 4) & 63));
@@ -242,7 +285,7 @@ class haxe_Serializer {
 								$b12 = null;
 								{
 									$pos5 = $i2++;
-									$b12 = ord($v5->b[$pos5]);
+									$b12 = ord($v7->b[$pos5]);
 								}
 								$charsBuf->add(_hx_char_at($b64, $b12 >> 2));
 								$charsBuf->add(_hx_char_at($b64, $b12 << 4 & 63));
@@ -255,17 +298,23 @@ class haxe_Serializer {
 						$this->buf->add($chars);
 					}break;
 					default:{
-						$this->cache->pop();
+						if($this->useCache) {
+							$this->cache->pop();
+						}
 						if(_hx_field($v, "hxSerialize") !== null) {
 							$this->buf->add("C");
 							$this->serializeString(Type::getClassName($c));
-							$this->cache->push($v);
+							if($this->useCache) {
+								$this->cache->push($v);
+							}
 							$v->hxSerialize($this);
 							$this->buf->add("g");
 						} else {
 							$this->buf->add("c");
 							$this->serializeString(Type::getClassName($c));
-							$this->cache->push($v);
+							if($this->useCache) {
+								$this->cache->push($v);
+							}
 							$this->serializeFields($v);
 						}
 					}break;
@@ -274,6 +323,7 @@ class haxe_Serializer {
 			}break;
 			case 4:{
 				if($this->useCache && $this->serializeRef($v)) {
+					$GLOBALS['%s']->pop();
 					return;
 				}
 				$this->buf->add("o");
@@ -282,10 +332,13 @@ class haxe_Serializer {
 			case 7:{
 				$e = $_g->params[0];
 				{
-					if($this->useCache && $this->serializeRef($v)) {
-						return;
+					if($this->useCache) {
+						if($this->serializeRef($v)) {
+							$GLOBALS['%s']->pop();
+							return;
+						}
+						$this->cache->pop();
 					}
-					$this->cache->pop();
 					$this->buf->add((($this->useEnumIndex) ? "j" : "w"));
 					$this->serializeString(Type::getEnumName($e));
 					if($this->useEnumIndex) {
@@ -309,7 +362,9 @@ class haxe_Serializer {
 							}
 						}
 					}
-					$this->cache->push($v);
+					if($this->useCache) {
+						$this->cache->push($v);
+					}
 				}
 			}break;
 			case 5:{
@@ -320,10 +375,14 @@ class haxe_Serializer {
 			}break;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function serializeException($e) {
+		$GLOBALS['%s']->push("haxe.Serializer::serializeException");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->buf->add("x");
 		$this->serialize($e);
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -339,9 +398,16 @@ class haxe_Serializer {
 	static $USE_ENUM_INDEX = false;
 	static $BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
 	static function run($v) {
+		$GLOBALS['%s']->push("haxe.Serializer::run");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$s = new haxe_Serializer();
 		$s->serialize($v);
-		return $s->toString();
+		{
+			$tmp = $s->toString();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return $this->toString(); }
 }

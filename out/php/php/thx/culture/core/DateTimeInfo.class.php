@@ -3,6 +3,8 @@
 class thx_culture_core_DateTimeInfo {
 	public function __construct($months, $abbrMonths, $days, $abbrDays, $shortDays, $am, $pm, $separatorDate, $separatorTime, $firstWeekDay, $patternYearMonth, $patternMonthDay, $patternDate, $patternDateShort, $patternDateRfc, $patternDateTime, $patternUniversal, $patternSortable, $patternTime, $patternTimeShort) {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("thx.culture.core.DateTimeInfo::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->months = $months;
 		$this->abbrMonths = $abbrMonths;
 		$this->days = $days;
@@ -23,6 +25,7 @@ class thx_culture_core_DateTimeInfo {
 		$this->patternSortable = $patternSortable;
 		$this->patternTime = $patternTime;
 		$this->patternTimeShort = $patternTimeShort;
+		$GLOBALS['%s']->pop();
 	}}
 	public $months;
 	public $abbrMonths;

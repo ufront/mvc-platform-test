@@ -3,6 +3,8 @@
 class EReg {
 	public function __construct($r, $opt) {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("EReg::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->pattern = $r;
 		$a = _hx_explode("g", $opt);
 		$this->{"global"} = $a->length > 1;
@@ -11,6 +13,7 @@ class EReg {
 		}
 		$this->options = $opt;
 		$this->re = '"' . str_replace('"','\\"',$r) . '"' . $opt;
+		$GLOBALS['%s']->pop();
 	}}
 	public $last;
 	public $global;
@@ -19,43 +22,82 @@ class EReg {
 	public $re;
 	public $matches;
 	public function match($s) {
+		$GLOBALS['%s']->push("EReg::match");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$p = preg_match($this->re, $s, $this->matches, PREG_OFFSET_CAPTURE);
 		if($p > 0) {
 			$this->last = $s;
 		} else {
 			$this->last = null;
 		}
-		return $p > 0;
+		{
+			$tmp = $p > 0;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function matched($n) {
+		$GLOBALS['%s']->push("EReg::matched");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->matches === null || $n < 0) {
 			throw new HException("EReg::matched");
 		}
 		if($n >= count($this->matches)) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
 		if($this->matches[$n][1] < 0) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
-		return $this->matches[$n][0];
+		{
+			$tmp = $this->matches[$n][0];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function matchedLeft() {
+		$GLOBALS['%s']->push("EReg::matchedLeft");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(count($this->matches) === 0) {
 			throw new HException("No string matched");
 		}
-		return _hx_substr($this->last, 0, $this->matches[0][1]);
+		{
+			$tmp = _hx_substr($this->last, 0, $this->matches[0][1]);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function matchedRight() {
+		$GLOBALS['%s']->push("EReg::matchedRight");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(count($this->matches) === 0) {
 			throw new HException("No string matched");
 		}
 		$x = $this->matches[0][1] + strlen($this->matches[0][0]);
-		return _hx_substr($this->last, $x, null);
+		{
+			$tmp = _hx_substr($this->last, $x, null);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function matchedPos() {
-		return _hx_anonymous(array("pos" => $this->matches[0][1], "len" => strlen($this->matches[0][0])));
+		$GLOBALS['%s']->push("EReg::matchedPos");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = _hx_anonymous(array("pos" => $this->matches[0][1], "len" => strlen($this->matches[0][0])));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function matchSub($s, $pos, $len = null) {
+		$GLOBALS['%s']->push("EReg::matchSub");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($len === null) {
 			$len = -1;
 		}
@@ -65,18 +107,39 @@ class EReg {
 		} else {
 			$this->last = null;
 		}
-		return $p > 0;
+		{
+			$tmp = $p > 0;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function split($s) {
-		return new _hx_array(preg_split($this->re, $s, $this->{"global"} ? -1 : 2));
+		$GLOBALS['%s']->push("EReg::split");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new _hx_array(preg_split($this->re, $s, $this->{"global"} ? -1 : 2));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function replace($s, $by) {
+		$GLOBALS['%s']->push("EReg::replace");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$by = str_replace("\\\$", "\\\\\$", $by);
 		$by = str_replace("\$\$", "\\\$", $by);
 		if(!preg_match('/\\([^?].+?\\)/', $this->re)) $by = preg_replace('/\$(\d+)/', '\\\$\1', $by);
-		return preg_replace($this->re, $by, $s, (($this->{"global"}) ? -1 : 1));
+		{
+			$tmp = preg_replace($this->re, $by, $s, (($this->{"global"}) ? -1 : 1));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function map($s, $f) {
+		$GLOBALS['%s']->push("EReg::map");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$offset = 0;
 		$buf = new StringBuf();
 		do {
@@ -102,7 +165,12 @@ class EReg {
 		if(!$this->{"global"} && $offset > 0 && $offset < strlen($s)) {
 			$buf->add(_hx_substr($s, $offset, null));
 		}
-		return $buf->b;
+		{
+			$tmp = $buf->b;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

@@ -6,12 +6,31 @@ class CompileTimeClassList {
 	static $__meta__;
 	static $lists = null;
 	static function get($id) {
+		$GLOBALS['%s']->push("CompileTimeClassList::get");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(CompileTimeClassList::$lists === null) {
 			CompileTimeClassList::initialise();
 		}
-		return CompileTimeClassList::$lists->get($id);
+		{
+			$tmp = CompileTimeClassList::$lists->get($id);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
+	}
+	static function getTyped($id, $type) {
+		$GLOBALS['%s']->push("CompileTimeClassList::getTyped");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = CompileTimeClassList::get($id);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function initialise() {
+		$GLOBALS['%s']->push("CompileTimeClassList::initialise");
+		$__hx__spos = $GLOBALS['%s']->length;
 		CompileTimeClassList::$lists = new haxe_ds_StringMap();
 		$m = haxe_rtti_Meta::getType(_hx_qtype("CompileTimeClassList"));
 		if($m->classLists !== null) {
@@ -22,17 +41,27 @@ class CompileTimeClassList {
 				++$_g;
 				$array = $item;
 				$listID = $array[0];
-				$classes = _hx_string_call($item[1], "split", array(","))->map(array(new _hx_lambda(array(&$_g, &$_g1, &$array, &$item, &$listID, &$m), "CompileTimeClassList_0"), 'execute'));
-				CompileTimeClassList::$lists->set($listID, $classes);
-				unset($listID,$item,$classes,$array);
+				$list = new HList();
+				{
+					$_g2 = 0;
+					$_g3 = _hx_explode(",", $array[1]);
+					while($_g2 < $_g3->length) {
+						$typeName = $_g3[$_g2];
+						++$_g2;
+						$type = Type::resolveClass($typeName);
+						if($type !== null) {
+							$list->push($type);
+						}
+						unset($typeName,$type);
+					}
+					unset($_g3,$_g2);
+				}
+				CompileTimeClassList::$lists->set($listID, $list);
+				unset($listID,$list,$item,$array);
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'CompileTimeClassList'; }
 }
 CompileTimeClassList::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("classLists" => (new _hx_array(array((new _hx_array(array("null,true,ufront.web.Controller", "testsite.Routes,ufront.web.DefaultController,ufront.web.TestController"))), (new _hx_array(array("null,true,ufront.api.UFApi", ""))))))))));
-function CompileTimeClassList_0(&$_g, &$_g1, &$array, &$item, &$listID, &$m, $typeName) {
-	{
-		return Type::resolveClass($typeName);
-	}
-}

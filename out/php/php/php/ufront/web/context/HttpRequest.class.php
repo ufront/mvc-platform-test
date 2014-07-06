@@ -3,16 +3,29 @@
 class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest {
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->_parsed = false;
+		$GLOBALS['%s']->pop();
 	}}
 	public function get_queryString() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_queryString");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->queryString) {
 			$this->queryString = $_SERVER["QUERY_STRING"];
 		}
-		return $this->queryString;
+		{
+			$tmp = $this->queryString;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_postString() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_postString");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->get_httpMethod() === "GET") {
+			$GLOBALS['%s']->pop();
 			return "";
 		}
 		if(null === $this->postString) {
@@ -25,12 +38,24 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 				$this->postString = "";
 			}
 		}
-		return $this->postString;
+		{
+			$tmp = $this->postString;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public $_parsed;
 	public function parseMultipart($onPart = null, $onData = null, $onEndPart = null) {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart");
+		$__hx__spos = $GLOBALS['%s']->length;
+		if(!$this->isMultipart()) {
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
 		if($this->_parsed) {
-			throw new HException(new tink_core_Error("parseMultipart() can only been called once", _hx_anonymous(array("fileName" => "HttpRequest.hx", "lineNumber" => 63, "className" => "php.ufront.web.context.HttpRequest", "methodName" => "parseMultipart"))));
+			throw new HException(new tink_core_TypedError(null, "parseMultipart() can only been called once", _hx_anonymous(array("fileName" => "HttpRequest.hx", "lineNumber" => 67, "className" => "php.ufront.web.context.HttpRequest", "methodName" => "parseMultipart"))));
 		}
 		$this->_parsed = true;
 		$post = $this->get_post();
@@ -104,26 +129,44 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 					unset($tmp,$readNextPart,$processResult,$partFinishedTrigger,$part,$name,$info,$fileResource,$file,$err,$currentPos,$bsize);
 				}
 			}
-			return tink_core__Future_Future_Impl_::map(tink_core__Future_Future_Impl_::ofMany($allPartFutures, null), array(new _hx_lambda(array(&$allPartFutures, &$errors, &$onData, &$onEndPart, &$onPart, &$parts, &$post), "php_ufront_web_context_HttpRequest_6"), 'execute'), null);
+			{
+				$tmp = tink_core__Future_Future_Impl_::map(tink_core__Future_Future_Impl_::ofMany($allPartFutures, null), array(new _hx_lambda(array(&$allPartFutures, &$errors, &$onData, &$onEndPart, &$onPart, &$parts, &$post), "php_ufront_web_context_HttpRequest_6"), 'execute'), null);
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		} else {
-			return ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+			$tmp = ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_query() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_query");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->query) {
 			$this->query = php_ufront_web_context_HttpRequest::getHashFromString($this->get_queryString());
 		}
-		return $this->query;
+		{
+			$tmp = $this->query;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_post() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_post");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->get_httpMethod() === "GET") {
-			return new haxe_ds_StringMap();
+			$tmp = new haxe_ds_StringMap();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		if(null === $this->post) {
-			if("multipart/form-data" === ufront_core__MultiValueMap_MultiValueMap_Impl_::get($this->get_clientHeaders(), "ContentType")) {
+			if($this->isMultipart()) {
 				$this->post = new haxe_ds_StringMap();
 				if(isset($_POST)) {
-					$postNames = new _hx_array(call_user_func_array($__call, array("array_keys", $_POST)));
+					$postNames = new _hx_array(array_keys($_POST));
 					{
 						$_g = 0;
 						while($_g < $postNames->length) {
@@ -135,6 +178,7 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 								if(null == $h) throw new HException('null iterable');
 								$__hx__it = $h->keys();
 								while($__hx__it->hasNext()) {
+									unset($k);
 									$k = $__hx__it->next();
 									if(is_string($val)) {
 										ufront_core__MultiValueMap_MultiValueMap_Impl_::add($this->post, $k, $h->get($k));
@@ -161,60 +205,91 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 						$part = $parts[$_g1];
 						++$_g1;
 						$file = $_FILES[$part]['name'];
-						$name1 = StringTools::urldecode($part);
+						$name1 = urldecode($part);
 						ufront_core__MultiValueMap_MultiValueMap_Impl_::add($this->post, $name1, $file);
 						unset($part,$name1,$file);
 					}
 				}
 			}
 		}
-		return $this->post;
+		{
+			$tmp = $this->post;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_cookies() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_cookies");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->cookies) {
 			$this->cookies = new haxe_ds_StringMap();
 			$h = php_Lib::hashOfAssociativeArray($_COOKIE);
 			if(null == $h) throw new HException('null iterable');
 			$__hx__it = $h->keys();
 			while($__hx__it->hasNext()) {
+				unset($k);
 				$k = $__hx__it->next();
 				ufront_core__MultiValueMap_MultiValueMap_Impl_::add($this->cookies, $k, $h->get($k));
 			}
 		}
-		return $this->cookies;
-	}
-	public function get_userAgent() {
-		if(null === $this->userAgent) {
-			$this->userAgent = ufront_web_UserAgent::fromString(ufront_core__MultiValueMap_MultiValueMap_Impl_::get($this->get_clientHeaders(), "User-Agent"));
+		{
+			$tmp = $this->cookies;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
-		return $this->userAgent;
+		$GLOBALS['%s']->pop();
 	}
 	public function get_hostName() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_hostName");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->hostName) {
 			$this->hostName = $_SERVER['SERVER_NAME'];
 		}
-		return $this->hostName;
+		{
+			$tmp = $this->hostName;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_clientIP() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_clientIP");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->clientIP) {
 			$this->clientIP = $_SERVER['REMOTE_ADDR'];
 		}
-		return $this->clientIP;
+		{
+			$tmp = $this->clientIP;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_uri() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_uri");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->uri) {
 			$s = $_SERVER['REQUEST_URI'];
 			$this->uri = _hx_array_get(_hx_explode("?", $s), 0);
 		}
-		return $this->uri;
+		{
+			$tmp = $this->uri;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_clientHeaders() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_clientHeaders");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->clientHeaders) {
 			$this->clientHeaders = new haxe_ds_StringMap();
 			$h = php_Lib::hashOfAssociativeArray($_SERVER);
 			if(null == $h) throw new HException('null iterable');
 			$__hx__it = $h->keys();
 			while($__hx__it->hasNext()) {
+				unset($k);
 				$k = $__hx__it->next();
 				if(_hx_substr($k, 0, 5) === "HTTP_") {
 					$headerName = Strings::ucwords(php_ufront_web_context_HttpRequest_7($this, $h, $k));
@@ -237,9 +312,16 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 				ufront_core__MultiValueMap_MultiValueMap_Impl_::set($this->clientHeaders, "Content-Type", $h->get("CONTENT_TYPE"));
 			}
 		}
-		return $this->clientHeaders;
+		{
+			$tmp = $this->clientHeaders;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_httpMethod() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_httpMethod");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->httpMethod) {
 			if(isset($_SERVER['REQUEST_METHOD'])) {
 				$this->httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -248,15 +330,29 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 				$this->httpMethod = "";
 			}
 		}
-		return $this->httpMethod;
+		{
+			$tmp = $this->httpMethod;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_scriptDirectory() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_scriptDirectory");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $this->scriptDirectory) {
 			$this->scriptDirectory = _hx_string_or_null(dirname($_SERVER['SCRIPT_FILENAME'])) . "/";
 		}
-		return $this->scriptDirectory;
+		{
+			$tmp = $this->scriptDirectory;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function get_authorization() {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::get_authorization");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === _hx_field($this, "authorization")) {
 			$this->authorization = _hx_anonymous(array("user" => null, "pass" => null));
 			if(isset($_SERVER['PHP_AUTH_USER'])) {
@@ -264,7 +360,12 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 				$this->authorization->pass = $_SERVER['PHP_AUTH_PW'];
 			}
 		}
-		return $this->authorization;
+		{
+			$tmp = $this->authorization;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -277,11 +378,20 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 			throw new HException('Unable to call <'.$m.'>');
 	}
 	static function encodeName($s) {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::encodeName");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$s1 = rawurlencode($s);
-		return str_replace(".", "%2E", $s1);
+		{
+			$tmp = str_replace(".", "%2E", $s1);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static $paramPattern;
 	static function getHashFromString($s) {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::getHashFromString");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$qm = new haxe_ds_StringMap();
 		{
 			$_g = 0;
@@ -296,13 +406,24 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 				unset($part);
 			}
 		}
-		return $qm;
+		{
+			$GLOBALS['%s']->pop();
+			return $qm;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function getHashFrom($a) {
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::getHashFrom");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(get_magic_quotes_gpc()) {
 			reset($a); while(list($k, $v) = each($a)) $a[$k] = stripslashes((string)$v);
 		}
-		return php_Lib::hashOfAssociativeArray($a);
+		{
+			$tmp = php_Lib::hashOfAssociativeArray($a);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static $__properties__ = array("get_authorization" => "get_authorization","get_scriptDirectory" => "get_scriptDirectory","get_httpMethod" => "get_httpMethod","get_userAgent" => "get_userAgent","get_clientHeaders" => "get_clientHeaders","get_uri" => "get_uri","get_clientIP" => "get_clientIP","get_hostName" => "get_hostName","get_cookies" => "get_cookies","get_files" => "get_files","get_post" => "get_post","get_query" => "get_query","get_postString" => "get_postString","get_queryString" => "get_queryString","get_params" => "get_params");
 	function __toString() { return 'php.ufront.web.context.HttpRequest'; }
@@ -310,26 +431,52 @@ class php_ufront_web_context_HttpRequest extends ufront_web_context_HttpRequest 
 php_ufront_web_context_HttpRequest::$paramPattern = new EReg("^([^=]+)=(.*?)\$", "");
 function php_ufront_web_context_HttpRequest_0(&$allPartFutures, &$errors, &$onData, &$onEndPart, &$onPart, &$parts, &$post, $_, $_1) {
 	{
-		return ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@78");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_1(&$allPartFutures, &$errors, &$onData, &$onEndPart, &$onPart, &$parts, &$post, $_2, $_3, $_4) {
 	{
-		return ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@79");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_2(&$allPartFutures, &$errors, &$onData, &$onEndPart, &$onPart, &$parts, &$post) {
 	{
-		return ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@80");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = ufront_core_Sync::of(tink_core_Outcome::Success(tink_core_Noise::$Noise));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_3(&$_g, &$allPartFutures, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$tmp, $surprise, $andThen) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@117");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		call_user_func_array($surprise, array(array(new _hx_lambda(array(&$_g, &$allPartFutures, &$andThen, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$surprise, &$tmp), "php_ufront_web_context_HttpRequest_10"), 'execute')));
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_4(&$_g, &$allPartFutures, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$processResult, &$readNextPart, &$readNextPart1, &$tmp) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@132");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		if(false === feof($fileResource)) {
 			$buf = fread($fileResource, $bsize);
 			$size = strlen($buf);
@@ -339,21 +486,32 @@ function php_ufront_web_context_HttpRequest_4(&$_g, &$allPartFutures, &$bsize, &
 			fclose($fileResource);
 			call_user_func_array($processResult, array(call_user_func($onEndPart), array(new _hx_lambda(array(&$_g, &$allPartFutures, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$processResult, &$readNextPart, &$readNextPart1, &$tmp), "php_ufront_web_context_HttpRequest_12"), 'execute')));
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_5(&$_g, &$allPartFutures, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$processResult, &$readNextPart, &$tmp) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@148");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		$fileResource = fopen($tmp, "r");
 		call_user_func($readNextPart);
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_6(&$allPartFutures, &$errors, &$onData, &$onEndPart, &$onPart, &$parts, &$post, $_5) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::parseMultipart@154");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($errors->length === 0) {
-			return tink_core_Outcome::Success(tink_core_Noise::$Noise);
+			$tmp = tink_core_Outcome::Success(tink_core_Noise::$Noise);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
-			return tink_core_Outcome::Failure(tink_core_Error::withData("Error parsing multipart request data", $errors, _hx_anonymous(array("fileName" => "HttpRequest.hx", "lineNumber" => 151, "className" => "php.ufront.web.context.HttpRequest", "methodName" => "parseMultipart"))));
+			$tmp = tink_core_Outcome::Failure(tink_core_TypedError::withData(null, "Error parsing multipart request data", $errors, _hx_anonymous(array("fileName" => "HttpRequest.hx", "lineNumber" => 156, "className" => "php.ufront.web.context.HttpRequest", "methodName" => "parseMultipart"))));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_7(&$__hx__this, &$h, &$k) {
@@ -376,6 +534,8 @@ function php_ufront_web_context_HttpRequest_9(&$_g, &$_g1, &$part, &$qm, &$s) {
 }
 function php_ufront_web_context_HttpRequest_10(&$_g, &$allPartFutures, &$andThen, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$surprise, &$tmp, $outcome) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::getHashFrom@118");
+		$__hx__spos3 = $GLOBALS['%s']->length;
 		switch($outcome->index) {
 		case 0:{
 			$err1 = $outcome->params[0];
@@ -391,6 +551,11 @@ function php_ufront_web_context_HttpRequest_10(&$_g, &$allPartFutures, &$andThen
 					$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 					$e = $_ex_;
 					{
+						$GLOBALS['%e'] = (new _hx_array(array()));
+						while($GLOBALS['%s']->length >= $__hx__spos3) {
+							$GLOBALS['%e']->unshift($GLOBALS['%s']->pop());
+						}
+						$GLOBALS['%s']->push($GLOBALS['%e'][0]);
 						$errors->push("Failed to close upload tmp file: " . Std::string($e));
 					}
 				}
@@ -400,6 +565,11 @@ function php_ufront_web_context_HttpRequest_10(&$_g, &$allPartFutures, &$andThen
 					$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 					$e1 = $_ex_;
 					{
+						$GLOBALS['%e'] = (new _hx_array(array()));
+						while($GLOBALS['%s']->length >= $__hx__spos3) {
+							$GLOBALS['%e']->unshift($GLOBALS['%s']->pop());
+						}
+						$GLOBALS['%s']->push($GLOBALS['%e'][0]);
 						$errors->push("Failed to delete upload tmp file: " . Std::string($e1));
 					}
 				}
@@ -416,15 +586,22 @@ function php_ufront_web_context_HttpRequest_10(&$_g, &$allPartFutures, &$andThen
 			}
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_11(&$_g, &$allPartFutures, &$bsize, &$buf, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$processResult, &$readNextPart, &$readNextPart1, &$size, &$tmp) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::getHashFrom@137");
+		$__hx__spos3 = $GLOBALS['%s']->length;
 		call_user_func($readNextPart1);
+		$GLOBALS['%s']->pop();
 	}
 }
 function php_ufront_web_context_HttpRequest_12(&$_g, &$allPartFutures, &$bsize, &$currentPos, &$err, &$errors, &$file, &$fileResource, &$info, &$name, &$onData, &$onEndPart, &$onPart, &$part, &$partFinishedTrigger, &$parts, &$post, &$processResult, &$readNextPart, &$readNextPart1, &$tmp) {
 	{
+		$GLOBALS['%s']->push("php.ufront.web.context.HttpRequest::getHashFrom@143");
+		$__hx__spos3 = $GLOBALS['%s']->length;
 		unlink($tmp);
+		$GLOBALS['%s']->pop();
 	}
 }

@@ -3,6 +3,8 @@
 class Arrays {
 	public function __construct(){}
 	static function addIf($arr, $condition = null, $value) {
+		$GLOBALS['%s']->push("Arrays::addIf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null !== $condition) {
 			if($condition) {
 				$arr->push($value);
@@ -12,17 +14,35 @@ class Arrays {
 				$arr->push($value);
 			}
 		}
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function add($arr, $value) {
+		$GLOBALS['%s']->push("Arrays::add");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$arr->push($value);
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function delete($arr, $value) {
+		$GLOBALS['%s']->push("Arrays::delete");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$arr->remove($value);
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function removef($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::removef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$index = -1;
 		{
 			$_g1 = 0;
@@ -37,16 +57,29 @@ class Arrays {
 			}
 		}
 		if($index < 0) {
+			$GLOBALS['%s']->pop();
 			return false;
 		}
 		$arr->splice($index, 1);
-		return true;
+		{
+			$GLOBALS['%s']->pop();
+			return true;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function deletef($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::deletef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		Arrays::removef($arr, $f);
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function filter($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::filter");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$result = (new _hx_array(array()));
 		{
 			$_g = 0;
@@ -59,10 +92,17 @@ class Arrays {
 				unset($i);
 			}
 		}
-		return $result;
+		{
+			$GLOBALS['%s']->pop();
+			return $result;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function min($arr, $f = null) {
+		$GLOBALS['%s']->push("Arrays::min");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($arr->length === 0) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
 		if(null === $f) {
@@ -80,7 +120,11 @@ class Arrays {
 					unset($i);
 				}
 			}
-			return $arr[$p];
+			{
+				$tmp = $arr[$p];
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		} else {
 			$a1 = call_user_func_array($f, array($arr[0]));
 			$p1 = 0;
@@ -97,12 +141,21 @@ class Arrays {
 					unset($i1);
 				}
 			}
-			return $arr[$p1];
+			{
+				$tmp = $arr[$p1];
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function floatMin($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::floatMin");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($arr->length === 0) {
-			return Math::$NaN;
+			$tmp = Math::$NaN;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$a = call_user_func_array($f, array($arr[0]));
 		$b = null;
@@ -117,10 +170,17 @@ class Arrays {
 				unset($i);
 			}
 		}
-		return $a;
+		{
+			$GLOBALS['%s']->pop();
+			return $a;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function bounds($arr, $f = null) {
+		$GLOBALS['%s']->push("Arrays::bounds");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($arr->length === 0) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
 		if(null === $f) {
@@ -143,7 +203,11 @@ class Arrays {
 					unset($i,$comp);
 				}
 			}
-			return (new _hx_array(array($arr[$p], $arr[$q])));
+			{
+				$tmp = (new _hx_array(array($arr[$p], $arr[$q])));
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		} else {
 			$a1 = call_user_func_array($f, array($arr[0]));
 			$p1 = 0;
@@ -175,11 +239,19 @@ class Arrays {
 					unset($i2);
 				}
 			}
-			return (new _hx_array(array($arr[$p1], $arr[$q1])));
+			{
+				$tmp = (new _hx_array(array($arr[$p1], $arr[$q1])));
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function boundsFloat($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::boundsFloat");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($arr->length === 0) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
 		$a = call_user_func_array($f, array($arr[0]));
@@ -200,10 +272,18 @@ class Arrays {
 				unset($i);
 			}
 		}
-		return (new _hx_array(array($a, $c)));
+		{
+			$tmp = (new _hx_array(array($a, $c)));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function max($arr, $f = null) {
+		$GLOBALS['%s']->push("Arrays::max");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($arr->length === 0) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
 		if(null === $f) {
@@ -221,7 +301,11 @@ class Arrays {
 					unset($i);
 				}
 			}
-			return $arr[$p];
+			{
+				$tmp = $arr[$p];
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		} else {
 			$a1 = call_user_func_array($f, array($arr[0]));
 			$p1 = 0;
@@ -238,12 +322,21 @@ class Arrays {
 					unset($i1);
 				}
 			}
-			return $arr[$p1];
+			{
+				$tmp = $arr[$p1];
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function floatMax($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::floatMax");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($arr->length === 0) {
-			return Math::$NaN;
+			$tmp = Math::$NaN;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$a = call_user_func_array($f, array($arr[0]));
 		$b = null;
@@ -258,9 +351,15 @@ class Arrays {
 				unset($i);
 			}
 		}
-		return $a;
+		{
+			$GLOBALS['%s']->pop();
+			return $a;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function flatten($arr) {
+		$GLOBALS['%s']->push("Arrays::flatten");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$r = (new _hx_array(array()));
 		{
 			$_g = 0;
@@ -271,19 +370,45 @@ class Arrays {
 				unset($v);
 			}
 		}
-		return $r;
+		{
+			$GLOBALS['%s']->pop();
+			return $r;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function map($arr, $f) {
-		return Iterators::map($arr->iterator(), $f);
+		$GLOBALS['%s']->push("Arrays::map");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::map($arr->iterator(), $f);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function reduce($arr, $f, $initialValue) {
-		return Iterators::reduce($arr->iterator(), $f, $initialValue);
+		$GLOBALS['%s']->push("Arrays::reduce");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::reduce($arr->iterator(), $f, $initialValue);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function order($arr, $f = null) {
+		$GLOBALS['%s']->push("Arrays::order");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$arr->sort(Arrays_0($arr, $f));
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function orderMultiple($arr, $f = null, $rest) {
+		$GLOBALS['%s']->push("Arrays::orderMultiple");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$swap = true;
 		$t = null;
 		$rest->remove($arr);
@@ -317,8 +442,11 @@ class Arrays {
 				unset($_g1,$_g);
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function split($arr, $f = null) {
+		$GLOBALS['%s']->push("Arrays::split");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $f) {
 			$f = array(new _hx_lambda(array(&$arr, &$f), "Arrays_1"), 'execute');
 		}
@@ -342,15 +470,22 @@ class Arrays {
 				unset($i1);
 			}
 		}
-		return $arrays;
+		{
+			$GLOBALS['%s']->pop();
+			return $arrays;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function exists($arr, $value = null, $f = null) {
+		$GLOBALS['%s']->push("Arrays::exists");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null !== $f) {
 			$_g = 0;
 			while($_g < $arr->length) {
 				$v = $arr[$_g];
 				++$_g;
 				if(call_user_func_array($f, array($v))) {
+					$GLOBALS['%s']->pop();
 					return true;
 				}
 				unset($v);
@@ -361,14 +496,21 @@ class Arrays {
 				$v1 = $arr[$_g1];
 				++$_g1;
 				if((is_object($_t = $v1) && !($_t instanceof Enum) ? $_t === $value : $_t == $value)) {
+					$GLOBALS['%s']->pop();
 					return true;
 				}
 				unset($v1,$_t);
 			}
 		}
-		return false;
+		{
+			$GLOBALS['%s']->pop();
+			return false;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function format($v, $param = null, $params = null, $culture = null) {
+		$GLOBALS['%s']->push("Arrays::format");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$params = thx_culture_FormatParams::params($param, $params, "J");
 		$format = $params->shift();
 		switch($format) {
@@ -380,7 +522,10 @@ class Arrays {
 				} else {
 					$empty = $params[1];
 				}
-				return $empty;
+				{
+					$GLOBALS['%s']->pop();
+					return $empty;
+				}
 			}
 			$sep = null;
 			if(null === $params[2]) {
@@ -405,45 +550,72 @@ class Arrays {
 				} else {
 					$elipsis = $params[4];
 				}
-				return _hx_string_or_null(_hx_deref((Arrays_2($culture, $elipsis, $format, $max, $param, $params, $sep, $v)))->join($sep)) . _hx_string_or_null($elipsis);
+				{
+					$tmp = _hx_string_or_null(_hx_deref((Arrays_2($culture, $elipsis, $format, $max, $param, $params, $sep, $v)))->join($sep)) . _hx_string_or_null($elipsis);
+					$GLOBALS['%s']->pop();
+					return $tmp;
+				}
 			} else {
-				return Iterators::map($v->iterator(), array(new _hx_lambda(array(&$culture, &$format, &$max, &$param, &$params, &$sep, &$v), "Arrays_3"), 'execute'))->join($sep);
+				$tmp = Iterators::map($v->iterator(), array(new _hx_lambda(array(&$culture, &$format, &$max, &$param, &$params, &$sep, &$v), "Arrays_3"), 'execute'))->join($sep);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}
 		}break;
 		case "C":{
-			return Ints::format($v->length, "I", (new _hx_array(array())), $culture);
+			$tmp = Ints::format($v->length, "I", (new _hx_array(array())), $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		default:{
 			throw new HException("Unsupported array format: " . _hx_string_or_null($format));
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function formatf($param = null, $params = null, $culture = null) {
+		$GLOBALS['%s']->push("Arrays::formatf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$params = thx_culture_FormatParams::params($param, $params, "J");
 		$format = $params->shift();
 		switch($format) {
 		case "J":{
-			return array(new _hx_lambda(array(&$culture, &$format, &$param, &$params), "Arrays_4"), 'execute');
+			$tmp = array(new _hx_lambda(array(&$culture, &$format, &$param, &$params), "Arrays_4"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		case "C":{
 			$f = Ints::formatf("I", (new _hx_array(array())), $culture);
-			return array(new _hx_lambda(array(&$culture, &$f, &$format, &$param, &$params), "Arrays_5"), 'execute');
+			{
+				$tmp = array(new _hx_lambda(array(&$culture, &$f, &$format, &$param, &$params), "Arrays_5"), 'execute');
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}break;
 		default:{
 			throw new HException("Unsupported array format: " . _hx_string_or_null($format));
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolate($v, $a, $b, $equation = null) {
-		return call_user_func_array(Arrays::interpolatef($a, $b, $equation), array($v));
+		$GLOBALS['%s']->push("Arrays::interpolate");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Arrays::interpolatef($a, $b, $equation), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolatef($a, $b, $equation = null) {
+		$GLOBALS['%s']->push("Arrays::interpolatef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$functions = (new _hx_array(array()));
 		$i = 0;
 		$min = null;
 		{
-			$b1 = $b->length;
 			$a1 = $a->length;
+			$b1 = $b->length;
 			if($a1 < $b1) {
 				$min = $a1;
 			} else {
@@ -466,18 +638,32 @@ class Arrays {
 			$i++;
 			unset($v1);
 		}
-		return array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min), "Arrays_8"), 'execute');
+		{
+			$tmp = array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min), "Arrays_8"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolateStrings($v, $a, $b, $equation = null) {
-		return call_user_func_array(Arrays::interpolateStringsf($a, $b, $equation), array($v));
+		$GLOBALS['%s']->push("Arrays::interpolateStrings");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Arrays::interpolateStringsf($a, $b, $equation), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolateStringsf($a, $b, $equation = null) {
+		$GLOBALS['%s']->push("Arrays::interpolateStringsf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$functions = (new _hx_array(array()));
 		$i = 0;
 		$min = null;
 		{
-			$b1 = $b->length;
 			$a1 = $a->length;
+			$b1 = $b->length;
 			if($a1 < $b1) {
 				$min = $a1;
 			} else {
@@ -500,18 +686,32 @@ class Arrays {
 			$i++;
 			unset($v1);
 		}
-		return array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min), "Arrays_11"), 'execute');
+		{
+			$tmp = array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min), "Arrays_11"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolateInts($v, $a, $b, $equation = null) {
-		return call_user_func_array(Arrays::interpolateIntsf($a, $b, $equation), array($v));
+		$GLOBALS['%s']->push("Arrays::interpolateInts");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Arrays::interpolateIntsf($a, $b, $equation), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolateIntsf($a, $b, $equation = null) {
+		$GLOBALS['%s']->push("Arrays::interpolateIntsf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$functions = (new _hx_array(array()));
 		$i = 0;
 		$min = null;
 		{
-			$b1 = $b->length;
 			$a1 = $a->length;
+			$b1 = $b->length;
 			if($a1 < $b1) {
 				$min = $a1;
 			} else {
@@ -534,37 +734,58 @@ class Arrays {
 			$i++;
 			unset($v1);
 		}
-		return array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min), "Arrays_14"), 'execute');
+		{
+			$tmp = array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min), "Arrays_14"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function indexOf($arr, $el) {
+		$GLOBALS['%s']->push("Arrays::indexOf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$len = $arr->length;
 		{
 			$_g = 0;
 			while($_g < $len) {
 				$i = $_g++;
 				if((is_object($_t = $arr[$i]) && !($_t instanceof Enum) ? $_t === $el : $_t == $el)) {
+					$GLOBALS['%s']->pop();
 					return $i;
 				}
 				unset($i,$_t);
 			}
 		}
-		return -1;
+		{
+			$GLOBALS['%s']->pop();
+			return -1;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function every($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::every");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g1 = 0;
 			$_g = $arr->length;
 			while($_g1 < $_g) {
 				$i = $_g1++;
 				if(!call_user_func_array($f, array($arr[$i], $i))) {
+					$GLOBALS['%s']->pop();
 					return false;
 				}
 				unset($i);
 			}
 		}
-		return true;
+		{
+			$GLOBALS['%s']->pop();
+			return true;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function each($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::each");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$_g1 = 0;
 		$_g = $arr->length;
 		while($_g1 < $_g) {
@@ -572,55 +793,123 @@ class Arrays {
 			call_user_func_array($f, array($arr[$i], $i));
 			unset($i);
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function any($arr, $f) {
-		return Iterators::any($arr->iterator(), $f);
+		$GLOBALS['%s']->push("Arrays::any");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::any($arr->iterator(), $f);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function all($arr, $f) {
-		return Iterators::all($arr->iterator(), $f);
+		$GLOBALS['%s']->push("Arrays::all");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::all($arr->iterator(), $f);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function random($arr) {
-		return $arr[Std::random($arr->length)];
+		$GLOBALS['%s']->push("Arrays::random");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $arr[Std::random($arr->length)];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function string($arr) {
-		return "[" . _hx_string_or_null(Iterators::map($arr->iterator(), array(new _hx_lambda(array(&$arr), "Arrays_15"), 'execute'))->join(", ")) . "]";
+		$GLOBALS['%s']->push("Arrays::string");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = "[" . _hx_string_or_null(Iterators::map($arr->iterator(), array(new _hx_lambda(array(&$arr), "Arrays_15"), 'execute'))->join(", ")) . "]";
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function last($arr) {
-		return $arr[$arr->length - 1];
+		$GLOBALS['%s']->push("Arrays::last");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $arr[$arr->length - 1];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function lastf($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::lastf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$i = $arr->length;
 		while(--$i >= 0) {
 			if(call_user_func_array($f, array($arr[$i]))) {
-				return $arr[$i];
+				$tmp = $arr[$i];
+				$GLOBALS['%s']->pop();
+				return $tmp;
+				unset($tmp);
 			}
 		}
-		return null;
+		{
+			$GLOBALS['%s']->pop();
+			return null;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function first($arr) {
-		return $arr[0];
+		$GLOBALS['%s']->push("Arrays::first");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $arr[0];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function firstf($arr, $f) {
+		$GLOBALS['%s']->push("Arrays::firstf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = 0;
 			while($_g < $arr->length) {
 				$v = $arr[$_g];
 				++$_g;
 				if(call_user_func_array($f, array($v))) {
+					$GLOBALS['%s']->pop();
 					return $v;
 				}
 				unset($v);
 			}
 		}
-		return null;
+		{
+			$GLOBALS['%s']->pop();
+			return null;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function bisect($a, $x, $lo = null, $hi = null) {
+		$GLOBALS['%s']->push("Arrays::bisect");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($lo === null) {
 			$lo = 0;
 		}
-		return Arrays::bisectRight($a, $x, $lo, $hi);
+		{
+			$tmp = Arrays::bisectRight($a, $x, $lo, $hi);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function bisectRight($a, $x, $lo = null, $hi = null) {
+		$GLOBALS['%s']->push("Arrays::bisectRight");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($lo === null) {
 			$lo = 0;
 		}
@@ -636,9 +925,15 @@ class Arrays {
 			}
 			unset($mid);
 		}
-		return $lo;
+		{
+			$GLOBALS['%s']->pop();
+			return $lo;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function bisectLeft($a, $x, $lo = null, $hi = null) {
+		$GLOBALS['%s']->push("Arrays::bisectLeft");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($lo === null) {
 			$lo = 0;
 		}
@@ -654,9 +949,15 @@ class Arrays {
 			}
 			unset($mid);
 		}
-		return $lo;
+		{
+			$GLOBALS['%s']->pop();
+			return $lo;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function nearest($a, $x, $f) {
+		$GLOBALS['%s']->push("Arrays::nearest");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$delta = (new _hx_array(array()));
 		{
 			$_g1 = 0;
@@ -668,11 +969,19 @@ class Arrays {
 			}
 		}
 		$delta->sort(array(new _hx_lambda(array(&$a, &$delta, &$f, &$x), "Arrays_16"), 'execute'));
-		return $a[_hx_array_get($delta, 0)->i];
+		{
+			$tmp = $a[_hx_array_get($delta, 0)->i];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function compare($a, $b) {
+		$GLOBALS['%s']->push("Arrays::compare");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$v = null;
 		if(($v = $a->length - $b->length) !== 0) {
+			$GLOBALS['%s']->pop();
 			return $v;
 		}
 		{
@@ -681,16 +990,25 @@ class Arrays {
 			while($_g1 < $_g) {
 				$i = $_g1++;
 				if(($v = Dynamics::compare($a[$i], $b[$i])) !== 0) {
+					$GLOBALS['%s']->pop();
 					return $v;
 				}
 				unset($i);
 			}
 		}
-		return 0;
+		{
+			$GLOBALS['%s']->pop();
+			return 0;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function product($a) {
+		$GLOBALS['%s']->push("Arrays::product");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($a->length === 0) {
-			return (new _hx_array(array()));
+			$tmp = (new _hx_array(array()));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$arr = $a->copy();
 		$result = (new _hx_array(array()));
@@ -732,11 +1050,19 @@ class Arrays {
 				unset($i);
 			}
 		}
-		return $result;
+		{
+			$GLOBALS['%s']->pop();
+			return $result;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function rotate($a) {
+		$GLOBALS['%s']->push("Arrays::rotate");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($a->length === 0) {
-			return (new _hx_array(array()));
+			$tmp = (new _hx_array(array()));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$result = (new _hx_array(array()));
 		{
@@ -763,9 +1089,15 @@ class Arrays {
 				unset($j,$_g3,$_g21);
 			}
 		}
-		return $result;
+		{
+			$GLOBALS['%s']->pop();
+			return $result;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function shuffle($a) {
+		$GLOBALS['%s']->push("Arrays::shuffle");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$t = Ints::range($a->length, null, null);
 		$arr = (new _hx_array(array()));
 		while($t->length > 0) {
@@ -775,9 +1107,15 @@ class Arrays {
 			$arr->push($a[$index]);
 			unset($pos,$index);
 		}
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function scanf($arr, $weightf, $incremental = null) {
+		$GLOBALS['%s']->push("Arrays::scanf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($incremental === null) {
 			$incremental = true;
 		}
@@ -809,7 +1147,12 @@ class Arrays {
 			$scan1 = array(new _hx_lambda(array(&$arr, &$incremental, &$scan, &$scan1, &$tot, &$weightf, &$weights), "Arrays_17"), 'execute');
 			$scan = $scan1;
 		}
-		return array(new _hx_lambda(array(&$arr, &$incremental, &$scan, &$tot, &$weightf, &$weights), "Arrays_18"), 'execute');
+		{
+			$tmp = array(new _hx_lambda(array(&$arr, &$incremental, &$scan, &$tot, &$weightf, &$weights), "Arrays_18"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'Arrays'; }
 }
@@ -822,7 +1165,14 @@ function Arrays_0(&$arr, &$f) {
 }
 function Arrays_1(&$arr, &$f, $v, $_) {
 	{
-		return $v === null;
+		$GLOBALS['%s']->push("Arrays::split@221");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = $v === null;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_2(&$culture, &$elipsis, &$format, &$max, &$param, &$params, &$sep, &$v) {
@@ -833,11 +1183,20 @@ function Arrays_2(&$culture, &$elipsis, &$format, &$max, &$param, &$params, &$se
 }
 function Arrays_3(&$culture, &$format, &$max, &$param, &$params, &$sep, &$v, $d1, $i1) {
 	{
-		return Dynamics::format($d1, $params[0], null, null, $culture);
+		$GLOBALS['%s']->push("Arrays::format@273");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Dynamics::format($d1, $params[0], null, null, $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_4(&$culture, &$format, &$param, &$params, $v) {
 	{
+		$GLOBALS['%s']->push("Arrays::formatf@288");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($v->length === 0) {
 			$empty = null;
 			if(null === $params[1]) {
@@ -845,7 +1204,10 @@ function Arrays_4(&$culture, &$format, &$param, &$params, $v) {
 			} else {
 				$empty = $params[1];
 			}
-			return $empty;
+			{
+				$GLOBALS['%s']->pop();
+				return $empty;
+			}
 		}
 		$sep = null;
 		if(null === $params[2]) {
@@ -870,107 +1232,215 @@ function Arrays_4(&$culture, &$format, &$param, &$params, $v) {
 			} else {
 				$elipsis = $params[4];
 			}
-			return _hx_string_or_null(_hx_deref((Arrays_20($culture, $elipsis, $format, $max, $param, $params, $sep, $v)))->join($sep)) . _hx_string_or_null($elipsis);
+			{
+				$tmp = _hx_string_or_null(_hx_deref((Arrays_20($culture, $elipsis, $format, $max, $param, $params, $sep, $v)))->join($sep)) . _hx_string_or_null($elipsis);
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		} else {
-			return Iterators::map($v->iterator(), array(new _hx_lambda(array(&$culture, &$format, &$max, &$param, &$params, &$sep, &$v), "Arrays_21"), 'execute'))->join($sep);
+			$tmp = Iterators::map($v->iterator(), array(new _hx_lambda(array(&$culture, &$format, &$max, &$param, &$params, &$sep, &$v), "Arrays_21"), 'execute'))->join($sep);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_5(&$culture, &$f, &$format, &$param, &$params, $v1) {
 	{
-		return call_user_func_array($f, array($v1->length));
+		$GLOBALS['%s']->push("Arrays::formatf@307");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array($f, array($v1->length));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_6(&$a, &$b, &$equation, &$functions, &$i, &$min, &$v, $_) {
 	{
-		return $v;
+		$GLOBALS['%s']->push("Arrays::interpolatef@329");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $v;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_7(&$a, &$b, &$equation, &$functions, &$i, &$min, &$v1, $_1) {
 	{
-		return $v1;
+		$GLOBALS['%s']->push("Arrays::interpolatef@337");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $v1;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_8(&$a, &$b, &$equation, &$functions, &$i, &$min, $t) {
 	{
-		return Iterators::map($functions->iterator(), array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t), "Arrays_22"), 'execute'));
+		$GLOBALS['%s']->push("Arrays::interpolatef@340");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::map($functions->iterator(), array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t), "Arrays_22"), 'execute'));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_9(&$a, &$b, &$equation, &$functions, &$i, &$min, &$v, $_) {
 	{
-		return $v;
+		$GLOBALS['%s']->push("Arrays::interpolateStringsf@359");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $v;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_10(&$a, &$b, &$equation, &$functions, &$i, &$min, &$v1, $_1) {
 	{
-		return $v1;
+		$GLOBALS['%s']->push("Arrays::interpolateStringsf@367");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $v1;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_11(&$a, &$b, &$equation, &$functions, &$i, &$min, $t) {
 	{
-		return Iterators::map($functions->iterator(), array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t), "Arrays_23"), 'execute'));
+		$GLOBALS['%s']->push("Arrays::interpolateStringsf@370");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::map($functions->iterator(), array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t), "Arrays_23"), 'execute'));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_12(&$a, &$b, &$equation, &$functions, &$i, &$min, &$v, $_) {
 	{
-		return $v;
+		$GLOBALS['%s']->push("Arrays::interpolateIntsf@389");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $v;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_13(&$a, &$b, &$equation, &$functions, &$i, &$min, &$v1, $_1) {
 	{
-		return $v1;
+		$GLOBALS['%s']->push("Arrays::interpolateIntsf@397");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $v1;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_14(&$a, &$b, &$equation, &$functions, &$i, &$min, $t) {
 	{
-		return Iterators::map($functions->iterator(), array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t), "Arrays_24"), 'execute'));
+		$GLOBALS['%s']->push("Arrays::interpolateIntsf@400");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Iterators::map($functions->iterator(), array(new _hx_lambda(array(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t), "Arrays_24"), 'execute'));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_15(&$arr, $v, $_) {
 	{
-		return Dynamics::string($v);
+		$GLOBALS['%s']->push("Arrays::string@455");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Dynamics::string($v);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_16(&$a, &$delta, &$f, &$x, $a1, $b) {
 	{
-		$b1 = $b->v;
+		$GLOBALS['%s']->push("Arrays::nearest@525");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		$a2 = $a1->v;
+		$b1 = $b->v;
 		if($a2 < $b1) {
+			$GLOBALS['%s']->pop();
 			return -1;
 		} else {
 			if($a2 > $b1) {
+				$GLOBALS['%s']->pop();
 				return 1;
 			} else {
+				$GLOBALS['%s']->pop();
 				return 0;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_17(&$arr, &$incremental, &$scan, &$scan1, &$tot, &$weightf, &$weights, $v, $start, $end) {
 	{
+		$GLOBALS['%s']->push("Arrays::scanf@610");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($start === $end) {
-			return $arr[$start];
+			$tmp = $arr[$start];
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$mid = Math::floor(($end - $start) / 2) + $start;
 		$value = $weights[$mid];
 		if($v < $value) {
-			return call_user_func_array($scan1, array($v, $start, $mid));
+			$tmp = call_user_func_array($scan1, array($v, $start, $mid));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
-			return call_user_func_array($scan1, array($v, $mid + 1, $end));
+			$tmp = call_user_func_array($scan1, array($v, $mid + 1, $end));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_18(&$arr, &$incremental, &$scan, &$tot, &$weightf, &$weights, $v1) {
 	{
+		$GLOBALS['%s']->push("Arrays::scanf@622");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($v1 < 0 || $v1 > $tot) {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
-		return call_user_func_array($scan, array($v1, 0, $weights->length - 1));
+		{
+			$tmp = call_user_func_array($scan, array($v1, 0, $weights->length - 1));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_19(&$arr, &$culture, &$elipsis, &$format, &$max, &$param, &$params, &$sep, &$v, $d, $i) {
 	{
-		return Dynamics::format($d, $params[0], null, null, $culture);
+		$GLOBALS['%s']->push("Arrays::scanf@271");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Dynamics::format($d, $params[0], null, null, $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_20(&$culture, &$elipsis, &$format, &$max, &$param, &$params, &$sep, &$v) {
@@ -981,26 +1451,61 @@ function Arrays_20(&$culture, &$elipsis, &$format, &$max, &$param, &$params, &$s
 }
 function Arrays_21(&$culture, &$format, &$max, &$param, &$params, &$sep, &$v, $d1, $i1) {
 	{
-		return Dynamics::format($d1, $params[0], null, null, $culture);
+		$GLOBALS['%s']->push("Arrays::scanf@303");
+		$__hx__spos3 = $GLOBALS['%s']->length;
+		{
+			$tmp = Dynamics::format($d1, $params[0], null, null, $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_22(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t, $f, $_2) {
 	{
-		return call_user_func_array($f, array($t));
+		$GLOBALS['%s']->push("Arrays::scanf@340");
+		$__hx__spos3 = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array($f, array($t));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_23(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t, $f, $_2) {
 	{
-		return call_user_func_array($f, array($t));
+		$GLOBALS['%s']->push("Arrays::scanf@370");
+		$__hx__spos3 = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array($f, array($t));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_24(&$a, &$b, &$equation, &$functions, &$i, &$min, &$t, $f, $_2) {
 	{
-		return call_user_func_array($f, array($t));
+		$GLOBALS['%s']->push("Arrays::scanf@400");
+		$__hx__spos3 = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array($f, array($t));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Arrays_25(&$arr, &$culture, &$elipsis, &$format, &$max, &$param, &$params, &$sep, &$v, $d, $i) {
 	{
-		return Dynamics::format($d, $params[0], null, null, $culture);
+		$GLOBALS['%s']->push("Arrays::scanf@301");
+		$__hx__spos3 = $GLOBALS['%s']->length;
+		{
+			$tmp = Dynamics::format($d, $params[0], null, null, $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }

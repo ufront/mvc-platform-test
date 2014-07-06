@@ -9,7 +9,14 @@ class thx_culture_Info {
 	public $iso3;
 	public $pluralRule;
 	public function toString() {
-		return _hx_string_or_null($this->native) . " (" . _hx_string_or_null($this->english) . ")";
+		$GLOBALS['%s']->push("thx.culture.Info::toString");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = _hx_string_or_null($this->native) . " (" . _hx_string_or_null($this->english) . ")";
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

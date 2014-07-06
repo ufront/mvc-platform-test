@@ -3,12 +3,15 @@
 class thx_culture_core_NumberInfo {
 	public function __construct($decimals, $decimalsSeparator, $groups, $groupsSeparator, $patternNegative, $patternPositive) {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("thx.culture.core.NumberInfo::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->decimals = $decimals;
 		$this->decimalsSeparator = $decimalsSeparator;
 		$this->groups = $groups;
 		$this->groupsSeparator = $groupsSeparator;
 		$this->patternNegative = $patternNegative;
 		$this->patternPositive = $patternPositive;
+		$GLOBALS['%s']->pop();
 	}}
 	public $decimals;
 	public $decimalsSeparator;

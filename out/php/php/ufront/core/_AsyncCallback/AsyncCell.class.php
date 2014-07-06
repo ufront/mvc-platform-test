@@ -2,12 +2,18 @@
 
 class ufront_core__AsyncCallback_AsyncCell {
 	public function __construct() {
-		;
-	}
+		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("ufront.core._AsyncCallback.AsyncCell::new");
+		$__hx__spos = $GLOBALS['%s']->length;
+		$GLOBALS['%s']->pop();
+	}}
 	public $cb;
 	public function free() {
+		$GLOBALS['%s']->push("ufront.core._AsyncCallback.AsyncCell::free");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->cb = null;
 		ufront_core__AsyncCallback_AsyncCell::$pool->push($this);
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -21,11 +27,18 @@ class ufront_core__AsyncCallback_AsyncCell {
 	}
 	static $pool;
 	static function get() {
+		$GLOBALS['%s']->push("ufront.core._AsyncCallback.AsyncCell::get");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(ufront_core__AsyncCallback_AsyncCell::$pool->length > 0) {
-			return ufront_core__AsyncCallback_AsyncCell::$pool->pop();
+			$tmp = ufront_core__AsyncCallback_AsyncCell::$pool->pop();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
-			return new ufront_core__AsyncCallback_AsyncCell();
+			$tmp = new ufront_core__AsyncCallback_AsyncCell();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'ufront.core._AsyncCallback.AsyncCell'; }
 }

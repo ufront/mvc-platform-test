@@ -3,16 +3,31 @@
 class Objects {
 	public function __construct(){}
 	static function field($o, $fieldname, $alt = null) {
+		$GLOBALS['%s']->push("Objects::field");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(_hx_has_field($o, $fieldname)) {
-			return Reflect::field($o, $fieldname);
+			$tmp = Reflect::field($o, $fieldname);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
+			$GLOBALS['%s']->pop();
 			return $alt;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function keys($o) {
-		return Reflect::fields($o);
+		$GLOBALS['%s']->push("Objects::keys");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = Reflect::fields($o);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function values($o) {
+		$GLOBALS['%s']->push("Objects::values");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$arr = (new _hx_array(array()));
 		{
 			$_g = 0;
@@ -24,9 +39,15 @@ class Objects {
 				unset($key);
 			}
 		}
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function entries($o) {
+		$GLOBALS['%s']->push("Objects::entries");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$arr = (new _hx_array(array()));
 		{
 			$_g = 0;
@@ -38,9 +59,15 @@ class Objects {
 				unset($key);
 			}
 		}
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function each($o, $handler) {
+		$GLOBALS['%s']->push("Objects::each");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$_g = 0;
 		$_g1 = Reflect::fields($o);
 		while($_g < $_g1->length) {
@@ -49,8 +76,11 @@ class Objects {
 			call_user_func_array($handler, array($key, Reflect::field($o, $key)));
 			unset($key);
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function map($o, $handler) {
+		$GLOBALS['%s']->push("Objects::map");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$results = (new _hx_array(array()));
 		{
 			$_g = 0;
@@ -62,17 +92,36 @@ class Objects {
 				unset($key);
 			}
 		}
-		return $results;
+		{
+			$GLOBALS['%s']->pop();
+			return $results;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function with($ob, $f) {
+		$GLOBALS['%s']->push("Objects::with");
+		$__hx__spos = $GLOBALS['%s']->length;
 		call_user_func_array($f, array($ob));
-		return $ob;
+		{
+			$GLOBALS['%s']->pop();
+			return $ob;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function toHash($ob) {
+		$GLOBALS['%s']->push("Objects::toHash");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$Map = new haxe_ds_StringMap();
-		return Objects::copyToHash($ob, $Map);
+		{
+			$tmp = Objects::copyToHash($ob, $Map);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function copyToHash($ob, $Map) {
+		$GLOBALS['%s']->push("Objects::copyToHash");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = 0;
 			$_g1 = Reflect::fields($ob);
@@ -84,12 +133,25 @@ class Objects {
 				unset($value,$field);
 			}
 		}
-		return $Map;
+		{
+			$GLOBALS['%s']->pop();
+			return $Map;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolate($v, $a, $b, $equation = null) {
-		return call_user_func_array(Objects::interpolatef($a, $b, $equation), array($v));
+		$GLOBALS['%s']->push("Objects::interpolate");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Objects::interpolatef($a, $b, $equation), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolatef($a, $b, $equation = null) {
+		$GLOBALS['%s']->push("Objects::interpolatef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$i = _hx_anonymous(array());
 		$c = _hx_anonymous(array());
 		$keys = Reflect::fields($a);
@@ -128,9 +190,16 @@ class Objects {
 				unset($key1);
 			}
 		}
-		return array(new _hx_lambda(array(&$a, &$b, &$c, &$equation, &$i, &$keys), "Objects_0"), 'execute');
+		{
+			$tmp = array(new _hx_lambda(array(&$a, &$b, &$c, &$equation, &$i, &$keys), "Objects_0"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function copyTo($src, $dst) {
+		$GLOBALS['%s']->push("Objects::copyTo");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = 0;
 			$_g1 = Reflect::fields($src);
@@ -147,13 +216,26 @@ class Objects {
 				unset($sv,$field,$dv);
 			}
 		}
-		return $dst;
+		{
+			$GLOBALS['%s']->pop();
+			return $dst;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function hclone($src) {
+		$GLOBALS['%s']->push("Objects::clone");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$dst = _hx_anonymous(array());
-		return Objects::copyTo($src, $dst);
+		{
+			$tmp = Objects::copyTo($src, $dst);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function mergef($ob, $new_ob, $f) {
+		$GLOBALS['%s']->push("Objects::mergef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$_g = 0;
 		$_g1 = Reflect::fields($new_ob);
 		while($_g < $_g1->length) {
@@ -173,11 +255,17 @@ class Objects {
 			}
 			unset($new_val,$field);
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function merge($ob, $new_ob) {
+		$GLOBALS['%s']->push("Objects::merge");
+		$__hx__spos = $GLOBALS['%s']->length;
 		Objects::mergef($ob, $new_ob, array(new _hx_lambda(array(&$new_ob, &$ob), "Objects_1"), 'execute'));
+		$GLOBALS['%s']->pop();
 	}
 	static function _flatten($src, $cum, $arr, $levels, $level) {
+		$GLOBALS['%s']->push("Objects::_flatten");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$_g = 0;
 		$_g1 = Reflect::fields($src);
 		while($_g < $_g1->length) {
@@ -194,8 +282,11 @@ class Objects {
 			}
 			unset($v,$field,$clone);
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function flatten($src, $levels = null) {
+		$GLOBALS['%s']->push("Objects::flatten");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($levels === null) {
 			$levels = 0;
 		}
@@ -217,12 +308,19 @@ class Objects {
 				unset($v,$field);
 			}
 		}
-		return $arr;
+		{
+			$GLOBALS['%s']->pop();
+			return $arr;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function compare($a, $b) {
+		$GLOBALS['%s']->push("Objects::compare");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$v = null;
 		$fields = null;
 		if(($v = Arrays::compare($fields = Reflect::fields($a), Reflect::fields($b))) !== 0) {
+			$GLOBALS['%s']->pop();
 			return $v;
 		}
 		{
@@ -231,14 +329,21 @@ class Objects {
 				$field = $fields[$_g];
 				++$_g;
 				if(($v = Dynamics::compare(Reflect::field($a, $field), Reflect::field($b, $field))) !== 0) {
+					$GLOBALS['%s']->pop();
 					return $v;
 				}
 				unset($field);
 			}
 		}
-		return 0;
+		{
+			$GLOBALS['%s']->pop();
+			return 0;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function addFields($o, $fields, $values) {
+		$GLOBALS['%s']->push("Objects::addFields");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g1 = 0;
 			$_g = $fields->length;
@@ -248,34 +353,60 @@ class Objects {
 				unset($i);
 			}
 		}
-		return $o;
+		{
+			$GLOBALS['%s']->pop();
+			return $o;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function addField($o, $field, $value) {
+		$GLOBALS['%s']->push("Objects::addField");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$o->{$field} = $value;
-		return $o;
+		{
+			$GLOBALS['%s']->pop();
+			return $o;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function format($v, $param = null, $params = null, $culture = null) {
-		return call_user_func_array(Objects::formatf($param, $params, $culture), array($v));
+		$GLOBALS['%s']->push("Objects::format");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Objects::formatf($param, $params, $culture), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function formatf($param = null, $params = null, $culture = null) {
+		$GLOBALS['%s']->push("Objects::formatf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$params = thx_culture_FormatParams::params($param, $params, "R");
 		$format = $params->shift();
 		switch($format) {
 		case "O":{
-			return array(new _hx_lambda(array(&$culture, &$format, &$param, &$params), "Objects_2"), 'execute');
+			$tmp = array(new _hx_lambda(array(&$culture, &$format, &$param, &$params), "Objects_2"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		case "R":{
-			return array(new _hx_lambda(array(&$culture, &$format, &$param, &$params), "Objects_3"), 'execute');
+			$tmp = array(new _hx_lambda(array(&$culture, &$format, &$param, &$params), "Objects_3"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		default:{
 			throw new HException(new thx_error_Error("Unsupported number format: {0}", null, $format, _hx_anonymous(array("fileName" => "Objects.hx", "lineNumber" => 242, "className" => "Objects", "methodName" => "formatf"))));
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'Objects'; }
 }
 function Objects_0(&$a, &$b, &$c, &$equation, &$i, &$keys, $t) {
 	{
+		$GLOBALS['%s']->push("Objects::interpolatef@102");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		{
 			$_g2 = 0;
 			$_g11 = Reflect::fields($i);
@@ -287,21 +418,40 @@ function Objects_0(&$a, &$b, &$c, &$equation, &$i, &$keys, $t) {
 				unset($value3,$k);
 			}
 		}
-		return $c;
+		{
+			$GLOBALS['%s']->pop();
+			return $c;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Objects_1(&$new_ob, &$ob, $key, $old_v, $new_v) {
 	{
-		return $new_v;
+		$GLOBALS['%s']->push("Objects::merge@150");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return $new_v;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Objects_2(&$culture, &$format, &$param, &$params, $v) {
 	{
-		return Std::string($v);
+		$GLOBALS['%s']->push("Objects::formatf@232");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Std::string($v);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Objects_3(&$culture, &$format, &$param, &$params, $v1) {
 	{
+		$GLOBALS['%s']->push("Objects::formatf@234");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		$buf = (new _hx_array(array()));
 		{
 			$_g = 0;
@@ -313,6 +463,11 @@ function Objects_3(&$culture, &$format, &$param, &$params, $v1) {
 				unset($field);
 			}
 		}
-		return "{" . _hx_string_or_null($buf->join(",")) . "}";
+		{
+			$tmp = "{" . _hx_string_or_null($buf->join(",")) . "}";
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }

@@ -3,18 +3,48 @@
 class ufront_core__AsyncSignal_AsyncSignal_Impl_ {
 	public function __construct(){}
 	static function _new() {
-		return (new _hx_array(array()));
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::_new");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = (new _hx_array(array()));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function handle($this1, $handler) {
-		return ufront_core__AsyncCallback_AsyncCallbackList_Impl_::add($this1, $handler);
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::handle");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = ufront_core__AsyncCallback_AsyncCallbackList_Impl_::add($this1, $handler);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function trigger($this1, $event) {
-		return ufront_core__AsyncCallback_AsyncCallbackList_Impl_::invoke($this1, $event);
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::trigger");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = ufront_core__AsyncCallback_AsyncCallbackList_Impl_::invoke($this1, $event);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function getLength($this1) {
-		return $this1->length;
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::getLength");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $this1->length;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dispatchChain($val, $chain, $showStopper = null) {
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::dispatchChain");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$allDone = new tink_core_FutureTrigger();
 		$chain = $chain->copy();
 		$triggerNextSignal = null;
@@ -39,12 +69,19 @@ class ufront_core__AsyncSignal_AsyncSignal_Impl_ {
 		} else {
 			call_user_func_array($triggerNextSignal, array($signal1));
 		}
-		return $allDone->future;
+		{
+			$tmp = $allDone->future;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'ufront.core._AsyncSignal.AsyncSignal_Impl_'; }
 }
 function ufront_core__AsyncSignal_AsyncSignal_Impl__0(&$allDone, &$chain, &$showStopper, &$triggerNextSignal, &$triggerNextSignal1, &$val, $signal) {
 	{
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::dispatchChain@39");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($showStopper !== null && call_user_func($showStopper)) {
 			$result = ufront_core_AsyncCompletion::$Aborted;
 			if($allDone->{"list"} === null) {
@@ -61,10 +98,13 @@ function ufront_core__AsyncSignal_AsyncSignal_Impl__0(&$allDone, &$chain, &$show
 			$this1 = ufront_core__AsyncCallback_AsyncCallbackList_Impl_::invoke($signal, $val);
 			call_user_func_array($this1, array(array(new _hx_lambda(array(&$allDone, &$chain, &$showStopper, &$signal, &$this1, &$triggerNextSignal, &$triggerNextSignal1, &$val), "ufront_core__AsyncSignal_AsyncSignal_Impl__1"), 'execute')));
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_core__AsyncSignal_AsyncSignal_Impl__1(&$allDone, &$chain, &$showStopper, &$signal, &$this1, &$triggerNextSignal, &$triggerNextSignal1, &$val, $resultFromCallbacks) {
 	{
+		$GLOBALS['%s']->push("ufront.core._AsyncSignal.AsyncSignal_Impl_::dispatchChain@43");
+		$__hx__spos3 = $GLOBALS['%s']->length;
 		switch($resultFromCallbacks->index) {
 		case 0:{
 			$signal = $chain->shift();
@@ -97,5 +137,6 @@ function ufront_core__AsyncSignal_AsyncSignal_Impl__1(&$allDone, &$chain, &$show
 			}
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 }

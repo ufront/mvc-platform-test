@@ -3,6 +3,8 @@
 class thx_culture_FormatDate {
 	public function __construct(){}
 	static function format($date, $pattern, $culture = null, $leadingspace = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::format");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($leadingspace === null) {
 			$leadingspace = true;
 		}
@@ -157,150 +159,324 @@ class thx_culture_FormatDate {
 			$pos++;
 			unset($c);
 		}
-		return $buf->b;
+		{
+			$tmp = $buf->b;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function getMHours($date) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::getMHours");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$v = $date->getHours();
 		if($v > 12) {
-			return $v - 12;
+			$tmp = $v - 12;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
+			$GLOBALS['%s']->pop();
 			return $v;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function yearMonth($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::yearMonth");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternYearMonth, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternYearMonth, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function monthDay($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::monthDay");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternMonthDay, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternMonthDay, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function monthDayShort($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::monthDayShort");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, "%b %d", $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, "%b %d", $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateYMD($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateYMD");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, "%Y-%m-%d", $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, "%Y-%m-%d", $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function date($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::date");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternDate, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternDate, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateShort($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateShort");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternDateShort, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternDateShort, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateShortTime($d, $culture = null) {
-		return _hx_string_or_null(thx_culture_FormatDate::dateShort($d, $culture)) . " " . _hx_string_or_null(thx_culture_FormatDate::time($d, $culture));
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateShortTime");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = _hx_string_or_null(thx_culture_FormatDate::dateShort($d, $culture)) . " " . _hx_string_or_null(thx_culture_FormatDate::time($d, $culture));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateShortTimeShort($d, $culture = null) {
-		return _hx_string_or_null(thx_culture_FormatDate::dateShort($d, $culture)) . " " . _hx_string_or_null(thx_culture_FormatDate::timeShort($d, $culture));
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateShortTimeShort");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = _hx_string_or_null(thx_culture_FormatDate::dateShort($d, $culture)) . " " . _hx_string_or_null(thx_culture_FormatDate::timeShort($d, $culture));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateTimeShort($d, $culture = null) {
-		return _hx_string_or_null(thx_culture_FormatDate::date($d, $culture)) . " " . _hx_string_or_null(thx_culture_FormatDate::timeShort($d, $culture));
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateTimeShort");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = _hx_string_or_null(thx_culture_FormatDate::date($d, $culture)) . " " . _hx_string_or_null(thx_culture_FormatDate::timeShort($d, $culture));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateRfc($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateRfc");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternDateRfc, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternDateRfc, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function dateTime($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::dateTime");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternDateTime, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternDateTime, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function universal($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::universal");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternUniversal, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternUniversal, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function sortable($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::sortable");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternSortable, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternSortable, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function time($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::time");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternTime, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternTime, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function timeShort($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::timeShort");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatDate::format($date, $culture->date->patternTimeShort, $culture, false);
+		{
+			$tmp = thx_culture_FormatDate::format($date, $culture->date->patternTimeShort, $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function hourShort($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::hourShort");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
 		if(null === $culture->date->am) {
-			return thx_culture_FormatDate::format($date, "%H", $culture, false);
+			$tmp = thx_culture_FormatDate::format($date, "%H", $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
-			return thx_culture_FormatDate::format($date, "%l %p", $culture, false);
+			$tmp = thx_culture_FormatDate::format($date, "%l %p", $culture, false);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function year($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::year");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::digits("" . _hx_string_rec($date->getFullYear(), ""), $culture);
+		{
+			$tmp = thx_culture_FormatNumber::digits("" . _hx_string_rec($date->getFullYear(), ""), $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function month($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::month");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::digits("" . _hx_string_rec(($date->getMonth() + 1), ""), $culture);
+		{
+			$tmp = thx_culture_FormatNumber::digits("" . _hx_string_rec(($date->getMonth() + 1), ""), $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function monthName($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::monthName");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return $culture->date->months[$date->getMonth()];
+		{
+			$tmp = $culture->date->months[$date->getMonth()];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function monthNameShort($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::monthNameShort");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return $culture->date->abbrMonths[$date->getMonth()];
+		{
+			$tmp = $culture->date->abbrMonths[$date->getMonth()];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function weekDay($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDay");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::digits("" . _hx_string_rec(($date->getDay() + $culture->date->firstWeekDay), ""), $culture);
+		{
+			$tmp = thx_culture_FormatNumber::digits("" . _hx_string_rec(($date->getDay() + $culture->date->firstWeekDay), ""), $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function weekDayName($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayName");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return $culture->date->days[$date->getDay()];
+		{
+			$tmp = $culture->date->days[$date->getDay()];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function weekDayNameShort($date, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayNameShort");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return $culture->date->abbrDays[$date->getDay()];
+		{
+			$tmp = $culture->date->abbrDays[$date->getDay()];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function weekDayNameFromNum($weekDayNum, $firstDayOfWk = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayNameFromNum");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($firstDayOfWk === null) {
 			$firstDayOfWk = 0;
 		}
@@ -309,9 +485,16 @@ class thx_culture_FormatDate {
 		}
 		$firstDayOfWk = Ints::wrap($firstDayOfWk, 0, 6);
 		$nameIndex = Ints::wrap($weekDayNum + $firstDayOfWk, 0, 6);
-		return $culture->date->days[$nameIndex];
+		{
+			$tmp = $culture->date->days[$nameIndex];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function weekDayShortNameFromNum($weekDayNum, $firstDayOfWk = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayShortNameFromNum");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($firstDayOfWk === null) {
 			$firstDayOfWk = 0;
 		}
@@ -320,9 +503,16 @@ class thx_culture_FormatDate {
 		}
 		$firstDayOfWk = Ints::wrap($firstDayOfWk, 0, 6);
 		$nameIndex = Ints::wrap($weekDayNum + $firstDayOfWk, 0, 6);
-		return $culture->date->abbrDays[$nameIndex];
+		{
+			$tmp = $culture->date->abbrDays[$nameIndex];
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function weekDayNumFromName($weekDayName, $firstDayOfWk = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayNumFromName");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($firstDayOfWk === null) {
 			$firstDayOfWk = 0;
 		}
@@ -344,7 +534,11 @@ class thx_culture_FormatDate {
 			$firstDayOfWk = Ints::wrap($firstDayOfWk, 0, 6);
 			$index = Ints::wrap($index - $firstDayOfWk, 0, 6);
 		}
-		return $index;
+		{
+			$GLOBALS['%s']->pop();
+			return $index;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'thx.culture.FormatDate'; }
 }
@@ -515,11 +709,25 @@ function thx_culture_FormatDate_14(&$buf, &$c, &$culture, &$d, &$date, &$info, &
 }
 function thx_culture_FormatDate_15(&$culture, &$firstDayOfWk, &$weekDayName, $d) {
 	{
-		return strtolower($d);
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayNumFromName@363");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = strtolower($d);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function thx_culture_FormatDate_16(&$culture, &$dayNames, &$firstDayOfWk, &$weekDayName, $d1) {
 	{
-		return strtolower($d1);
+		$GLOBALS['%s']->push("thx.culture.FormatDate::weekDayNumFromName@364");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = strtolower($d1);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }

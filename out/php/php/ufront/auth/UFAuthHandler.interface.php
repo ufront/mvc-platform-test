@@ -9,5 +9,6 @@ interface ufront_auth_UFAuthHandler {
 	function hasPermissions($permissions);
 	function requirePermission($permission);
 	function requirePermissions($permissions);
+	function getUserByID($id);
 	//;
 }

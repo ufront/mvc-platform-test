@@ -23,7 +23,7 @@ class RequestResponseTester {
 			var protocol = regex.matched(1);
 			var domain = regex.matched(2);
 			var portStr = regex.matched(3);
-			var dir = regex.matched(4).removeTrailingSlash();
+			var dir = regex.matched(4).removeTrailingSlashes();
 
 			if ( portStr==null ) portStr = "";
 			scriptDir = FileSystem.fullPath( scriptDir );

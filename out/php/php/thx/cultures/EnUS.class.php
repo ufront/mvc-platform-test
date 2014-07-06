@@ -2,6 +2,8 @@
 
 class thx_cultures_EnUS extends thx_culture_Culture {
 	public function __construct() { if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("thx.cultures.EnUS::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->language = thx_languages_En::get_language();
 		$this->name = "en-US";
 		$this->english = "English (United States)";
@@ -28,13 +30,21 @@ class thx_cultures_EnUS extends thx_culture_Culture {
 		$this->iso3 = "USA";
 		$this->isMetric = false;
 		thx_culture_Culture::add($this);
+		$GLOBALS['%s']->pop();
 	}}
 	static $culture;
 	static function get_culture() {
+		$GLOBALS['%s']->push("thx.cultures.EnUS::get_culture");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === thx_cultures_EnUS::$culture) {
 			thx_cultures_EnUS::$culture = new thx_cultures_EnUS();
 		}
-		return thx_cultures_EnUS::$culture;
+		{
+			$tmp = thx_cultures_EnUS::$culture;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static $__properties__ = array("get_culture" => "get_culture","set_defaultCulture" => "set_defaultCulture","get_defaultCulture" => "get_defaultCulture","get_cultures" => "get_cultures");
 	function __toString() { return 'thx.cultures.EnUS'; }

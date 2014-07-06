@@ -3,6 +3,7 @@ package test;
 import haxe.Http;
 import haxe.PosInfos;
 import haxe.Timer;
+import sys.io.File;
 import sys.net.Host;
 import utest.Assert;
 using haxe.io.Path;
@@ -107,13 +108,18 @@ class RequestResponseTest {
 		var expected = 'drink=coffee\ngame=baseball,football';
 		assertResponseEquals( expected, h, true );
 
-		// // Test multipart data
-		// var h = new Http( base()+'/post' );
-		// h.setPostData( CompileTime.readFile('test/SamplePostData.txt') );
-		// h.setHeader( "Content-Type", "multipart/form-data" );
-		// h.setHeader( "boundary", "AaB03x" );
-		// var expected = 'age=43,name=Larry';
-		// assertResponseEquals( expected, h, true );
+		// Test multipart data
+		var h = new Http( base()+'/post' );
+		
+		h.addParameter( "names[]", "Larry" );
+		h.addParameter( "names[]", "Charlie" );
+		h.addParameter( "group", "Team Winner" );
+		var filename = "test.json";
+		var fileInput = File.read( filename );
+		var size = sys.FileSystem.stat( filename ).size;
+		h.fileTransfer( "upload", "data.json", fileInput, size, "application/json" );
+		var expected = 'group=Team Winner\nnames=Charlie,Larry\nupload=data.json';
+		assertResponseEquals( expected, h, true );
 	}
 
 	public function testCookies() {

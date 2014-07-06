@@ -1,67 +1,96 @@
 <?php
 
-class ufront_web_HttpError extends tink_core_Error {
-	public function __construct($code, $message, $pos = null) {
-		if(!php_Boot::$skip_constructor) {
-		parent::__construct($message,$pos);
-		$this->code = $code;
-	}}
-	public $code;
-	public function toString() {
-		return "" . _hx_string_rec($this->code, "") . " Error: " . _hx_string_or_null($this->message);
-	}
-	public function printPos() {
-		return parent::printPos();
-	}
-	public function __call($m, $a) {
-		if(isset($this->$m) && is_callable($this->$m))
-			return call_user_func_array($this->$m, $a);
-		else if(isset($this->__dynamics[$m]) && is_callable($this->__dynamics[$m]))
-			return call_user_func_array($this->__dynamics[$m], $a);
-		else if('toString' == $m)
-			return $this->__toString();
-		else
-			throw new HException('Unable to call <'.$m.'>');
-	}
+class ufront_web_HttpError {
+	public function __construct(){}
 	static function wrap($e, $msg = null, $pos = null) {
+		$GLOBALS['%s']->push("ufront.web.HttpError::wrap");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($msg === null) {
 			$msg = "Internal Server Error";
 		}
-		if(Std::is($e, _hx_qtype("ufront.web.HttpError"))) {
-			return $e;
+		if(Std::is($e, _hx_qtype("tink.core.TypedError"))) {
+			$tmp = $e;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
-			if(Std::is($e, _hx_qtype("tink.core.Error"))) {
-				return ufront_web_HttpError::internalServerError($e->message, $e->data, $e->pos);
-			} else {
-				return ufront_web_HttpError::internalServerError($msg, $e, $pos);
-			}
+			$tmp = tink_core_TypedError::withData(500, $msg, $e, $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function badRequest($pos = null) {
-		return new ufront_web_HttpError(400, "Bad Request", $pos);
+		$GLOBALS['%s']->push("ufront.web.HttpError::badRequest");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new tink_core_TypedError(400, "Bad Request", $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function internalServerError($msg = null, $inner = null, $pos = null) {
+		$GLOBALS['%s']->push("ufront.web.HttpError::internalServerError");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($msg === null) {
 			$msg = "Internal Server Error";
 		}
-		$e = new ufront_web_HttpError(500, $msg, $pos);
-		$e->data = $inner;
-		return $e;
+		{
+			$tmp = tink_core_TypedError::withData(500, $msg, $inner, $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function methodNotAllowed($pos = null) {
-		return new ufront_web_HttpError(405, "Method Not Allowed", $pos);
+		$GLOBALS['%s']->push("ufront.web.HttpError::methodNotAllowed");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new tink_core_TypedError(405, "Method Not Allowed", $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function pageNotFound($pos = null) {
-		return new ufront_web_HttpError(404, "Page Not Found", $pos);
+		$GLOBALS['%s']->push("ufront.web.HttpError::pageNotFound");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new tink_core_TypedError(404, "Page Not Found", $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function unauthorized($pos = null) {
-		return new ufront_web_HttpError(401, "Unauthorized Access", $pos);
+		$GLOBALS['%s']->push("ufront.web.HttpError::unauthorized");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new tink_core_TypedError(401, "Unauthorized Access", $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function unprocessableEntity($pos = null) {
-		return new ufront_web_HttpError(422, "Unprocessable Entity", $pos);
+		$GLOBALS['%s']->push("ufront.web.HttpError::unprocessableEntity");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new tink_core_TypedError(422, "Unprocessable Entity", $pos);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function fakePosition($obj, $method, $args = null) {
-		return _hx_anonymous(array("methodName" => $method, "lineNumber" => -1, "fileName" => "", "customParams" => (($args !== null) ? $args : (new _hx_array(array()))), "className" => Type::getClassName(Type::getClass($obj))));
+		$GLOBALS['%s']->push("ufront.web.HttpError::fakePosition");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = _hx_anonymous(array("methodName" => $method, "lineNumber" => -1, "fileName" => "", "customParams" => $args, "className" => Type::getClassName(Type::getClass($obj))));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
-	function __toString() { return $this->toString(); }
+	function __toString() { return 'ufront.web.HttpError'; }
 }

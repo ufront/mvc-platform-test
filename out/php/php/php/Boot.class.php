@@ -535,7 +535,7 @@ function _hx_set_method($o, $field, $func) {
 }
 
 function _hx_shift_right($v, $n) {
-	return ($v >> $n) & (0x7fffffff >> ($n-1));
+	return ($v >= 0) ? ($v >> $n) : ($v >> $n) & (0x7fffffff >> ($n-1));
 }
 
 function _hx_string_call($s, $method, $params) {
@@ -957,3 +957,5 @@ if(!ini_get('date.timezone'))
 
 spl_autoload_register('_hx_autoload');
 }
+$GLOBALS['%s'] = new _hx_array(array());
+$GLOBALS['%e'] = new _hx_array(array());

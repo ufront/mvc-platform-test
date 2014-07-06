@@ -9,7 +9,7 @@ import ufront.web.result.EmptyResult;
 class Routes extends Controller {
 
 	@:route("/") 
-	public function index() return "Index";
+	public function index():String return "Index";
 
 	@:route("/querystring") 
 	public function queryString() return context.request.queryString;

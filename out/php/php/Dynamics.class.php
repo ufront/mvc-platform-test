@@ -3,18 +3,41 @@
 class Dynamics {
 	public function __construct(){}
 	static function format($v, $param = null, $params = null, $nullstring = null, $culture = null) {
-		return call_user_func_array(Dynamics::formatf($param, $params, $nullstring, $culture), array($v));
+		$GLOBALS['%s']->push("Dynamics::format");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Dynamics::formatf($param, $params, $nullstring, $culture), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function formatf($param = null, $params = null, $nullstring = null, $culture = null) {
+		$GLOBALS['%s']->push("Dynamics::formatf");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($nullstring === null) {
 			$nullstring = "null";
 		}
-		return array(new _hx_lambda(array(&$culture, &$nullstring, &$param, &$params), "Dynamics_0"), 'execute');
+		{
+			$tmp = array(new _hx_lambda(array(&$culture, &$nullstring, &$param, &$params), "Dynamics_0"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolate($v, $a, $b, $equation = null) {
-		return call_user_func_array(Dynamics::interpolatef($a, $b, $equation), array($v));
+		$GLOBALS['%s']->push("Dynamics::interpolate");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = call_user_func_array(Dynamics::interpolatef($a, $b, $equation), array($v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function interpolatef($a, $b, $equation = null) {
+		$GLOBALS['%s']->push("Dynamics::interpolatef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$ta = Type::typeof($a);
 		$tb = Type::typeof($b);
 		if(!((Std::is($a, _hx_qtype("Float")) || Std::is($a, _hx_qtype("Int"))) && (Std::is($b, _hx_qtype("Float")) || Std::is($b, _hx_qtype("Int")))) && !Type::enumEq($ta, $tb)) {
@@ -22,23 +45,35 @@ class Dynamics {
 		}
 		switch($ta->index) {
 		case 0:{
-			return array(new _hx_lambda(array(&$a, &$b, &$equation, &$ta, &$tb), "Dynamics_1"), 'execute');
+			$tmp = array(new _hx_lambda(array(&$a, &$b, &$equation, &$ta, &$tb), "Dynamics_1"), 'execute');
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		case 1:{
 			if(Std::is($b, _hx_qtype("Int"))) {
-				return Ints::interpolatef($a, $b, $equation);
+				$tmp = Ints::interpolatef($a, $b, $equation);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			} else {
-				return Floats::interpolatef($a, $b, $equation);
+				$tmp = Floats::interpolatef($a, $b, $equation);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}
 		}break;
 		case 2:{
-			return Floats::interpolatef($a, $b, $equation);
+			$tmp = Floats::interpolatef($a, $b, $equation);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		case 3:{
-			return Bools::interpolatef($a, $b, $equation);
+			$tmp = Bools::interpolatef($a, $b, $equation);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		case 4:{
-			return Objects::interpolatef($a, $b, $equation);
+			$tmp = Objects::interpolatef($a, $b, $equation);
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}break;
 		case 6:{
 			$c = $ta->params[0];
@@ -46,10 +81,14 @@ class Dynamics {
 				$name = Type::getClassName($c);
 				switch($name) {
 				case "String":{
-					return Strings::interpolatef($a, $b, $equation);
+					$tmp = Strings::interpolatef($a, $b, $equation);
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				}break;
 				case "Date":{
-					return Dates::interpolatef($a, $b, $equation);
+					$tmp = Dates::interpolatef($a, $b, $equation);
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				}break;
 				default:{
 					throw new HException(new thx_error_Error("cannot interpolate on instances of {0}", null, $name, _hx_anonymous(array("fileName" => "Dynamics.hx", "lineNumber" => 79, "className" => "Dynamics", "methodName" => "interpolatef"))));
@@ -61,22 +100,32 @@ class Dynamics {
 			throw new HException(new thx_error_Error("cannot interpolate on functions/enums/unknown", null, null, _hx_anonymous(array("fileName" => "Dynamics.hx", "lineNumber" => 81, "className" => "Dynamics", "methodName" => "interpolatef"))));
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function string($v) {
+		$GLOBALS['%s']->push("Dynamics::string");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = Type::typeof($v);
 			switch($_g->index) {
 			case 0:{
+				$GLOBALS['%s']->pop();
 				return "null";
 			}break;
 			case 1:{
-				return Ints::format($v, null, null, null);
+				$tmp = Ints::format($v, null, null, null);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 2:{
-				return Floats::format($v, null, null, null);
+				$tmp = Floats::format($v, null, null, null);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 3:{
-				return Bools::format($v, null, null, null);
+				$tmp = Bools::format($v, null, null, null);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 4:{
 				$keys = null;
@@ -94,7 +143,11 @@ class Dynamics {
 						unset($key);
 					}
 				}
-				return "{" . _hx_string_or_null($result->join(", ")) . "}";
+				{
+					$tmp = "{" . _hx_string_or_null($result->join(", ")) . "}";
+					$GLOBALS['%s']->pop();
+					return $tmp;
+				}
 			}break;
 			case 6:{
 				$c = $_g->params[0];
@@ -102,82 +155,112 @@ class Dynamics {
 					$name = Type::getClassName($c);
 					switch($name) {
 					case "Array":{
-						return Arrays::string($v);
+						$tmp = Arrays::string($v);
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					case "String":{
 						$s = $v;
 						if(_hx_index_of($s, "\"", null) < 0) {
-							return "\"" . _hx_string_or_null($s) . "\"";
+							$tmp = "\"" . _hx_string_or_null($s) . "\"";
+							$GLOBALS['%s']->pop();
+							return $tmp;
 						} else {
 							if(_hx_index_of($s, "'", null) < 0) {
-								return "'" . _hx_string_or_null($s) . "'";
+								$tmp = "'" . _hx_string_or_null($s) . "'";
+								$GLOBALS['%s']->pop();
+								return $tmp;
 							} else {
-								return "\"" . _hx_string_or_null(str_replace("\"", "\\\"", $s)) . "\"";
+								$tmp = "\"" . _hx_string_or_null(str_replace("\"", "\\\"", $s)) . "\"";
+								$GLOBALS['%s']->pop();
+								return $tmp;
 							}
 						}
 					}break;
 					case "Date":{
-						return Dates::format($v, null, null, null);
+						$tmp = Dates::format($v, null, null, null);
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					default:{
-						return Std::string($v);
+						$tmp = Std::string($v);
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					}
 				}
 			}break;
 			case 7:{
-				return Enums::string($v);
+				$tmp = Enums::string($v);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 8:{
+				$GLOBALS['%s']->pop();
 				return "<unknown>";
 			}break;
 			case 5:{
+				$GLOBALS['%s']->pop();
 				return "<function>";
 			}break;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function compare($a, $b) {
+		$GLOBALS['%s']->push("Dynamics::compare");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $a && null === $b) {
+			$GLOBALS['%s']->pop();
 			return 0;
 		}
 		if(null === $a) {
+			$GLOBALS['%s']->pop();
 			return -1;
 		}
 		if(null === $b) {
+			$GLOBALS['%s']->pop();
 			return 1;
 		}
 		{
 			$_g = Type::typeof($a);
 			switch($_g->index) {
 			case 1:case 2:{
-				$b1 = $b;
 				$a1 = $a;
+				$b1 = $b;
 				if($a1 < $b1) {
+					$GLOBALS['%s']->pop();
 					return -1;
 				} else {
 					if($a1 > $b1) {
+						$GLOBALS['%s']->pop();
 						return 1;
 					} else {
+						$GLOBALS['%s']->pop();
 						return 0;
 					}
 				}
 			}break;
 			case 3:{
-				$b2 = $b;
 				$a2 = $a;
+				$b2 = $b;
 				if($a2 === $b2) {
+					$GLOBALS['%s']->pop();
 					return 0;
 				} else {
 					if($a2) {
+						$GLOBALS['%s']->pop();
 						return -1;
 					} else {
+						$GLOBALS['%s']->pop();
 						return 1;
 					}
 				}
 			}break;
 			case 4:{
-				return Objects::compare($a, $b);
+				$tmp = Objects::compare($a, $b);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 6:{
 				$c = $_g->params[0];
@@ -185,55 +268,76 @@ class Dynamics {
 					$name = Type::getClassName($c);
 					switch($name) {
 					case "Array":{
-						return Arrays::compare($a, $b);
+						$tmp = Arrays::compare($a, $b);
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					case "String":{
-						return Strings::compare($a, $b);
+						$tmp = Strings::compare($a, $b);
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					case "Date":{
-						$b3 = $b;
 						$a3 = $a;
+						$b3 = $b;
 						{
-							$b4 = $b3->getTime();
 							$a4 = $a3->getTime();
+							$b4 = $b3->getTime();
 							if($a4 < $b4) {
+								$GLOBALS['%s']->pop();
 								return -1;
 							} else {
 								if($a4 > $b4) {
+									$GLOBALS['%s']->pop();
 									return 1;
 								} else {
+									$GLOBALS['%s']->pop();
 									return 0;
 								}
 							}
 						}
 					}break;
 					default:{
-						return Strings::compare(Std::string($a), Std::string($b));
+						$tmp = Strings::compare(Std::string($a), Std::string($b));
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					}
 				}
 			}break;
 			case 7:{
-				return Enums::compare($a, $b);
+				$tmp = Enums::compare($a, $b);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			default:{
+				$GLOBALS['%s']->pop();
 				return 0;
 			}break;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function comparef($sample) {
+		$GLOBALS['%s']->push("Dynamics::comparef");
+		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = Type::typeof($sample);
 			switch($_g->index) {
 			case 1:case 2:{
-				return (isset(Floats::$compare) ? Floats::$compare: array("Floats", "compare"));
+				$tmp = (isset(Floats::$compare) ? Floats::$compare: array("Floats", "compare"));
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 3:{
-				return (isset(Bools::$compare) ? Bools::$compare: array("Bools", "compare"));
+				$tmp = (isset(Bools::$compare) ? Bools::$compare: array("Bools", "compare"));
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 4:{
-				return (isset(Objects::$compare) ? Objects::$compare: array("Objects", "compare"));
+				$tmp = (isset(Objects::$compare) ? Objects::$compare: array("Objects", "compare"));
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 6:{
 				$c = $_g->params[0];
@@ -241,30 +345,45 @@ class Dynamics {
 					$name = Type::getClassName($c);
 					switch($name) {
 					case "Array":{
-						return (isset(Arrays::$compare) ? Arrays::$compare: array("Arrays", "compare"));
+						$tmp = (isset(Arrays::$compare) ? Arrays::$compare: array("Arrays", "compare"));
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					case "String":{
-						return (isset(Strings::$compare) ? Strings::$compare: array("Strings", "compare"));
+						$tmp = (isset(Strings::$compare) ? Strings::$compare: array("Strings", "compare"));
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					case "Date":{
-						return (isset(Dates::$compare) ? Dates::$compare: array("Dates", "compare"));
+						$tmp = (isset(Dates::$compare) ? Dates::$compare: array("Dates", "compare"));
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					default:{
-						return array(new _hx_lambda(array(&$_g, &$c, &$name, &$sample), "Dynamics_2"), 'execute');
+						$tmp = array(new _hx_lambda(array(&$_g, &$c, &$name, &$sample), "Dynamics_2"), 'execute');
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}break;
 					}
 				}
 			}break;
 			case 7:{
-				return (isset(Enums::$compare) ? Enums::$compare: array("Enums", "compare"));
+				$tmp = (isset(Enums::$compare) ? Enums::$compare: array("Enums", "compare"));
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			default:{
-				return (isset(Dynamics::$compare) ? Dynamics::$compare: array("Dynamics", "compare"));
+				$tmp = (isset(Dynamics::$compare) ? Dynamics::$compare: array("Dynamics", "compare"));
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function hclone($v, $cloneInstances = null) {
+		$GLOBALS['%s']->push("Dynamics::clone");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($cloneInstances === null) {
 			$cloneInstances = false;
 		}
@@ -272,15 +391,20 @@ class Dynamics {
 			$_g = Type::typeof($v);
 			switch($_g->index) {
 			case 0:{
+				$GLOBALS['%s']->pop();
 				return null;
 			}break;
 			case 1:case 2:case 3:case 7:case 8:case 5:{
+				$GLOBALS['%s']->pop();
 				return $v;
 			}break;
 			case 4:{
 				$o = _hx_anonymous(array());
 				Objects::copyTo($v, $o);
-				return $o;
+				{
+					$GLOBALS['%s']->pop();
+					return $o;
+				}
 			}break;
 			case 6:{
 				$c = $_g->params[0];
@@ -299,9 +423,13 @@ class Dynamics {
 								unset($i);
 							}
 						}
-						return $a;
+						{
+							$GLOBALS['%s']->pop();
+							return $a;
+						}
 					}break;
 					case "String":case "Date":{
+						$GLOBALS['%s']->pop();
 						return $v;
 					}break;
 					default:{
@@ -318,8 +446,12 @@ class Dynamics {
 									unset($value,$field);
 								}
 							}
-							return $o1;
+							{
+								$GLOBALS['%s']->pop();
+								return $o1;
+							}
 						} else {
+							$GLOBALS['%s']->pop();
 							return $v;
 						}
 					}break;
@@ -328,24 +460,34 @@ class Dynamics {
 			}break;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function same($a, $b) {
+		$GLOBALS['%s']->push("Dynamics::same");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$ta = Types::typeName($a);
 		$tb = Types::typeName($b);
 		if($ta !== $tb) {
+			$GLOBALS['%s']->pop();
 			return false;
 		}
 		{
 			$_g = Type::typeof($a);
 			switch($_g->index) {
 			case 2:{
-				return Floats::equals($a, $b, null);
+				$tmp = Floats::equals($a, $b, null);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 0:case 1:case 3:{
-				return (is_object($_t = $a) && !($_t instanceof Enum) ? $_t === $b : $_t == $b);
+				$tmp = (is_object($_t = $a) && !($_t instanceof Enum) ? $_t === $b : $_t == $b);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 5:{
-				return Reflect::compareMethods($a, $b);
+				$tmp = Reflect::compareMethods($a, $b);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 6:{
 				$c = $_g->params[0];
@@ -353,15 +495,18 @@ class Dynamics {
 					$ca = Type::getClassName($c);
 					$cb = Type::getClassName(Type::getClass($b));
 					if($ca !== $cb) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					if(Std::is($a, _hx_qtype("String")) && (is_object($_t = $a) && !($_t instanceof Enum) ? $_t !== $b : $_t != $b)) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					if(Std::is($a, _hx_qtype("Array"))) {
 						$aa = $a;
 						$ab = $b;
 						if($aa->length !== $ab->length) {
+							$GLOBALS['%s']->pop();
 							return false;
 						}
 						{
@@ -370,15 +515,21 @@ class Dynamics {
 							while($_g2 < $_g1) {
 								$i = $_g2++;
 								if(!Dynamics::same($aa[$i], $ab[$i])) {
+									$GLOBALS['%s']->pop();
 									return false;
 								}
 								unset($i);
 							}
 						}
-						return true;
+						{
+							$GLOBALS['%s']->pop();
+							return true;
+						}
 					}
 					if(Std::is($a, _hx_qtype("Date"))) {
-						return _hx_equal($a->getTime(), $b->getTime());
+						$tmp = _hx_equal($a->getTime(), $b->getTime());
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					}
 					if(Std::is($a, _hx_qtype("_Map.Map_Impl_")) || Std::is($a, _hx_qtype("haxe.ds.StringMap")) || Std::is($a, _hx_qtype("haxe.ds.IntMap"))) {
 						$ha = $a;
@@ -386,6 +537,7 @@ class Dynamics {
 						$ka = Iterators::harray($ha->keys());
 						$kb = Iterators::harray($hb->keys());
 						if($ka->length !== $kb->length) {
+							$GLOBALS['%s']->pop();
 							return false;
 						}
 						{
@@ -394,12 +546,16 @@ class Dynamics {
 								$key = $ka[$_g11];
 								++$_g11;
 								if(!$hb->exists($key) || !Dynamics::same($ha->get($key), $hb->get($key))) {
+									$GLOBALS['%s']->pop();
 									return false;
 								}
 								unset($key);
 							}
 						}
-						return true;
+						{
+							$GLOBALS['%s']->pop();
+							return true;
+						}
 					}
 					$t = false;
 					if(($t = Iterators::isIterator($a)) || Iterables::isIterable($a)) {
@@ -416,6 +572,7 @@ class Dynamics {
 							$vb = Iterators::harray($b->iterator());
 						}
 						if($va->length !== $vb->length) {
+							$GLOBALS['%s']->pop();
 							return false;
 						}
 						{
@@ -424,12 +581,16 @@ class Dynamics {
 							while($_g21 < $_g12) {
 								$i1 = $_g21++;
 								if(!Dynamics::same($va[$i1], $vb[$i1])) {
+									$GLOBALS['%s']->pop();
 									return false;
 								}
 								unset($i1);
 							}
 						}
-						return true;
+						{
+							$GLOBALS['%s']->pop();
+							return true;
+						}
 					}
 					$fields = Type::getInstanceFields(Type::getClass($a));
 					{
@@ -443,12 +604,16 @@ class Dynamics {
 							}
 							$vb1 = Reflect::field($b, $field);
 							if(!Dynamics::same($va1, $vb1)) {
+								$GLOBALS['%s']->pop();
 								return false;
 							}
 							unset($vb1,$va1,$field);
 						}
 					}
-					return true;
+					{
+						$GLOBALS['%s']->pop();
+						return true;
+					}
 				}
 			}break;
 			case 7:{
@@ -458,9 +623,11 @@ class Dynamics {
 					$teb = Type::getEnum($b);
 					$eb = Type::getEnumName($teb);
 					if($ea !== $eb) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					if($a->index !== $b->index) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					$pa = Type::enumParameters($a);
@@ -471,12 +638,16 @@ class Dynamics {
 						while($_g22 < $_g14) {
 							$i2 = $_g22++;
 							if(!Dynamics::same($pa[$i2], $pb[$i2])) {
+								$GLOBALS['%s']->pop();
 								return false;
 							}
 							unset($i2);
 						}
 					}
-					return true;
+					{
+						$GLOBALS['%s']->pop();
+						return true;
+					}
 				}
 			}break;
 			case 4:{
@@ -489,6 +660,7 @@ class Dynamics {
 						++$_g15;
 						$fb->remove($field1);
 						if(!_hx_has_field($b, $field1)) {
+							$GLOBALS['%s']->pop();
 							return false;
 						}
 						$va2 = Reflect::field($a, $field1);
@@ -497,20 +669,24 @@ class Dynamics {
 						}
 						$vb2 = Reflect::field($b, $field1);
 						if(!Dynamics::same($va2, $vb2)) {
+							$GLOBALS['%s']->pop();
 							return false;
 						}
 						unset($vb2,$va2,$field1);
 					}
 				}
 				if($fb->length > 0) {
+					$GLOBALS['%s']->pop();
 					return false;
 				}
 				$t1 = false;
 				if(($t1 = Iterators::isIterator($a)) || Iterables::isIterable($a)) {
 					if($t1 && !Iterators::isIterator($b)) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					if(!$t1 && !Iterables::isIterable($b)) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					$aa1 = null;
@@ -526,6 +702,7 @@ class Dynamics {
 						$ab1 = Iterators::harray($b->iterator());
 					}
 					if($aa1->length !== $ab1->length) {
+						$GLOBALS['%s']->pop();
 						return false;
 					}
 					{
@@ -534,14 +711,21 @@ class Dynamics {
 						while($_g23 < $_g16) {
 							$i3 = $_g23++;
 							if(!Dynamics::same($aa1[$i3], $ab1[$i3])) {
+								$GLOBALS['%s']->pop();
 								return false;
 							}
 							unset($i3);
 						}
 					}
+					{
+						$GLOBALS['%s']->pop();
+						return true;
+					}
+				}
+				{
+					$GLOBALS['%s']->pop();
 					return true;
 				}
-				return true;
 			}break;
 			case 8:{
 				throw new HException("Unable to compare two unknown types");
@@ -549,65 +733,97 @@ class Dynamics {
 			}
 		}
 		throw new HException(new thx_error_Error("Unable to compare values: {0} and {1}", (new _hx_array(array($a, $b))), null, _hx_anonymous(array("fileName" => "Dynamics.hx", "lineNumber" => 370, "className" => "Dynamics", "methodName" => "same"))));
+		$GLOBALS['%s']->pop();
 	}
 	static function number($v) {
+		$GLOBALS['%s']->push("Dynamics::number");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(Std::is($v, _hx_qtype("Bool"))) {
 			if(_hx_equal($v, true)) {
+				$GLOBALS['%s']->pop();
 				return 1;
 			} else {
+				$GLOBALS['%s']->pop();
 				return 0;
 			}
 		} else {
 			if(Std::is($v, _hx_qtype("Date"))) {
-				return $v->getTime();
+				$tmp = $v->getTime();
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			} else {
 				if(Std::is($v, _hx_qtype("String"))) {
-					return Std::parseFloat($v);
+					$tmp = Std::parseFloat($v);
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				} else {
-					return Math::$NaN;
+					$tmp = Math::$NaN;
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				}
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'Dynamics'; }
 }
 function Dynamics_0(&$culture, &$nullstring, &$param, &$params, $v) {
 	{
+		$GLOBALS['%s']->push("Dynamics::formatf@20");
+		$__hx__spos2 = $GLOBALS['%s']->length;
 		{
 			$_g = Type::typeof($v);
 			switch($_g->index) {
 			case 0:{
+				$GLOBALS['%s']->pop();
 				return $nullstring;
 			}break;
 			case 1:{
-				return Ints::format($v, $param, $params, $culture);
+				$tmp = Ints::format($v, $param, $params, $culture);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 2:{
-				return Floats::format($v, $param, $params, $culture);
+				$tmp = Floats::format($v, $param, $params, $culture);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 3:{
-				return Bools::format($v, $param, $params, $culture);
+				$tmp = Bools::format($v, $param, $params, $culture);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 6:{
 				$c = $_g->params[0];
 				if((is_object($_t = $c) && !($_t instanceof Enum) ? $_t === _hx_qtype("String") : $_t == _hx_qtype("String"))) {
-					return Strings::formatOne($v, $param, $params, $culture);
+					$tmp = Strings::formatOne($v, $param, $params, $culture);
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				} else {
 					if((is_object($_t2 = $c) && !($_t2 instanceof Enum) ? $_t2 === _hx_qtype("Array") : $_t2 == _hx_qtype("Array"))) {
-						return Arrays::format($v, $param, $params, $culture);
+						$tmp = Arrays::format($v, $param, $params, $culture);
+						$GLOBALS['%s']->pop();
+						return $tmp;
 					} else {
 						if((is_object($_t3 = $c) && !($_t3 instanceof Enum) ? $_t3 === _hx_qtype("Date") : $_t3 == _hx_qtype("Date"))) {
-							return Dates::format($v, $param, $params, $culture);
+							$tmp = Dates::format($v, $param, $params, $culture);
+							$GLOBALS['%s']->pop();
+							return $tmp;
 						} else {
-							return Objects::format($v, $param, $params, $culture);
+							$tmp = Objects::format($v, $param, $params, $culture);
+							$GLOBALS['%s']->pop();
+							return $tmp;
 						}
 					}
 				}
 			}break;
 			case 4:{
-				return Objects::format($v, $param, $params, $culture);
+				$tmp = Objects::format($v, $param, $params, $culture);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}break;
 			case 5:{
+				$GLOBALS['%s']->pop();
 				return "function()";
 			}break;
 			default:{
@@ -615,15 +831,29 @@ function Dynamics_0(&$culture, &$nullstring, &$param, &$params, $v) {
 			}break;
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Dynamics_1(&$a, &$b, &$equation, &$ta, &$tb, $_) {
 	{
-		return null;
+		$GLOBALS['%s']->push("Dynamics::interpolatef@64");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$GLOBALS['%s']->pop();
+			return null;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }
 function Dynamics_2(&$_g, &$c, &$name, &$sample, $a, $b) {
 	{
-		return Strings::compare(Std::string($a), Std::string($b));
+		$GLOBALS['%s']->push("Dynamics::comparef@181");
+		$__hx__spos2 = $GLOBALS['%s']->length;
+		{
+			$tmp = Strings::compare(Std::string($a), Std::string($b));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 }

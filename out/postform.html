@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Post test</title>
+</head>
+<body>
+
+
+
+<form method="POST" action="php/post/" enctype="multipart/form-data">
+	<h1>Multipart PHP</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+<form method="POST" action="neko_cache/post/" enctype="multipart/form-data">
+	<h1>Multipart Neko Cache</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+<form method="POST" action="neko_nocache/post/" enctype="multipart/form-data">
+	<h1>Multipart Neko No Cache</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+<form method="POST" action="http://localhost:2987/post/" enctype="multipart/form-data">
+	<h1>Multipart NodeJS</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+
+<hr />
+
+<form method="POST" action="php/post/">
+	<h1>URLEncode PHP</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+<form method="POST" action="neko_cache/post/">
+	<h1>URLEncode Neko Cache</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+<form method="POST" action="neko_nocache/post/">
+	<h1>URLEncode Neko No Cache</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+<form method="POST" action="http://localhost:2987/post/">
+	<h1>URLEncode NodeJS</h1>
+	<input type="text" name="yourname" value="Jason" />
+	<input type="number" name="age" value="26" />
+	<input type="file" name="files[]" multiple="multiple" />
+	<input type="submit" value="POST" />
+</form>
+
+</body>
+</html>

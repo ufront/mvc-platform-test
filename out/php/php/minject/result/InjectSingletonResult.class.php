@@ -3,23 +3,47 @@
 class minject_result_InjectSingletonResult extends minject_result_InjectionResult {
 	public function __construct($responseType) {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("minject.result.InjectSingletonResult::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		parent::__construct();
 		$this->responseType = $responseType;
+		$GLOBALS['%s']->pop();
 	}}
 	public $responseType;
 	public $response;
 	public function getResponse($injector) {
+		$GLOBALS['%s']->push("minject.result.InjectSingletonResult::getResponse");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(_hx_field($this, "response") === null) {
 			$this->response = $this->createResponse($injector);
 			$injector->injectInto($this->response);
 		}
-		return $this->response;
+		{
+			$tmp = $this->response;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function createResponse($injector) {
-		return $injector->construct($this->responseType);
+		$GLOBALS['%s']->push("minject.result.InjectSingletonResult::createResponse");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $injector->construct($this->responseType);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function toString() {
-		return "singleton " . _hx_string_or_null(Type::getClassName($this->responseType));
+		$GLOBALS['%s']->push("minject.result.InjectSingletonResult::toString");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = "singleton " . _hx_string_or_null(Type::getClassName($this->responseType));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

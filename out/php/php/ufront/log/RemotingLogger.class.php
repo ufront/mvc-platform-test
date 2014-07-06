@@ -1,11 +1,14 @@
 <?php
 
 class ufront_log_RemotingLogger implements ufront_app_UFLogHandler{
-	public function __construct() {
-		;
-	}
-	public $appMessages;
+	public function __construct() { if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("ufront.log.RemotingLogger::new");
+		$__hx__spos = $GLOBALS['%s']->length;
+		$GLOBALS['%s']->pop();
+	}}
 	public function log($httpContext, $appMessages) {
+		$GLOBALS['%s']->push("ufront.log.RemotingLogger::log");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($httpContext->response->get_contentType() === "application/x-haxe-remoting") {
 			$results = (new _hx_array(array()));
 			{
@@ -14,45 +17,54 @@ class ufront_log_RemotingLogger implements ufront_app_UFLogHandler{
 				while($_g < $_g1->length) {
 					$msg = $_g1[$_g];
 					++$_g;
-					$results->push($this->formatMessage($msg));
+					$results->push(ufront_log_RemotingLogger::formatMessage($msg));
 					unset($msg);
+				}
+			}
+			if($appMessages !== null) {
+				$_g2 = 0;
+				while($_g2 < $appMessages->length) {
+					$msg1 = $appMessages[$_g2];
+					++$_g2;
+					$results->push(ufront_log_RemotingLogger::formatMessage($msg1));
+					unset($msg1);
 				}
 			}
 			if($results->length > 0) {
 				$httpContext->response->write("\x0A" . _hx_string_or_null($results->join("\x0A")));
 			}
 		}
-		return ufront_core_Sync::success();
-	}
-	public function formatMessage($m) {
-		try {
-			$m->msg = Std::string($m->msg);
-		}catch(Exception $__hx__e) {
-			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-			$e = $_ex_;
-			{
-				$m->msg = "ERROR: unable to format message in RemotingLogger.formatMessage";
-			}
+		{
+			$tmp = ufront_core_Sync::success();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
+	}
+	static function formatMessage($m) {
+		$GLOBALS['%s']->push("ufront.log.RemotingLogger::formatMessage");
+		$__hx__spos = $GLOBALS['%s']->length;
+		$m->msg = "" . Std::string($m->msg);
 		if($m->pos->customParams !== null) {
-			$m->pos->customParams = $m->pos->customParams->map(array(new _hx_lambda(array(&$e, &$m), "ufront_log_RemotingLogger_0"), 'execute'));
+			$_g = (new _hx_array(array()));
+			{
+				$_g1 = 0;
+				$_g2 = $m->pos->customParams;
+				while($_g1 < $_g2->length) {
+					$p = $_g2[$_g1];
+					++$_g1;
+					$_g->push("" . Std::string($p));
+					unset($p);
+				}
+			}
+			$m->pos->customParams = $_g;
 		}
-		return "hxt" . _hx_string_or_null(haxe_Serializer::run($m));
-	}
-	public function __call($m, $a) {
-		if(isset($this->$m) && is_callable($this->$m))
-			return call_user_func_array($this->$m, $a);
-		else if(isset($this->__dynamics[$m]) && is_callable($this->__dynamics[$m]))
-			return call_user_func_array($this->__dynamics[$m], $a);
-		else if('toString' == $m)
-			return $this->__toString();
-		else
-			throw new HException('Unable to call <'.$m.'>');
+		{
+			$tmp = "hxt" . _hx_string_or_null(haxe_Serializer::run($m));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'ufront.log.RemotingLogger'; }
-}
-function ufront_log_RemotingLogger_0(&$e, &$m, $v) {
-	{
-		return Std::string($v);
-	}
 }

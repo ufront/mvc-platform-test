@@ -3,8 +3,11 @@
 class minject_InjecteeDescription {
 	public function __construct($ctor, $injectionPoints) {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("minject.InjecteeDescription::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->ctor = $ctor;
 		$this->injectionPoints = $injectionPoints;
+		$GLOBALS['%s']->pop();
 	}}
 	public $ctor;
 	public $injectionPoints;

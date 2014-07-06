@@ -3,50 +3,100 @@
 class thx_culture_FormatNumber {
 	public function __construct(){}
 	static function decimal($v, $decimals = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::decimal");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::crunch($v, $decimals, $culture->percent, $culture->number->patternNegative, $culture->number->patternPositive, $culture, null, null);
+		{
+			$tmp = thx_culture_FormatNumber::crunch($v, $decimals, $culture->percent, $culture->number->patternNegative, $culture->number->patternPositive, $culture, null, null);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function percent($v, $decimals = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::percent");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::crunch($v, $decimals, $culture->percent, $culture->percent->patternNegative, $culture->percent->patternPositive, $culture, "%", $culture->symbolPercent);
+		{
+			$tmp = thx_culture_FormatNumber::crunch($v, $decimals, $culture->percent, $culture->percent->patternNegative, $culture->percent->patternPositive, $culture, "%", $culture->symbolPercent);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function permille($v, $decimals = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::permille");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::crunch($v, $decimals, $culture->percent, $culture->percent->patternNegative, $culture->percent->patternPositive, $culture, "%", $culture->symbolPermille);
+		{
+			$tmp = thx_culture_FormatNumber::crunch($v, $decimals, $culture->percent, $culture->percent->patternNegative, $culture->percent->patternPositive, $culture, "%", $culture->symbolPermille);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function currency($v, $symbol = null, $decimals = null, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::currency");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::crunch($v, $decimals, $culture->currency, $culture->currency->patternNegative, $culture->currency->patternPositive, $culture, "\$", thx_culture_FormatNumber_0($culture, $decimals, $symbol, $v));
+		{
+			$tmp = thx_culture_FormatNumber::crunch($v, $decimals, $culture->currency, $culture->currency->patternNegative, $culture->currency->patternPositive, $culture, "\$", thx_culture_FormatNumber_0($culture, $decimals, $symbol, $v));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function int($v, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::int");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::decimal($v, 0, $culture);
+		{
+			$tmp = thx_culture_FormatNumber::decimal($v, 0, $culture);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function digits($v, $culture = null) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::digits");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $culture) {
 			$culture = thx_culture_Culture::get_defaultCulture();
 		}
-		return thx_culture_FormatNumber::processDigits($v, $culture->digits);
+		{
+			$tmp = thx_culture_FormatNumber::processDigits($v, $culture->digits);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function crunch($v, $decimals, $info, $negative, $positive, $culture, $symbol, $replace) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::crunch");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(Math::isNaN($v)) {
-			return $culture->symbolNaN;
+			$tmp = $culture->symbolNaN;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
 			if(!Math::isFinite($v)) {
 				if($v === Math::$NEGATIVE_INFINITY) {
-					return $culture->symbolNegInf;
+					$tmp = $culture->symbolNegInf;
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				} else {
-					return $culture->symbolPosInf;
+					$tmp = $culture->symbolPosInf;
+					$GLOBALS['%s']->pop();
+					return $tmp;
 				}
 			}
 		}
@@ -63,9 +113,13 @@ class thx_culture_FormatNumber {
 				$s = str_replace("n", $fv, $s1);
 			}
 			if($symbol === "") {
-				return implode(str_split ($s), $replace);
+				$tmp = implode(str_split ($s), $replace);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			} else {
-				return str_replace($symbol, $replace, $s);
+				$tmp = str_replace($symbol, $replace, $s);
+				$GLOBALS['%s']->pop();
+				return $tmp;
 			}
 		} else {
 			$s2 = null;
@@ -74,11 +128,19 @@ class thx_culture_FormatNumber {
 			} else {
 				$s2 = $positive;
 			}
-			return str_replace("n", $fv, $s2);
+			{
+				$tmp = str_replace("n", $fv, $s2);
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function processDigits($s, $digits) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::processDigits");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($digits === null) {
+			$GLOBALS['%s']->pop();
 			return $s;
 		}
 		$o = (new _hx_array(array()));
@@ -91,9 +153,16 @@ class thx_culture_FormatNumber {
 				unset($i);
 			}
 		}
-		return $o->join("");
+		{
+			$tmp = $o->join("");
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function value($v, $info, $decimals, $digits) {
+		$GLOBALS['%s']->push("thx.culture.FormatNumber::value");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$fv = "" . _hx_string_rec(Math::abs($v), "");
 		$pos = _hx_index_of($fv, "E", null);
 		if($pos > 0) {
@@ -160,10 +229,16 @@ class thx_culture_FormatNumber {
 					}
 				}
 			}
-			return _hx_string_or_null($intpart) . _hx_string_or_null($info->decimalsSeparator) . _hx_string_or_null(thx_culture_FormatNumber::processDigits($decpart, $digits));
+			{
+				$tmp = _hx_string_or_null($intpart) . _hx_string_or_null($info->decimalsSeparator) . _hx_string_or_null(thx_culture_FormatNumber::processDigits($decpart, $digits));
+				$GLOBALS['%s']->pop();
+				return $tmp;
+			}
 		} else {
+			$GLOBALS['%s']->pop();
 			return $intpart;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'thx.culture.FormatNumber'; }
 }

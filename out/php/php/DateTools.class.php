@@ -2,22 +2,26 @@
 
 class DateTools {
 	public function __construct(){}
-	static function format($d, $f) {
-		return strftime($f, $d->__t);
-	}
 	static $DAYS_OF_MONTH;
 	static function getMonthDays($d) {
+		$GLOBALS['%s']->push("DateTools::getMonthDays");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$month = $d->getMonth();
 		$year = $d->getFullYear();
 		if($month !== 1) {
-			return DateTools::$DAYS_OF_MONTH[$month];
+			$tmp = DateTools::$DAYS_OF_MONTH[$month];
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$isB = _hx_mod($year, 4) === 0 && _hx_mod($year, 100) !== 0 || _hx_mod($year, 400) === 0;
 		if($isB) {
+			$GLOBALS['%s']->pop();
 			return 29;
 		} else {
+			$GLOBALS['%s']->pop();
 			return 28;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'DateTools'; }
 }

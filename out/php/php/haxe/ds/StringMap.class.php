@@ -3,38 +3,108 @@
 class haxe_ds_StringMap implements IMap, IteratorAggregate{
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("haxe.ds.StringMap::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->h = array();
+		$GLOBALS['%s']->pop();
 	}}
 	public $h;
 	public function set($key, $value) {
+		$GLOBALS['%s']->push("haxe.ds.StringMap::set");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->h[$key] = $value;
+		$GLOBALS['%s']->pop();
 	}
 	public function get($key) {
+		$GLOBALS['%s']->push("haxe.ds.StringMap::get");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(array_key_exists($key, $this->h)) {
-			return $this->h[$key];
+			$tmp = $this->h[$key];
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
+			$GLOBALS['%s']->pop();
 			return null;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function exists($key) {
-		return array_key_exists($key, $this->h);
+		$GLOBALS['%s']->push("haxe.ds.StringMap::exists");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = array_key_exists($key, $this->h);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function remove($key) {
+		$GLOBALS['%s']->push("haxe.ds.StringMap::remove");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(array_key_exists($key, $this->h)) {
 			unset($this->h[$key]);
-			return true;
+			{
+				$GLOBALS['%s']->pop();
+				return true;
+			}
 		} else {
+			$GLOBALS['%s']->pop();
 			return false;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function keys() {
-		return new _hx_array_iterator(array_keys($this->h));
+		$GLOBALS['%s']->push("haxe.ds.StringMap::keys");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new _hx_array_iterator(array_keys($this->h));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function iterator() {
-		return new _hx_array_iterator(array_values($this->h));
+		$GLOBALS['%s']->push("haxe.ds.StringMap::iterator");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = new _hx_array_iterator(array_values($this->h));
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
+	}
+	public function toString() {
+		$GLOBALS['%s']->push("haxe.ds.StringMap::toString");
+		$__hx__spos = $GLOBALS['%s']->length;
+		$s = "{";
+		$it = $this->keys();
+		$__hx__it = $it;
+		while($__hx__it->hasNext()) {
+			unset($i);
+			$i = $__hx__it->next();
+			$s .= _hx_string_or_null($i);
+			$s .= " => ";
+			$s .= Std::string($this->get($i));
+			if($it->hasNext()) {
+				$s .= ", ";
+			}
+		}
+		{
+			$tmp = _hx_string_or_null($s) . "}";
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function getIterator() {
-		return $this->iterator();
+		$GLOBALS['%s']->push("haxe.ds.StringMap::getIterator");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = $this->iterator();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -46,5 +116,5 @@ class haxe_ds_StringMap implements IMap, IteratorAggregate{
 		else
 			throw new HException('Unable to call <'.$m.'>');
 	}
-	function __toString() { return 'haxe.ds.StringMap'; }
+	function __toString() { return $this->toString(); }
 }

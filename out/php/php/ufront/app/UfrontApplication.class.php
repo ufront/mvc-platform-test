@@ -3,6 +3,8 @@
 class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 	public function __construct($optionsIn = null) {
 		if(!php_Boot::$skip_constructor) {
+		$GLOBALS['%s']->push("ufront.app.UfrontApplication::new");
+		$__hx__spos = $GLOBALS['%s']->length;
 		parent::__construct();
 		$this->configuration = ufront_web_DefaultUfrontConfiguration::get();
 		Objects::merge($this->configuration, $optionsIn);
@@ -16,12 +18,14 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 		if(null == $this->configuration->controllers) throw new HException('null iterable');
 		$__hx__it = $this->configuration->controllers->iterator();
 		while($__hx__it->hasNext()) {
+			unset($controller);
 			$controller = $__hx__it->next();
 			$this->mvcHandler->injector->mapClass($controller, $controller, null);
 		}
 		if(null == $this->configuration->apis) throw new HException('null iterable');
 		$__hx__it = $this->configuration->apis->iterator();
 		while($__hx__it->hasNext()) {
+			unset($api);
 			$api = $__hx__it->next();
 			$this->remotingHandler->injector->mapClass($api, $api, null);
 			$this->mvcHandler->injector->mapClass($api, $api, null);
@@ -54,21 +58,31 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 		$this->inject(_hx_qtype("ufront.web.session.UFSessionFactory"), $this->configuration->sessionFactory, null, null, null);
 		$this->inject(_hx_qtype("ufront.auth.UFAuthFactory"), $this->configuration->authFactory, null, null, null);
 		$this->viewEngine = $this->configuration->viewEngine;
+		$GLOBALS['%s']->pop();
 	}}
 	public $configuration;
 	public $mvcHandler;
 	public $remotingHandler;
 	public $viewEngine;
-	public function execute($httpContext = null) {
-		if($httpContext === null) {
-			$httpContext = ufront_web_context_HttpContext::create($this->injector, null, null, null, null, $this->urlFilters, $this->configuration->contentDirectory);
+	public function execute($httpContext) {
+		$GLOBALS['%s']->push("ufront.app.UfrontApplication::execute");
+		$__hx__spos = $GLOBALS['%s']->length;
+		if(null === $httpContext) {
+			throw new HException(new thx_error_NullArgument("httpContext", "invalid null argument '{0}' for method {1}.{2}()", _hx_anonymous(array("fileName" => "UfrontApplication.hx", "lineNumber" => 161, "className" => "ufront.app.UfrontApplication", "methodName" => "execute"))));
 		}
 		if(ufront_app_UfrontApplication::$firstRun) {
 			$this->initOnFirstExecute($httpContext);
 		}
-		return parent::execute($httpContext);
+		{
+			$tmp = parent::execute($httpContext);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function initOnFirstExecute($httpContext) {
+		$GLOBALS['%s']->push("ufront.app.UfrontApplication::initOnFirstExecute");
+		$__hx__spos = $GLOBALS['%s']->length;
 		ufront_app_UfrontApplication::$firstRun = false;
 		$this->inject(_hx_qtype("String"), $httpContext->request->get_scriptDirectory(), null, null, "scriptDirectory");
 		$this->inject(_hx_qtype("String"), $httpContext->get_contentDirectory(), null, null, "contentDirectory");
@@ -76,20 +90,40 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 			$this->injector->injectInto($this->viewEngine);
 			$this->inject(_hx_qtype("ufront.view.UFViewEngine"), $this->viewEngine, null, null, null);
 		}
+		$GLOBALS['%s']->pop();
 	}
 	public function loadApi($apiContext) {
+		$GLOBALS['%s']->push("ufront.app.UfrontApplication::loadApi");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->remotingHandler->apis->push($apiContext);
-		return $this;
+		{
+			$GLOBALS['%s']->pop();
+			return $this;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function addTemplatingEngine($engine) {
+		$GLOBALS['%s']->push("ufront.app.UfrontApplication::addTemplatingEngine");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this->viewEngine->engines->push($engine);
-		return $this;
+		{
+			$GLOBALS['%s']->pop();
+			return $this;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function inject($cl, $val = null, $cl2 = null, $singleton = null, $named = null) {
+		$GLOBALS['%s']->push("ufront.app.UfrontApplication::inject");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($singleton === null) {
 			$singleton = false;
 		}
-		return parent::inject($cl,$val,$cl2,$singleton,$named);
+		{
+			$tmp = parent::inject($cl,$val,$cl2,$singleton,$named);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

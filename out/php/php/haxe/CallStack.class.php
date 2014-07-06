@@ -2,13 +2,19 @@
 
 class haxe_CallStack {
 	public function __construct(){}
-	static function callStack() {
-		return haxe_CallStack::makeStack("%s");
-	}
 	static function exceptionStack() {
-		return haxe_CallStack::makeStack("%e");
+		$GLOBALS['%s']->push("haxe.CallStack::exceptionStack");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = haxe_CallStack::makeStack("%e");
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function toString($stack) {
+		$GLOBALS['%s']->push("haxe.CallStack::toString");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$b = new StringBuf();
 		{
 			$_g = 0;
@@ -20,9 +26,16 @@ class haxe_CallStack {
 				unset($s);
 			}
 		}
-		return $b->b;
+		{
+			$tmp = $b->b;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function itemToString($b, $s) {
+		$GLOBALS['%s']->push("haxe.CallStack::itemToString");
+		$__hx__spos = $GLOBALS['%s']->length;
 		switch($s->index) {
 		case 0:{
 			$b->add("a C function");
@@ -68,10 +81,15 @@ class haxe_CallStack {
 			}
 		}break;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function makeStack($s) {
+		$GLOBALS['%s']->push("haxe.CallStack::makeStack");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(!isset($GLOBALS[$s])) {
-			return (new _hx_array(array()));
+			$tmp = (new _hx_array(array()));
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
 		$a = $GLOBALS[$s];
 		$m = (new _hx_array(array()));
@@ -86,7 +104,11 @@ class haxe_CallStack {
 				unset($i,$d);
 			}
 		}
-		return $m;
+		{
+			$GLOBALS['%s']->pop();
+			return $m;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'haxe.CallStack'; }
 }

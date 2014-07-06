@@ -1,25 +1,105 @@
---AaB03x
-Content-Disposition: form-data; name="name"
+Content-Type: multipart/form-data; boundary=---------------------------1471016779686860769544868462
+Content-Length: 5463
 
-Larry
---AaB03x
+-----------------------------1471016779686860769544868462
+Content-Disposition: form-data; name="yourname"
+
+Jason
+-----------------------------1471016779686860769544868462
 Content-Disposition: form-data; name="age"
 
-43
---AaB03x
-Content-Disposition: form-data; name="files"
-Content-Type: multipart/mixed; boundary=BbC04y
+26
+-----------------------------1471016779686860769544868462
+Content-Disposition: form-data; name="files"; filename="Gravatar.jpeg"
+Content-Type: image/jpeg
 
---BbC04y
-Content-Disposition: file; filename="file1.txt"
-Content-Type: text/plain
+Some jpg content that I can't copy paste...
+-----------------------------1471016779686860769544868462
+Content-Disposition: form-data; name="files"; filename="sample.svg"
+Content-Type: image/svg+xml
 
-... contents of file1.txt ...
---BbC04y
-Content-Disposition: file; filename="file2.gif"
-Content-Type: image/gif
-Content-Transfer-Encoding: binary
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-...contents of file2.gif...
---BbC04y--
---AaB03x--
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="375"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1301"
+     inkscape:window-height="744"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="fill:#0075af;fill-opacity:1;stroke:#d2143a;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path2985"
+       sodipodi:sides="5"
+       sodipodi:cx="300"
+       sodipodi:cy="455.21933"
+       sodipodi:r1="294.7846"
+       sodipodi:r2="147.3923"
+       sodipodi:arg1="1.5126097"
+       sodipodi:arg2="2.1409282"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 317.14284,749.50505 220.44603,579.29856 25.415075,562.46243 157.41011,417.9016 113.15434,227.21349 l 178.27423,80.86298 167.67939,-101.0156 -21.8155,194.5369 147.88733,128.25704 -191.75696,39.36744 z"
+       inkscape:transform-center-x="-5.2974342"
+       inkscape:transform-center-y="23.063626" />
+    <text
+       xml:space="preserve"
+       style="font-size:189.26010132px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="199.15393"
+       y="511.05246"
+       id="text2987"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2989"
+         x="199.15393"
+         y="511.05246">Jason</tspan></text>
+  </g>
+</svg>
+
+-----------------------------1471016779686860769544868462--

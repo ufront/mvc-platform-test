@@ -32,3 +32,12 @@
 --remap neko:php
 --php-lib php/
 -php out/php/
+
+--next
+
+# NodeJS
+
+-lib js-kit
+-D nodejs
+-js out/node/server.js
+--macro npm.Package.export('out/node/package.json')

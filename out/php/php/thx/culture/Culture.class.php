@@ -33,37 +33,81 @@ class thx_culture_Culture extends thx_culture_Info {
 	}
 	static $cultures;
 	static function get_cultures() {
+		$GLOBALS['%s']->push("thx.culture.Culture::get_cultures");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === thx_culture_Culture::$cultures) {
 			thx_culture_Culture::$cultures = new haxe_ds_StringMap();
 		}
-		return thx_culture_Culture::$cultures;
+		{
+			$tmp = thx_culture_Culture::$cultures;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function get($name) {
-		$key = strtolower($name);
+		$GLOBALS['%s']->push("thx.culture.Culture::get");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this1 = thx_culture_Culture::get_cultures();
-		return $this1->get($key);
+		$key = strtolower($name);
+		{
+			$tmp = $this1->get($key);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function names() {
+		$GLOBALS['%s']->push("thx.culture.Culture::names");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this1 = thx_culture_Culture::get_cultures();
-		return $this1->keys();
+		{
+			$tmp = $this1->keys();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function exists($culture) {
-		$key = strtolower($culture);
+		$GLOBALS['%s']->push("thx.culture.Culture::exists");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$this1 = thx_culture_Culture::get_cultures();
-		return $this1->exists($key);
+		$key = strtolower($culture);
+		{
+			$tmp = $this1->exists($key);
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static $_defaultCulture;
 	static function get_defaultCulture() {
+		$GLOBALS['%s']->push("thx.culture.Culture::get_defaultCulture");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === thx_culture_Culture::$_defaultCulture) {
-			return thx_cultures_EnUS::get_culture();
+			$tmp = thx_cultures_EnUS::get_culture();
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		} else {
-			return thx_culture_Culture::$_defaultCulture;
+			$tmp = thx_culture_Culture::$_defaultCulture;
+			$GLOBALS['%s']->pop();
+			return $tmp;
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function set_defaultCulture($culture) {
-		return thx_culture_Culture::$_defaultCulture = $culture;
+		$GLOBALS['%s']->push("thx.culture.Culture::set_defaultCulture");
+		$__hx__spos = $GLOBALS['%s']->length;
+		{
+			$tmp = thx_culture_Culture::$_defaultCulture = $culture;
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	static function add($culture) {
+		$GLOBALS['%s']->push("thx.culture.Culture::add");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === thx_culture_Culture::$_defaultCulture) {
 			thx_culture_Culture::$_defaultCulture = $culture;
 		}
@@ -72,8 +116,11 @@ class thx_culture_Culture extends thx_culture_Info {
 			$this2 = thx_culture_Culture::get_cultures();
 			$this2->set($name, $culture);
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static function loadAll() {
+		$GLOBALS['%s']->push("thx.culture.Culture::loadAll");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$dir = _hx_string_or_null(Sys::getCwd()) . "lib/thx/cultures/";
 		{
 			$_g = 0;
@@ -85,6 +132,7 @@ class thx_culture_Culture extends thx_culture_Info {
 				unset($file);
 			}
 		}
+		$GLOBALS['%s']->pop();
 	}
 	static $__properties__ = array("set_defaultCulture" => "set_defaultCulture","get_defaultCulture" => "get_defaultCulture","get_cultures" => "get_cultures");
 	function __toString() { return 'thx.culture.Culture'; }

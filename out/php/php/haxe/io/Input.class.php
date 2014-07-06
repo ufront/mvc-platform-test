@@ -3,9 +3,14 @@
 class haxe_io_Input {
 	public function __construct(){}
 	public function readByte() {
+		$GLOBALS['%s']->push("haxe.io.Input::readByte");
+		$__hx__spos = $GLOBALS['%s']->length;
 		throw new HException("Not implemented");
+		$GLOBALS['%s']->pop();
 	}
 	public function readBytes($s, $pos, $len) {
+		$GLOBALS['%s']->push("haxe.io.Input::readBytes");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$k = $len;
 		$b = $s->b;
 		if($pos < 0 || $len < 0 || $pos + $len > $s->length) {
@@ -16,9 +21,20 @@ class haxe_io_Input {
 			$pos++;
 			$k--;
 		}
-		return $len;
+		{
+			$GLOBALS['%s']->pop();
+			return $len;
+		}
+		$GLOBALS['%s']->pop();
+	}
+	public function close() {
+		$GLOBALS['%s']->push("haxe.io.Input::close");
+		$__hx__spos = $GLOBALS['%s']->length;
+		$GLOBALS['%s']->pop();
 	}
 	public function readAll($bufsize = null) {
+		$GLOBALS['%s']->push("haxe.io.Input::readAll");
+		$__hx__spos = $GLOBALS['%s']->length;
 		if($bufsize === null) {
 			$bufsize = 8192;
 		}
@@ -41,11 +57,23 @@ class haxe_io_Input {
 		}catch(Exception $__hx__e) {
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 			if(($e = $_ex_) instanceof haxe_io_Eof){
+				$GLOBALS['%e'] = (new _hx_array(array()));
+				while($GLOBALS['%s']->length >= $__hx__spos) {
+					$GLOBALS['%e']->unshift($GLOBALS['%s']->pop());
+				}
+				$GLOBALS['%s']->push($GLOBALS['%e'][0]);
 			} else throw $__hx__e;;
 		}
-		return $total->getBytes();
+		{
+			$tmp = $total->getBytes();
+			$GLOBALS['%s']->pop();
+			return $tmp;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	public function read($nbytes) {
+		$GLOBALS['%s']->push("haxe.io.Input::read");
+		$__hx__spos = $GLOBALS['%s']->length;
 		$s = haxe_io_Bytes::alloc($nbytes);
 		$p = 0;
 		while($nbytes > 0) {
@@ -57,7 +85,11 @@ class haxe_io_Input {
 			$nbytes -= $k;
 			unset($k);
 		}
-		return $s;
+		{
+			$GLOBALS['%s']->pop();
+			return $s;
+		}
+		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'haxe.io.Input'; }
 }
