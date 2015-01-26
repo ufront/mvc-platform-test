@@ -3,20 +3,10 @@
 class Reflect {
 	public function __construct(){}
 	static function field($o, $field) {
-		$GLOBALS['%s']->push("Reflect::field");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = _hx_field($o, $field);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return _hx_field($o, $field);
 	}
 	static function setProperty($o, $field, $value) {
-		$GLOBALS['%s']->push("Reflect::setProperty");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $o) {
-			$GLOBALS['%s']->pop();
 			null;
 			return;
 		}
@@ -28,122 +18,64 @@ class Reflect {
 		}
 		$cls_vars = get_class_vars($cls);
 		if(isset($cls_vars['__properties__']) && isset($cls_vars['__properties__']['set_'.$field]) && ($field = $cls_vars['__properties__']['set_'.$field])) {
-			$tmp = $o->$field($value);
-			$GLOBALS['%s']->pop();
-			$tmp;
+			$o->$field($value);
 			return;
 		} else {
-			$tmp = $o->$field = $value;
-			$GLOBALS['%s']->pop();
-			$tmp;
+			$o->$field = $value;
 			return;
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function callMethod($o, $func, $args) {
-		$GLOBALS['%s']->push("Reflect::callMethod");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(is_string($o) && !is_array($func)) {
-			$tmp = call_user_func_array(Reflect::field($o, $func), $args->a);
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return call_user_func_array(Reflect::field($o, $func), $args->a);
 		}
-		{
-			$tmp = call_user_func_array(((is_callable($func)) ? $func : array($o, $func)), ((null === $args) ? array() : $args->a));
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return call_user_func_array(((is_callable($func)) ? $func : array($o, $func)), ((null === $args) ? array() : $args->a));
 	}
 	static function fields($o) {
-		$GLOBALS['%s']->push("Reflect::fields");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($o === null) {
-			$tmp = new _hx_array(array());
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return new _hx_array(array());
 		}
 		if($o instanceof _hx_array) {
-			$tmp = new _hx_array(array('concat','copy','insert','iterator','length','join','pop','push','remove','reverse','shift','slice','sort','splice','toString','unshift'));
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return new _hx_array(array('concat','copy','insert','iterator','length','join','pop','push','remove','reverse','shift','slice','sort','splice','toString','unshift'));
 		} else {
 			if(is_string($o)) {
-				$tmp = new _hx_array(array('charAt','charCodeAt','indexOf','lastIndexOf','length','split','substr','toLowerCase','toString','toUpperCase'));
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return new _hx_array(array('charAt','charCodeAt','indexOf','lastIndexOf','length','split','substr','toLowerCase','toString','toUpperCase'));
 			} else {
-				$tmp = new _hx_array(_hx_get_object_vars($o));
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return new _hx_array(_hx_get_object_vars($o));
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function isFunction($f) {
-		$GLOBALS['%s']->push("Reflect::isFunction");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = (is_array($f) && is_callable($f)) || _hx_is_lambda($f) || is_array($f) && Reflect_0($f) && $f[1] !== "length";
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return (is_array($f) && is_callable($f)) || _hx_is_lambda($f) || is_array($f) && Reflect_0($f) && $f[1] !== "length";
 	}
 	static function compare($a, $b) {
-		$GLOBALS['%s']->push("Reflect::compare");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if((is_object($_t = $a) && !($_t instanceof Enum) ? $_t === $b : $_t == $b)) {
-			$GLOBALS['%s']->pop();
 			return 0;
 		} else {
 			if($a > $b) {
-				$GLOBALS['%s']->pop();
 				return 1;
 			} else {
-				$GLOBALS['%s']->pop();
 				return -1;
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function compareMethods($f1, $f2) {
-		$GLOBALS['%s']->push("Reflect::compareMethods");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(is_array($f1) && is_array($f1)) {
-			$tmp = $f1[0] === $f2[0] && $f1[1] == $f2[1];
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return $f1[0] === $f2[0] && $f1[1] == $f2[1];
 		}
 		if(is_string($f1) && is_string($f2)) {
-			$tmp = _hx_equal($f1, $f2);
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return _hx_equal($f1, $f2);
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return false;
-		}
-		$GLOBALS['%s']->pop();
+		return false;
 	}
 	static function isObject($v) {
-		$GLOBALS['%s']->push("Reflect::isObject");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($v === null) {
-			$GLOBALS['%s']->pop();
 			return false;
 		}
 		if(is_object($v)) {
-			$tmp = $v instanceof _hx_anonymous || Type::getClass($v) !== null;
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return $v instanceof _hx_anonymous || Type::getClass($v) !== null;
 		}
-		{
-			$tmp = is_string($v) && !_hx_is_lambda($v);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return is_string($v) && !_hx_is_lambda($v);
 	}
 	function __toString() { return 'Reflect'; }
 }

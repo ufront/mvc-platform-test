@@ -3,8 +3,6 @@
 class ufront_web_Dispatch extends haxe_web_Dispatch {
 	public function __construct($url, $params, $method = null) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		parent::__construct($url,$params);
 		$this->onProcessDispatchRequestTrigger = tink_core__Signal_Signal_Impl_::trigger();
 		$this->onProcessDispatchRequest = tink_core__Signal_SignalTrigger_Impl_::asSignal($this->onProcessDispatchRequestTrigger);
@@ -16,7 +14,6 @@ class ufront_web_Dispatch extends haxe_web_Dispatch {
 		$this->controller = null;
 		$this->action = null;
 		$this->arguments = null;
-		$GLOBALS['%s']->pop();
 	}}
 	public $method;
 	public $controller;
@@ -25,22 +22,14 @@ class ufront_web_Dispatch extends haxe_web_Dispatch {
 	public $onProcessDispatchRequest;
 	public $onProcessDispatchRequestTrigger;
 	public function resolveNames($name) {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::resolveNames");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$arr = (new _hx_array(array()));
 		if($this->method !== null) {
 			$arr->push(_hx_string_or_null($this->method) . "_" . _hx_string_or_null($name));
 		}
 		$arr->push($name);
-		{
-			$GLOBALS['%s']->pop();
-			return $arr;
-		}
-		$GLOBALS['%s']->pop();
+		return $arr;
 	}
 	public function processDispatchRequest($cfg) {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::processDispatchRequest");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$partName = $this->parts->shift();
 		if($partName === null || $partName === "") {
 			$partName = "default";
@@ -98,65 +87,31 @@ class ufront_web_Dispatch extends haxe_web_Dispatch {
 		$this->action = $name;
 		$this->arguments = $args;
 		tink_core__Callback_CallbackList_Impl_::invoke($this->onProcessDispatchRequestTrigger, null);
-		$GLOBALS['%s']->pop();
 	}
 	public function executeDispatchRequest() {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::executeDispatchRequest");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(_hx_field($this, "controller") === null || $this->action === null || $this->arguments === null) {
 			throw new HException(haxe_web_DispatchError::$DEMissing);
 		}
 		$actionMethod = Reflect::field($this->controller, $this->action);
-		{
-			$tmp = Reflect::callMethod($this->controller, $actionMethod, $this->arguments);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return Reflect::callMethod($this->controller, $actionMethod, $this->arguments);
 	}
 	public function runtimeDispatch($cfg) {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::runtimeDispatch");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->runtimeReturnDispatch($cfg);
-		$GLOBALS['%s']->pop();
 	}
 	public function runtimeReturnDispatch($cfg) {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::runtimeReturnDispatch");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->processDispatchRequest($cfg);
 		try {
-			{
-				$tmp = $this->executeDispatchRequest();
-				$GLOBALS['%s']->pop();
-				return $tmp;
-			}
+			return $this->executeDispatchRequest();
 		}catch(Exception $__hx__e) {
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 			if(($e = $_ex_) instanceof haxe_web_Redirect){
-				$GLOBALS['%e'] = (new _hx_array(array()));
-				while($GLOBALS['%s']->length >= $__hx__spos) {
-					$GLOBALS['%e']->unshift($GLOBALS['%s']->pop());
-				}
-				$GLOBALS['%s']->push($GLOBALS['%e'][0]);
 				$this->processDispatchRequest($cfg);
-				{
-					$tmp = $this->executeDispatchRequest();
-					$GLOBALS['%s']->pop();
-					return $tmp;
-				}
+				return $this->executeDispatchRequest();
 			} else throw $__hx__e;;
 		}
-		$GLOBALS['%s']->pop();
 	}
 	public function toString() {
-		$GLOBALS['%s']->push("ufront.web.Dispatch::toString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = Type::getClassName(Type::getClass($this));
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return Type::getClassName(Type::getClass($this));
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

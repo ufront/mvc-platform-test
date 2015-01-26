@@ -3,121 +3,69 @@
 class ufront_handler_RemotingHandler implements ufront_app_UFInitRequired, ufront_app_UFRequestHandler{
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::new");
-		$__hx__spos = $GLOBALS['%s']->length;
+		$this->apiContexts = new HList();
 		$this->apis = new HList();
-		$this->injector = new minject_Injector();
-		$this->injector->mapValue(_hx_qtype("minject.Injector"), $this->injector, null);
-		$GLOBALS['%s']->pop();
 	}}
-	public $injector;
+	public $apiContexts;
 	public $apis;
-	public function loadApi($UFApiContext) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::loadApi");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$this->apis->push($UFApiContext);
-		$GLOBALS['%s']->pop();
+	public $context;
+	public function loadApi($api) {
+		$this->apis->push($api);
+	}
+	public function loadApis($newAPIs) {
+		if(null == $newAPIs) throw new HException('null iterable');
+		$__hx__it = $newAPIs->iterator();
+		while($__hx__it->hasNext()) {
+			$api = $__hx__it->next();
+			$this->apis->push($api);
+		}
+	}
+	public function loadApiContext($apiContext) {
+		$this->apiContexts->push($apiContext);
 	}
 	public function init($app) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::init");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$this->injector->set_parentInjector($app->injector);
-		{
-			$tmp = ufront_core_Sync::success();
-			$GLOBALS['%s']->pop();
-			return $tmp;
+		$ufApp = Std::instance($app, _hx_qtype("ufront.app.UfrontApplication"));
+		if($ufApp !== null) {
+			if(null == $ufApp->configuration->apis) throw new HException('null iterable');
+			$__hx__it = $ufApp->configuration->apis->iterator();
+			while($__hx__it->hasNext()) {
+				$api = $__hx__it->next();
+				$this->apis->push($api);
+			}
+			$this->apiContexts->push($ufApp->configuration->remotingApi);
 		}
-		$GLOBALS['%s']->pop();
+		return ufront_core_Sync::success();
 	}
 	public function dispose($app) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::dispose");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$this->injector = null;
-		$this->apis = null;
-		{
-			$tmp = ufront_core_Sync::success();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		$this->apiContexts = null;
+		return ufront_core_Sync::success();
 	}
 	public function handleRequest($httpContext) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::handleRequest");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$doneTrigger = new tink_core_FutureTrigger();
 		if(ufront_handler_RemotingHandler_0($this, $doneTrigger, $httpContext)) {
-			$actionContext = new ufront_web_context_ActionContext($httpContext);
-			$requestInjector = $this->injector->createChildInjector();
-			$requestInjector->mapValue(_hx_qtype("ufront.auth.UFAuthHandler"), $httpContext->get_auth(), null);
-			$requestInjector->mapValue(_hx_qtype("ufront.log.MessageList"), new ufront_log_MessageList($httpContext->messages, null), null);
-			$requestInjector->mapValue(_hx_qtype("ufront.auth.UFAuthUser"), ((null !== $httpContext->get_auth()) ? $httpContext->get_auth()->get_currentUser() : null), null);
-			$requestInjector->mapValue(_hx_qtype("String"), $httpContext->get_contentDirectory(), "contentDirectory");
-			$requestInjector->mapValue(_hx_qtype("String"), ((null !== $httpContext->_session) ? $httpContext->_session->get_id() : null), "sessionID");
-			$requestInjector->mapValue(_hx_qtype("String"), ((null !== $httpContext->get_auth() && null !== $httpContext->get_auth()->get_currentUser()) ? $httpContext->get_auth()->get_currentUser()->get_userID() : null), "currentUserID");
-			$requestInjector->mapValue(Type::getClass($httpContext->get_auth()), $httpContext->get_auth(), null);
-			$httpContext->injector = $this->injector;
-			$context = new haxe_remoting_Context();
-			if(null == $this->apis) throw new HException('null iterable');
-			$__hx__it = $this->apis->iterator();
-			while($__hx__it->hasNext()) {
-				unset($api);
-				$api = $__hx__it->next();
-				$apiContext = $requestInjector->instantiate($api);
-				{
-					$_g = 0;
-					$_g1 = Reflect::fields($apiContext);
-					while($_g < $_g1->length) {
-						$fieldName = $_g1[$_g];
-						++$_g;
-						$o = Reflect::field($apiContext, $fieldName);
-						if(Reflect::isObject($o)) {
-							$context->addObject($fieldName, $o, null);
-						}
-						unset($o,$fieldName);
-					}
-					unset($_g1,$_g);
-				}
-				unset($apiContext);
-			}
 			$r = $httpContext->response;
 			$remotingResponse = null;
+			$r->setOk();
 			try {
+				$this->initializeContext($httpContext->injector);
 				$params = $httpContext->request->get_params();
 				if(!$params->exists("__x")) {
 					throw new HException("Remoting call did not have parameter `__x` which describes which API call to make.  Aborting");
 				}
-				$remotingResponse = $this->processRequest(ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "__x"), $context, $actionContext);
-				$r->setOk();
+				$u = new haxe_Unserializer(ufront_core__MultiValueMap_MultiValueMap_Impl_::get($params, "__x"));
+				$path = $u->unserialize();
+				$args = $u->unserialize();
+				$apiCallFinished = $this->executeApiCall($path, $args, $this->context, $httpContext->actionContext);
+				$remotingResponse = tink_core__Future_Future_Impl_::map($apiCallFinished, array(new _hx_lambda(array(&$apiCallFinished, &$args, &$doneTrigger, &$httpContext, &$params, &$path, &$r, &$remotingResponse, &$u), "ufront_handler_RemotingHandler_1"), 'execute'), null);
 			}catch(Exception $__hx__e) {
 				$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 				$e = $_ex_;
 				{
-					$GLOBALS['%e'] = (new _hx_array(array()));
-					while($GLOBALS['%s']->length >= $__hx__spos) {
-						$GLOBALS['%e']->unshift($GLOBALS['%s']->pop());
-					}
-					$GLOBALS['%s']->push($GLOBALS['%e'][0]);
-					$remotingResponse = $this->remotingError($e, $httpContext);
 					$r->setInternalError();
+					$remotingResponse = tink_core__Future_Future_Impl_::sync($this->remotingError($e, $httpContext));
 				}
 			}
-			$r->set_contentType("application/x-haxe-remoting");
-			$r->clearContent();
-			$r->write($remotingResponse);
-			$httpContext->completion |= 1 << ufront_web_context_RequestCompletion::$CRequestHandlersComplete->index;
-			{
-				$result = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-				if($doneTrigger->{"list"} === null) {
-					false;
-				} else {
-					$list = $doneTrigger->{"list"};
-					$doneTrigger->{"list"} = null;
-					$doneTrigger->result = $result;
-					tink_core__Callback_CallbackList_Impl_::invoke($list, $result);
-					tink_core__Callback_CallbackList_Impl_::clear($list);
-					true;
-				}
-			}
+			call_user_func_array($remotingResponse, array(array(new _hx_lambda(array(&$doneTrigger, &$e, &$httpContext, &$r, &$remotingResponse), "ufront_handler_RemotingHandler_2"), 'execute')));
 		} else {
 			$result1 = tink_core_Outcome::Success(tink_core_Noise::$Noise);
 			if($doneTrigger->{"list"} === null) {
@@ -131,58 +79,79 @@ class ufront_handler_RemotingHandler implements ufront_app_UFInitRequired, ufron
 				true;
 			}
 		}
-		{
-			$tmp = $doneTrigger->future;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $doneTrigger->future;
 	}
-	public function processRequest($requestData, $ctx, $actionContext) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::processRequest");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$u = new haxe_Unserializer($requestData);
-		$path = $u->unserialize();
-		$args = $u->unserialize();
-		$className = $path->copy();
+	public function initializeContext($injector) {
+		$this->context = new haxe_remoting_Context();
+		if(null == $this->apiContexts) throw new HException('null iterable');
+		$__hx__it = $this->apiContexts->iterator();
+		while($__hx__it->hasNext()) {
+			$apiContextClass = $__hx__it->next();
+			$apiContext = $injector->instantiate($apiContextClass);
+			{
+				$_g = 0;
+				$_g1 = Reflect::fields($apiContext);
+				while($_g < $_g1->length) {
+					$fieldName = $_g1[$_g];
+					++$_g;
+					$api = Reflect::field($apiContext, $fieldName);
+					if(Reflect::isObject($api)) {
+						$this->context->addObject($fieldName, $api, null);
+					}
+					unset($fieldName,$api);
+				}
+				unset($_g1,$_g);
+			}
+			unset($apiContext);
+		}
+		if(null == $this->apis) throw new HException('null iterable');
+		$__hx__it = $this->apis->iterator();
+		while($__hx__it->hasNext()) {
+			$apiClass = $__hx__it->next();
+			$className = Type::getClassName($apiClass);
+			$api1 = $injector->instantiate($apiClass);
+			$this->context->addObject($className, $api1, null);
+			unset($className,$api1);
+		}
+	}
+	public function executeApiCall($path, $args, $remotingContext, $actionContext) {
 		$actionContext->handler = $this;
 		$actionContext->action = $path[$path->length - 1];
-		$actionContext->controller = $ctx->objects->get($actionContext->action);
+		$actionContext->controller = $remotingContext->objects->get($path[0])->obj;
 		$actionContext->args = $args;
-		$data = $ctx->call($path, $args);
-		$s = new haxe_Serializer();
-		$s->serialize($data);
-		{
-			$tmp = "hxr" . _hx_string_or_null($s->toString());
-			$GLOBALS['%s']->pop();
-			return $tmp;
+		$returnType = null;
+		try {
+			$fieldsMeta = haxe_rtti_Meta::getFields(Type::getClass($actionContext->controller));
+			$actionMeta = Reflect::field($fieldsMeta, $actionContext->action);
+			$returnType = $actionMeta->returnType[0];
+		}catch(Exception $__hx__e) {
+			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
+			$e = $_ex_;
+			{
+				$returnType = 0;
+			}
 		}
-		$GLOBALS['%s']->pop();
+		$flags = $returnType;
+		$result = $remotingContext->call($path, $args);
+		if(($flags & 1 << ufront_api_ApiReturnType::$ARTFuture->index) !== 0) {
+			return $result;
+		} else {
+			if(($flags & 1 << ufront_api_ApiReturnType::$ARTVoid->index) !== 0) {
+				return tink_core__Future_Future_Impl_::sync(null);
+			} else {
+				return tink_core__Future_Future_Impl_::sync($result);
+			}
+		}
 	}
 	public function remotingError($e, $httpContext) {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::remotingError");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$httpContext->messages->push(_hx_anonymous(array("msg" => $e, "pos" => _hx_anonymous(array("fileName" => "RemotingHandler.hx", "lineNumber" => 161, "className" => "ufront.handler.RemotingHandler", "methodName" => "remotingError")), "type" => ufront_log_MessageType::$Error)));
+		$httpContext->messages->push(_hx_anonymous(array("msg" => $e, "pos" => _hx_anonymous(array("fileName" => "RemotingHandler.hx", "lineNumber" => 182, "className" => "ufront.handler.RemotingHandler", "methodName" => "remotingError")), "type" => ufront_log_MessageType::$Error)));
 		$s = new haxe_Serializer();
 		$s->serializeException($e);
 		$serializedException = "hxe" . _hx_string_or_null($s->toString());
-		$exceptionStack = haxe_CallStack::toString(haxe_CallStack::exceptionStack());
-		$serializedStack = "hxs" . _hx_string_or_null(haxe_Serializer::run($exceptionStack));
-		{
-			$tmp = _hx_string_or_null($serializedStack) . "\x0A" . _hx_string_or_null($serializedException);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $serializedException;
 	}
 	public function toString() {
-		$GLOBALS['%s']->push("ufront.handler.RemotingHandler::toString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$GLOBALS['%s']->pop();
-			return "ufront.handler.RemotingHandler";
-		}
-		$GLOBALS['%s']->pop();
+		return "ufront.handler.RemotingHandler";
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -200,5 +169,33 @@ function ufront_handler_RemotingHandler_0(&$__hx__this, &$doneTrigger, &$httpCon
 	{
 		$this1 = $httpContext->request->get_clientHeaders();
 		return $this1->exists("X-Haxe-Remoting");
+	}
+}
+function ufront_handler_RemotingHandler_1(&$apiCallFinished, &$args, &$doneTrigger, &$httpContext, &$params, &$path, &$r, &$remotingResponse, &$u, $data) {
+	{
+		$s = new haxe_Serializer();
+		$s->serialize($data);
+		return "hxr" . _hx_string_or_null($s->toString());
+	}
+}
+function ufront_handler_RemotingHandler_2(&$doneTrigger, &$e, &$httpContext, &$r, &$remotingResponse, $response) {
+	{
+		$r->set_contentType("application/x-haxe-remoting");
+		$r->clearContent();
+		$r->write($response);
+		$httpContext->completion |= 1 << ufront_web_context_RequestCompletion::$CRequestHandlersComplete->index;
+		{
+			$result = tink_core_Outcome::Success(tink_core_Noise::$Noise);
+			if($doneTrigger->{"list"} === null) {
+				false;
+			} else {
+				$list = $doneTrigger->{"list"};
+				$doneTrigger->{"list"} = null;
+				$doneTrigger->result = $result;
+				tink_core__Callback_CallbackList_Impl_::invoke($list, $result);
+				tink_core__Callback_CallbackList_Impl_::clear($list);
+				true;
+			}
+		}
 	}
 }

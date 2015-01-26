@@ -3,56 +3,22 @@
 class tink_core__Ref_Ref_Impl_ {
 	public function __construct(){}
 	static function _new() {
-		$GLOBALS['%s']->push("tink.core._Ref.Ref_Impl_::_new");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = tink_core__Ref_Ref_Impl__0();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return tink_core__Ref_Ref_Impl__0();
 	}
 	static function get_value($this1) {
-		$GLOBALS['%s']->push("tink.core._Ref.Ref_Impl_::get_value");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = $this1[0];
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this1[0];
 	}
 	static function set_value($this1, $param) {
-		$GLOBALS['%s']->push("tink.core._Ref.Ref_Impl_::set_value");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = $this1[0] = $param;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this1[0] = $param;
 	}
 	static function toString($this1) {
-		$GLOBALS['%s']->push("tink.core._Ref.Ref_Impl_::toString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = "@[" . Std::string($this1[0]) . "]";
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return "@[" . Std::string($this1[0]) . "]";
 	}
 	static function to($v) {
-		$GLOBALS['%s']->push("tink.core._Ref.Ref_Impl_::to");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$ret = null;
 		$ret = tink_core__Ref_Ref_Impl__1($ret, $v);
 		$ret[0] = $v;
-		{
-			$GLOBALS['%s']->pop();
-			return $ret;
-		}
-		$GLOBALS['%s']->pop();
+		return $ret;
 	}
 	static $__properties__ = array("set_value" => "set_value","get_value" => "get_value");
 	function __toString() { return 'tink.core._Ref.Ref_Impl_'; }

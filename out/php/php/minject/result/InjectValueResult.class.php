@@ -3,32 +3,15 @@
 class minject_result_InjectValueResult extends minject_result_InjectionResult {
 	public function __construct($value) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("minject.result.InjectValueResult::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		parent::__construct();
 		$this->value = $value;
-		$GLOBALS['%s']->pop();
 	}}
 	public $value;
 	public function getResponse($injector) {
-		$GLOBALS['%s']->push("minject.result.InjectValueResult::getResponse");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = $this->value;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->value;
 	}
 	public function toString() {
-		$GLOBALS['%s']->push("minject.result.InjectValueResult::toString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = "instance of " . _hx_string_or_null(Type::getClassName(Type::getClass($this->value)));
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return "instance of " . _hx_string_or_null(Type::getClassName(Type::getClass($this->value)));
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

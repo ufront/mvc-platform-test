@@ -3,25 +3,26 @@
 class ufront_sys_SysUtil {
 	public function __construct(){}
 	static function mkdir($dir) {
-		$GLOBALS['%s']->push("ufront.sys.SysUtil::mkdir");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$dir = haxe_io_Path::removeTrailingSlashes($dir);
 		if(!file_exists($dir)) {
 			$parentDir = haxe_io_Path::directory($dir);
 			ufront_sys_SysUtil::mkdir($parentDir);
 			{
 				$path = haxe_io_Path::addTrailingSlash($dir);
-				$_p = null;
-				$parts = (new _hx_array(array()));
-				while($path !== ($_p = haxe_io_Path::directory($path))) {
-					$parts->unshift($path);
-					$path = $_p;
-				}
+				$parts = null;
 				{
-					$_g = 0;
-					while($_g < $parts->length) {
-						$part = $parts[$_g];
-						++$_g;
+					$_g = (new _hx_array(array()));
+					while(($path = haxe_io_Path::directory($path)) !== "") {
+						$_g->push($path);
+					}
+					$parts = $_g;
+				}
+				$parts->reverse();
+				{
+					$_g1 = 0;
+					while($_g1 < $parts->length) {
+						$part = $parts[$_g1];
+						++$_g1;
 						if(_hx_char_code_at($part, strlen($part) - 1) !== 58 && !file_exists($part)) {
 							@mkdir($part, 493);
 						}
@@ -30,11 +31,8 @@ class ufront_sys_SysUtil {
 				}
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function recursiveCopy($inFile, $outFile) {
-		$GLOBALS['%s']->push("ufront.sys.SysUtil::recursiveCopy");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$inFile = haxe_io_Path::removeTrailingSlashes($inFile);
 		$outFile = haxe_io_Path::removeTrailingSlashes($outFile);
 		if(!file_exists($inFile)) {
@@ -68,33 +66,25 @@ class ufront_sys_SysUtil {
 				sys_io_File::saveBytes($outFile, sys_io_File::getBytes($inFile));
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function getCommandOutput($cmd, $args) {
-		$GLOBALS['%s']->push("ufront.sys.SysUtil::getCommandOutput");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$p = new sys_io_Process($cmd, $args);
 		$code = $p->exitCode();
 		$stdout = $p->stdout->readAll(null)->toString();
 		$stderr = $p->stderr->readAll(null)->toString();
 		switch($code) {
 		case 0:{
-			$GLOBALS['%s']->pop();
 			return $stdout;
 		}break;
 		default:{
 			throw new HException("Command `" . _hx_string_or_null($cmd) . " " . _hx_string_or_null($args->join(" ")) . "` failed. \x0AExit code: " . _hx_string_rec($code, "") . "\x0AStdout: " . _hx_string_or_null($stdout) . "\x0AStderr: " . _hx_string_or_null($stderr));
 		}break;
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function areFilesDifferent($file1, $file2) {
-		$GLOBALS['%s']->push("ufront.sys.SysUtil::areFilesDifferent");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$file1Stat = sys_FileSystem::stat($file1);
 		$file2Stat = sys_FileSystem::stat($file2);
 		if($file1Stat->size !== $file2Stat->size) {
-			$GLOBALS['%s']->pop();
 			return true;
 		} else {
 			$input1 = sys_io_File::read($file1, null);
@@ -118,12 +108,8 @@ class ufront_sys_SysUtil {
 			}
 			$input1->close();
 			$input2->close();
-			{
-				$GLOBALS['%s']->pop();
-				return $differenceFound;
-			}
+			return $differenceFound;
 		}
-		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'ufront.sys.SysUtil'; }
 }

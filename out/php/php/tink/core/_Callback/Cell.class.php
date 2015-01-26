@@ -2,18 +2,12 @@
 
 class tink_core__Callback_Cell {
 	public function __construct() {
-		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("tink.core._Callback.Cell::new");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$GLOBALS['%s']->pop();
-	}}
+		;
+	}
 	public $cb;
 	public function free() {
-		$GLOBALS['%s']->push("tink.core._Callback.Cell::free");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->cb = null;
 		tink_core__Callback_Cell::$pool->push($this);
-		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -27,18 +21,11 @@ class tink_core__Callback_Cell {
 	}
 	static $pool;
 	static function get() {
-		$GLOBALS['%s']->push("tink.core._Callback.Cell::get");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(tink_core__Callback_Cell::$pool->length > 0) {
-			$tmp = tink_core__Callback_Cell::$pool->pop();
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return tink_core__Callback_Cell::$pool->pop();
 		} else {
-			$tmp = new tink_core__Callback_Cell();
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return new tink_core__Callback_Cell();
 		}
-		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'tink.core._Callback.Cell'; }
 }

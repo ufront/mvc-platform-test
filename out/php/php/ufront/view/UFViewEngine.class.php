@@ -3,8 +3,6 @@
 class ufront_view_UFViewEngine {
 	public function __construct($cachingEnabled = null) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($cachingEnabled === null) {
 			$cachingEnabled = true;
 		}
@@ -12,20 +10,15 @@ class ufront_view_UFViewEngine {
 			$this->cache = new haxe_ds_StringMap();
 		}
 		$this->engines = (new _hx_array(array()));
-		$GLOBALS['%s']->pop();
 	}}
 	public $engines;
 	public $cache;
 	public function getTemplate($path, $templatingEngine = null) {
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplate");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$_g = $this;
 		if($this->cache !== null && $this->cache->exists($path)) {
 			$cached = $this->cache->get($path);
 			if($templatingEngine === null || $templatingEngine->type === $cached->a) {
-				$tmp = tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Success($cached->b));
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Success($cached->b));
 			}
 		}
 		$tplStrReady = new tink_core_FutureTrigger();
@@ -75,28 +68,13 @@ class ufront_view_UFViewEngine {
 				}
 			}
 		}
-		{
-			$tmp = tink_core__Future_Future_Impl_::_tryFailingMap($tplStrReady->future, array(new _hx_lambda(array(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$tplStrReady), "ufront_view_UFViewEngine_4"), 'execute'));
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return tink_core__Future_Future_Impl_::_tryFailingMap($tplStrReady->future, array(new _hx_lambda(array(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$tplStrReady), "ufront_view_UFViewEngine_4"), 'execute'));
 	}
 	public function getTemplateString($path) {
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplateString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(new tink_core_TypedError(null, "Attempting to fetch template " . _hx_string_or_null($path) . " with UFViewEngine.  This is an abstract class, you must use one of the ViewEngine implementations.", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 214, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplateString")))));
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(new tink_core_TypedError(null, "Attempting to fetch template " . _hx_string_or_null($path) . " with UFViewEngine.  This is an abstract class, you must use one of the ViewEngine implementations.", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 214, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplateString")))));
 	}
 	public function addTemplatingEngine($engine) {
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::addTemplatingEngine");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->engines->push($engine);
-		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -112,8 +90,6 @@ class ufront_view_UFViewEngine {
 }
 function ufront_view_UFViewEngine_0(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$this1, &$tplStrReady, $result) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplate@100");
-		$__hx__spos2 = $GLOBALS['%s']->length;
 		switch($result->index) {
 		case 1:{
 			$err = $result->params[0];
@@ -165,13 +141,10 @@ function ufront_view_UFViewEngine_0(&$_g, &$ext, &$finalPath, &$path, &$templati
 			}
 		}break;
 		}
-		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_view_UFViewEngine_1(&$_g, &$ext, &$exts, &$finalPath, &$path, &$templatingEngine, &$testNextExtension, &$testNextExtension1, &$tplStrReady) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplate@109");
-		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($exts->length > 0) {
 			$ext1 = $exts->shift();
 			$finalPath = haxe_io_Path::withExtension($path, $ext1);
@@ -192,13 +165,10 @@ function ufront_view_UFViewEngine_1(&$_g, &$ext, &$exts, &$finalPath, &$path, &$
 				true;
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_view_UFViewEngine_2(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$testNextEngine, &$testNextEngine1, &$tplEngines, &$tplStrReady) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplate@125");
-		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($tplEngines->length > 0) {
 			$engine = $tplEngines->shift();
 			if(Lambda::has($engine->extensions, $ext)) {
@@ -223,13 +193,10 @@ function ufront_view_UFViewEngine_2(&$_g, &$ext, &$finalPath, &$path, &$templati
 				true;
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_view_UFViewEngine_3(&$_g, &$engine1, &$ext, &$ext2, &$extensions, &$extensionsUsed, &$finalPath, &$path, &$templatingEngine, &$testNextEngineOrExtension, &$testNextEngineOrExtension1, &$tplEngines1, &$tplStrReady) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplate@151");
-		$__hx__spos2 = $GLOBALS['%s']->length;
 		if($extensions->length === 0 && $tplEngines1->length === 0) {
 			{
 				$result13 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No template found for " . _hx_string_or_null($path) . " with extensions " . Std::string($extensionsUsed), _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 153, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
@@ -244,10 +211,7 @@ function ufront_view_UFViewEngine_3(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 					true;
 				}
 			}
-			{
-				$GLOBALS['%s']->pop();
-				return;
-			}
+			return;
 		} else {
 			if($extensions->length === 0) {
 				$engine1 = $tplEngines1->shift();
@@ -263,17 +227,11 @@ function ufront_view_UFViewEngine_3(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 			$this4 = $_g->getTemplateString($finalPath);
 			call_user_func_array($this4, array(array(new _hx_lambda(array(&$_g, &$engine1, &$ext, &$ext2, &$extensions, &$extensionsUsed, &$finalPath, &$path, &$templatingEngine, &$testNextEngineOrExtension, &$testNextEngineOrExtension1, &$this4, &$tplEngines1, &$tplStrReady), "ufront_view_UFViewEngine_7"), 'execute')));
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return;
-		}
-		$GLOBALS['%s']->pop();
+		return;
 	}
 }
 function ufront_view_UFViewEngine_4(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$tplStrReady, $tplStr) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::getTemplate@185");
-		$__hx__spos2 = $GLOBALS['%s']->length;
 		try {
 			$tpl4 = $templatingEngine->factory($tplStr);
 			{
@@ -281,34 +239,18 @@ function ufront_view_UFViewEngine_4(&$_g, &$ext, &$finalPath, &$path, &$templati
 				$_g->cache->set($path, $v);
 				$v;
 			}
-			{
-				$tmp = tink_core_Outcome::Success($tpl4);
-				$GLOBALS['%s']->pop();
-				return $tmp;
-			}
+			return tink_core_Outcome::Success($tpl4);
 		}catch(Exception $__hx__e) {
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 			$e = $_ex_;
 			{
-				$GLOBALS['%e'] = (new _hx_array(array()));
-				while($GLOBALS['%s']->length >= $__hx__spos2) {
-					$GLOBALS['%e']->unshift($GLOBALS['%s']->pop());
-				}
-				$GLOBALS['%s']->push($GLOBALS['%e'][0]);
-				{
-					$tmp = tink_core_Outcome::Failure(tink_core_TypedError::withData(null, "Failed to pass template " . _hx_string_or_null($finalPath) . " using " . _hx_string_or_null($templatingEngine->type), $e, _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 192, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
-					$GLOBALS['%s']->pop();
-					return $tmp;
-				}
+				return tink_core_Outcome::Failure(tink_core_TypedError::withData(null, "Failed to pass template " . _hx_string_or_null($finalPath) . " using " . _hx_string_or_null($templatingEngine->type), $e, _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 192, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_view_UFViewEngine_5(&$_g, &$ext, &$ext1, &$exts, &$finalPath, &$path, &$templatingEngine, &$testNextExtension, &$testNextExtension1, &$this2, &$tplStrReady, $result4) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::addTemplatingEngine@113");
-		$__hx__spos3 = $GLOBALS['%s']->length;
 		switch($result4->index) {
 		case 1:{
 			$err1 = $result4->params[0];
@@ -350,13 +292,10 @@ function ufront_view_UFViewEngine_5(&$_g, &$ext, &$ext1, &$exts, &$finalPath, &$
 			}
 		}break;
 		}
-		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_view_UFViewEngine_6(&$_g, &$engine, &$ext, &$finalPath, &$path, &$templatingEngine, &$testNextEngine, &$testNextEngine1, &$this3, &$tplEngines, &$tplStrReady, $result8) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::addTemplatingEngine@130");
-		$__hx__spos3 = $GLOBALS['%s']->length;
 		switch($result8->index) {
 		case 1:{
 			$err2 = $result8->params[0];
@@ -411,13 +350,10 @@ function ufront_view_UFViewEngine_6(&$_g, &$engine, &$ext, &$finalPath, &$path, 
 			}
 		}break;
 		}
-		$GLOBALS['%s']->pop();
 	}
 }
 function ufront_view_UFViewEngine_7(&$_g, &$engine1, &$ext, &$ext2, &$extensions, &$extensionsUsed, &$finalPath, &$path, &$templatingEngine, &$testNextEngineOrExtension, &$testNextEngineOrExtension1, &$this4, &$tplEngines1, &$tplStrReady, $result14) {
 	{
-		$GLOBALS['%s']->push("ufront.view.UFViewEngine::addTemplatingEngine@167");
-		$__hx__spos3 = $GLOBALS['%s']->length;
 		switch($result14->index) {
 		case 1:{
 			$err3 = $result14->params[0];
@@ -462,6 +398,5 @@ function ufront_view_UFViewEngine_7(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 			}
 		}break;
 		}
-		$GLOBALS['%s']->pop();
 	}
 }

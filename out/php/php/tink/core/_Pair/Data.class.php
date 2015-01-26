@@ -3,11 +3,8 @@
 class tink_core__Pair_Data {
 	public function __construct($a, $b) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("tink.core._Pair.Data::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->a = $a;
 		$this->b = $b;
-		$GLOBALS['%s']->pop();
 	}}
 	public $a;
 	public $b;

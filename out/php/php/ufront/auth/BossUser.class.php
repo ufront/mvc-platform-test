@@ -2,29 +2,14 @@
 
 class ufront_auth_BossUser implements ufront_auth_UFAuthUser{
 	public function __construct() {
-		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("ufront.auth.BossUser::new");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$GLOBALS['%s']->pop();
-	}}
+		;
+	}
 	public $userID;
 	public function can($p = null, $ps = null) {
-		$GLOBALS['%s']->push("ufront.auth.BossUser::can");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$GLOBALS['%s']->pop();
-			return true;
-		}
-		$GLOBALS['%s']->pop();
+		return true;
 	}
 	public function get_userID() {
-		$GLOBALS['%s']->push("ufront.auth.BossUser::get_userID");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$GLOBALS['%s']->pop();
-			return "The Boss";
-		}
-		$GLOBALS['%s']->pop();
+		return "The Boss";
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

@@ -3,37 +3,23 @@
 class minject_point_MethodInjectionPoint extends minject_point_InjectionPoint {
 	public function __construct($meta, $injector = null) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("minject.point.MethodInjectionPoint::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->requiredParameters = 0;
 		parent::__construct($meta,$injector);
-		$GLOBALS['%s']->pop();
 	}}
 	public $methodName;
 	public $_parameterInjectionConfigs;
 	public $requiredParameters;
 	public function applyInjection($target, $injector) {
-		$GLOBALS['%s']->push("minject.point.MethodInjectionPoint::applyInjection");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$parameters = $this->gatherParameterValues($target, $injector);
 		$method = Reflect::field($target, $this->methodName);
 		mcore_util_Reflection::callMethod($target, $method, $parameters);
-		{
-			$GLOBALS['%s']->pop();
-			return $target;
-		}
-		$GLOBALS['%s']->pop();
+		return $target;
 	}
 	public function initializeInjection($meta) {
-		$GLOBALS['%s']->push("minject.point.MethodInjectionPoint::initializeInjection");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->methodName = $meta->name[0];
 		$this->gatherParameters($meta);
-		$GLOBALS['%s']->pop();
 	}
 	public function gatherParameters($meta) {
-		$GLOBALS['%s']->push("minject.point.MethodInjectionPoint::gatherParameters");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$nameArgs = $meta->inject;
 		$args = $meta->args;
 		if($nameArgs === null) {
@@ -63,11 +49,8 @@ class minject_point_MethodInjectionPoint extends minject_point_InjectionPoint {
 				unset($parameterTypeName,$injectionName,$arg);
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	public function gatherParameterValues($target, $injector) {
-		$GLOBALS['%s']->push("minject.point.MethodInjectionPoint::gatherParameterValues");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$parameters = (new _hx_array(array()));
 		$length = $this->_parameterInjectionConfigs->length;
 		{
@@ -87,11 +70,7 @@ class minject_point_MethodInjectionPoint extends minject_point_InjectionPoint {
 				unset($parameterConfig,$injection,$i,$config);
 			}
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return $parameters;
-		}
-		$GLOBALS['%s']->pop();
+		return $parameters;
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

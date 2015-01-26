@@ -3,8 +3,6 @@
 class haxe_Unserializer {
 	public function __construct($buf) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("haxe.Unserializer::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->buf = $buf;
 		$this->length = strlen($buf);
 		$this->pos = 0;
@@ -16,7 +14,6 @@ class haxe_Unserializer {
 			haxe_Unserializer::$DEFAULT_RESOLVER = $r;
 		}
 		$this->setResolver($r);
-		$GLOBALS['%s']->pop();
 	}}
 	public $buf;
 	public $pos;
@@ -25,18 +22,13 @@ class haxe_Unserializer {
 	public $scache;
 	public $resolver;
 	public function setResolver($r) {
-		$GLOBALS['%s']->push("haxe.Unserializer::setResolver");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($r === null) {
 			$this->resolver = _hx_anonymous(array("resolveClass" => array(new _hx_lambda(array(&$r), "haxe_Unserializer_0"), 'execute'), "resolveEnum" => array(new _hx_lambda(array(&$r), "haxe_Unserializer_1"), 'execute')));
 		} else {
 			$this->resolver = $r;
 		}
-		$GLOBALS['%s']->pop();
 	}
 	public function readDigits() {
-		$GLOBALS['%s']->push("haxe.Unserializer::readDigits");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$k = 0;
 		$s = false;
 		$fpos = $this->pos;
@@ -63,15 +55,9 @@ class haxe_Unserializer {
 		if($s) {
 			$k *= -1;
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return $k;
-		}
-		$GLOBALS['%s']->pop();
+		return $k;
 	}
 	public function unserializeObject($o) {
-		$GLOBALS['%s']->push("haxe.Unserializer::unserializeObject");
-		$__hx__spos = $GLOBALS['%s']->length;
 		while(true) {
 			if($this->pos >= $this->length) {
 				throw new HException("Invalid object");
@@ -88,34 +74,22 @@ class haxe_Unserializer {
 			unset($v,$k);
 		}
 		$this->pos++;
-		$GLOBALS['%s']->pop();
 	}
 	public function unserializeEnum($edecl, $tag) {
-		$GLOBALS['%s']->push("haxe.Unserializer::unserializeEnum");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(haxe_Unserializer_2($this, $edecl, $tag) !== 58) {
 			throw new HException("Invalid enum format");
 		}
 		$nargs = $this->readDigits();
 		if($nargs === 0) {
-			$tmp = Type::createEnum($edecl, $tag, null);
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return Type::createEnum($edecl, $tag, null);
 		}
 		$args = new _hx_array(array());
 		while($nargs-- > 0) {
 			$args->push($this->unserialize());
 		}
-		{
-			$tmp = Type::createEnum($edecl, $tag, $args);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return Type::createEnum($edecl, $tag, $args);
 	}
 	public function unserialize() {
-		$GLOBALS['%s']->push("haxe.Unserializer::unserialize");
-		$__hx__spos = $GLOBALS['%s']->length;
 		{
 			$_g = null;
 			{
@@ -124,25 +98,19 @@ class haxe_Unserializer {
 			}
 			switch($_g) {
 			case 110:{
-				$GLOBALS['%s']->pop();
 				return null;
 			}break;
 			case 116:{
-				$GLOBALS['%s']->pop();
 				return true;
 			}break;
 			case 102:{
-				$GLOBALS['%s']->pop();
 				return false;
 			}break;
 			case 122:{
-				$GLOBALS['%s']->pop();
 				return 0;
 			}break;
 			case 105:{
-				$tmp = $this->readDigits();
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return $this->readDigits();
 			}break;
 			case 100:{
 				$p1 = $this->pos;
@@ -155,11 +123,7 @@ class haxe_Unserializer {
 					}
 					unset($c);
 				}
-				{
-					$tmp = Std::parseFloat(_hx_substr($this->buf, $p1, $this->pos - $p1));
-					$GLOBALS['%s']->pop();
-					return $tmp;
-				}
+				return Std::parseFloat(_hx_substr($this->buf, $p1, $this->pos - $p1));
 			}break;
 			case 121:{
 				$len = $this->readDigits();
@@ -170,25 +134,16 @@ class haxe_Unserializer {
 				$this->pos += $len;
 				$s = urldecode($s);
 				$this->scache->push($s);
-				{
-					$GLOBALS['%s']->pop();
-					return $s;
-				}
+				return $s;
 			}break;
 			case 107:{
-				$tmp = Math::$NaN;
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return Math::$NaN;
 			}break;
 			case 109:{
-				$tmp = Math::$NEGATIVE_INFINITY;
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return Math::$NEGATIVE_INFINITY;
 			}break;
 			case 112:{
-				$tmp = Math::$POSITIVE_INFINITY;
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return Math::$POSITIVE_INFINITY;
 			}break;
 			case 97:{
 				$buf = $this->buf;
@@ -210,41 +165,27 @@ class haxe_Unserializer {
 					}
 					unset($c1);
 				}
-				{
-					$GLOBALS['%s']->pop();
-					return $a;
-				}
+				return $a;
 			}break;
 			case 111:{
 				$o = _hx_anonymous(array());
 				$this->cache->push($o);
 				$this->unserializeObject($o);
-				{
-					$GLOBALS['%s']->pop();
-					return $o;
-				}
+				return $o;
 			}break;
 			case 114:{
 				$n1 = $this->readDigits();
 				if($n1 < 0 || $n1 >= $this->cache->length) {
 					throw new HException("Invalid reference");
 				}
-				{
-					$tmp = $this->cache[$n1];
-					$GLOBALS['%s']->pop();
-					return $tmp;
-				}
+				return $this->cache[$n1];
 			}break;
 			case 82:{
 				$n2 = $this->readDigits();
 				if($n2 < 0 || $n2 >= $this->scache->length) {
 					throw new HException("Invalid string reference");
 				}
-				{
-					$tmp = $this->scache[$n2];
-					$GLOBALS['%s']->pop();
-					return $tmp;
-				}
+				return $this->scache[$n2];
 			}break;
 			case 120:{
 				throw new HException($this->unserialize());
@@ -258,10 +199,7 @@ class haxe_Unserializer {
 				$o1 = Type::createEmptyInstance($cl);
 				$this->cache->push($o1);
 				$this->unserializeObject($o1);
-				{
-					$GLOBALS['%s']->pop();
-					return $o1;
-				}
+				return $o1;
 			}break;
 			case 119:{
 				$name1 = $this->unserialize();
@@ -271,10 +209,7 @@ class haxe_Unserializer {
 				}
 				$e = $this->unserializeEnum($edecl, $this->unserialize());
 				$this->cache->push($e);
-				{
-					$GLOBALS['%s']->pop();
-					return $e;
-				}
+				return $e;
 			}break;
 			case 106:{
 				$name2 = $this->unserialize();
@@ -290,10 +225,7 @@ class haxe_Unserializer {
 				}
 				$e1 = $this->unserializeEnum($edecl1, $tag);
 				$this->cache->push($e1);
-				{
-					$GLOBALS['%s']->pop();
-					return $e1;
-				}
+				return $e1;
 			}break;
 			case 108:{
 				$l = new HList();
@@ -303,10 +235,7 @@ class haxe_Unserializer {
 					$l->add($this->unserialize());
 				}
 				$this->pos++;
-				{
-					$GLOBALS['%s']->pop();
-					return $l;
-				}
+				return $l;
 			}break;
 			case 98:{
 				$h = new haxe_ds_StringMap();
@@ -318,10 +247,7 @@ class haxe_Unserializer {
 					unset($s1);
 				}
 				$this->pos++;
-				{
-					$GLOBALS['%s']->pop();
-					return $h;
-				}
+				return $h;
 			}break;
 			case 113:{
 				$h1 = new haxe_ds_IntMap();
@@ -345,10 +271,7 @@ class haxe_Unserializer {
 				if($c2 !== 104) {
 					throw new HException("Invalid IntMap format");
 				}
-				{
-					$GLOBALS['%s']->pop();
-					return $h1;
-				}
+				return $h1;
 			}break;
 			case 77:{
 				$h2 = new haxe_ds_ObjectMap();
@@ -360,19 +283,13 @@ class haxe_Unserializer {
 					unset($s2);
 				}
 				$this->pos++;
-				{
-					$GLOBALS['%s']->pop();
-					return $h2;
-				}
+				return $h2;
 			}break;
 			case 118:{
 				$d = Date::fromString(_hx_substr($this->buf, $this->pos, 19));
 				$this->cache->push($d);
 				$this->pos += 19;
-				{
-					$GLOBALS['%s']->pop();
-					return $d;
-				}
+				return $d;
 			}break;
 			case 115:{
 				$len1 = $this->readDigits();
@@ -431,10 +348,7 @@ class haxe_Unserializer {
 				}
 				$this->pos += $len1;
 				$this->cache->push($bytes);
-				{
-					$GLOBALS['%s']->pop();
-					return $bytes;
-				}
+				return $bytes;
 			}break;
 			case 67:{
 				$name3 = $this->unserialize();
@@ -448,10 +362,7 @@ class haxe_Unserializer {
 				if(haxe_Unserializer_13($this, $_g, $cl1, $name3, $o2) !== 103) {
 					throw new HException("Invalid custom data");
 				}
-				{
-					$GLOBALS['%s']->pop();
-					return $o2;
-				}
+				return $o2;
 			}break;
 			default:{
 			}break;
@@ -459,7 +370,6 @@ class haxe_Unserializer {
 		}
 		$this->pos--;
 		throw new HException("Invalid char " . _hx_string_or_null(_hx_char_at($this->buf, $this->pos)) . " at position " . _hx_string_rec($this->pos, ""));
-		$GLOBALS['%s']->pop();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -475,8 +385,6 @@ class haxe_Unserializer {
 	static $BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
 	static $CODES = null;
 	static function initCodes() {
-		$GLOBALS['%s']->push("haxe.Unserializer::initCodes");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$codes = new _hx_array(array());
 		{
 			$_g1 = 0;
@@ -487,45 +395,22 @@ class haxe_Unserializer {
 				unset($i);
 			}
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return $codes;
-		}
-		$GLOBALS['%s']->pop();
+		return $codes;
 	}
 	static function run($v) {
-		$GLOBALS['%s']->push("haxe.Unserializer::run");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = _hx_deref(new haxe_Unserializer($v))->unserialize();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return _hx_deref(new haxe_Unserializer($v))->unserialize();
 	}
 	function __toString() { return 'haxe.Unserializer'; }
 }
 haxe_Unserializer::$DEFAULT_RESOLVER = _hx_qtype("Type");
 function haxe_Unserializer_0(&$r, $_) {
 	{
-		$GLOBALS['%s']->push("haxe.Unserializer::setResolver@127");
-		$__hx__spos2 = $GLOBALS['%s']->length;
-		{
-			$GLOBALS['%s']->pop();
-			return null;
-		}
-		$GLOBALS['%s']->pop();
+		return null;
 	}
 }
 function haxe_Unserializer_1(&$r, $_1) {
 	{
-		$GLOBALS['%s']->push("haxe.Unserializer::setResolver@128");
-		$__hx__spos2 = $GLOBALS['%s']->length;
-		{
-			$GLOBALS['%s']->pop();
-			return null;
-		}
-		$GLOBALS['%s']->pop();
+		return null;
 	}
 }
 function haxe_Unserializer_2(&$__hx__this, &$edecl, &$tag) {

@@ -6,31 +6,15 @@ class CompileTimeClassList {
 	static $__meta__;
 	static $lists = null;
 	static function get($id) {
-		$GLOBALS['%s']->push("CompileTimeClassList::get");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(CompileTimeClassList::$lists === null) {
 			CompileTimeClassList::initialise();
 		}
-		{
-			$tmp = CompileTimeClassList::$lists->get($id);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return CompileTimeClassList::$lists->get($id);
 	}
 	static function getTyped($id, $type) {
-		$GLOBALS['%s']->push("CompileTimeClassList::getTyped");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = CompileTimeClassList::get($id);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return CompileTimeClassList::get($id);
 	}
 	static function initialise() {
-		$GLOBALS['%s']->push("CompileTimeClassList::initialise");
-		$__hx__spos = $GLOBALS['%s']->length;
 		CompileTimeClassList::$lists = new haxe_ds_StringMap();
 		$m = haxe_rtti_Meta::getType(_hx_qtype("CompileTimeClassList"));
 		if($m->classLists !== null) {
@@ -60,8 +44,7 @@ class CompileTimeClassList {
 				unset($listID,$list,$item,$array);
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	function __toString() { return 'CompileTimeClassList'; }
 }
-CompileTimeClassList::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("classLists" => (new _hx_array(array((new _hx_array(array("null,true,ufront.web.Controller", "testsite.Routes,ufront.web.DefaultController,ufront.web.TestController"))), (new _hx_array(array("null,true,ufront.api.UFApi", ""))))))))));
+CompileTimeClassList::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("classLists" => (new _hx_array(array((new _hx_array(array("null,true,ufront.web.Controller", "testsite.Routes,ufront.web.DefaultUfrontController"))), (new _hx_array(array("null,true,ufront.api.UFApi", ""))))))))));

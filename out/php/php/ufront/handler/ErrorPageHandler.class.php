@@ -5,16 +5,11 @@ class ufront_handler_ErrorPageHandler implements ufront_app_UFErrorHandler{
 		if(!isset($this->renderErrorContent)) $this->renderErrorContent = array(new _hx_lambda(array(&$this), "ufront_handler_ErrorPageHandler_0"), 'execute');
 		if(!isset($this->renderErrorPage)) $this->renderErrorPage = array(new _hx_lambda(array(&$this), "ufront_handler_ErrorPageHandler_1"), 'execute');
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("ufront.handler.ErrorPageHandler::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->catchErrors = true;
-		$GLOBALS['%s']->pop();
 	}}
 	public $catchErrors;
 	public function handleError($httpError, $ctx) {
-		$GLOBALS['%s']->push("ufront.handler.ErrorPageHandler::handleError");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$callStack = " " . _hx_string_or_null(haxe_CallStack::toString(haxe_CallStack::exceptionStack()));
+		$callStack = "";
 		$inner = null;
 		if($httpError !== null && _hx_field($httpError, "data") !== null) {
 			$inner = " (" . Std::string($httpError->data) . ")";
@@ -26,7 +21,7 @@ class ufront_handler_ErrorPageHandler implements ufront_app_UFErrorHandler{
 			$ctx->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "ErrorPageHandler.hx", "lineNumber" => 53, "className" => "ufront.handler.ErrorPageHandler", "methodName" => "handleError")), "type" => ufront_log_MessageType::$Error)));
 		}
 		if(!(($ctx->completion & 1 << ufront_web_context_RequestCompletion::$CRequestHandlersComplete->index) !== 0)) {
-			$showStack = true;
+			$showStack = false;
 			$ctx->response->clear();
 			$ctx->response->status = $httpError->code;
 			$ctx->response->set_contentType("text/html");
@@ -36,27 +31,15 @@ class ufront_handler_ErrorPageHandler implements ufront_app_UFErrorHandler{
 		if(!$this->catchErrors) {
 			throw new HException($httpError);
 		}
-		{
-			$tmp = ufront_core_Sync::success();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return ufront_core_Sync::success();
 	}
 	public function renderErrorContent($error, $showStack = null) { return call_user_func_array($this->renderErrorContent, array($error, $showStack)); }
 	public $renderErrorContent = null;
 	public function renderErrorPage($title, $content) { return call_user_func_array($this->renderErrorPage, array($title, $content)); }
 	public $renderErrorPage = null;
 	public function renderError($error, $showStack = null) {
-		$GLOBALS['%s']->push("ufront.handler.ErrorPageHandler::renderError");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$content = $this->renderErrorContent($error, $showStack);
-		{
-			$tmp = $this->renderErrorPage($error->toString(), $content);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->renderErrorPage($error->toString(), $content);
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -69,24 +52,16 @@ class ufront_handler_ErrorPageHandler implements ufront_app_UFErrorHandler{
 			throw new HException('Unable to call <'.$m.'>');
 	}
 	static function errorStackItems($stack) {
-		$GLOBALS['%s']->push("ufront.handler.ErrorPageHandler::errorStackItems");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$arr = (new _hx_array(array()));
 		$stack->pop();
 		$stack = $stack->slice(2, null);
 		$arr1 = _hx_explode("\x0A", haxe_CallStack::toString($stack));
-		{
-			$GLOBALS['%s']->pop();
-			return $arr1;
-		}
-		$GLOBALS['%s']->pop();
+		return $arr1;
 	}
 	function __toString() { return 'ufront.handler.ErrorPageHandler'; }
 }
 function ufront_handler_ErrorPageHandler_0(&$__hx__this, $error, $showStack) {
 	{
-		$GLOBALS['%s']->push("ufront.handler.ErrorPageHandler::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($showStack === null) {
 			$showStack = false;
 		}
@@ -109,23 +84,12 @@ function ufront_handler_ErrorPageHandler_0(&$__hx__this, $error, $showStack) {
 		} else {
 			$exceptionStack = "";
 		}
-		$content = "\x0A\x09\x09\x09<summary class=\"error-summary\"><h1 class=\"error-message\">" . Std::string($error) . "</h1></summary>\x0A\x09\x09\x09<details class=\"error-details\"> " . _hx_string_or_null($inner) . " " . _hx_string_or_null($pos) . " " . _hx_string_or_null($exceptionStack) . "</details>\x0A\x09\x09";
-		{
-			$GLOBALS['%s']->pop();
-			return $content;
-		}
-		$GLOBALS['%s']->pop();
+		$content = "\x0A\x09\x09\x09<summary class=\"error-summary\"><h1 class=\"error-message\">" . _hx_string_or_null($error->message) . "</h1></summary>\x0A\x09\x09\x09<details class=\"error-details\"> " . _hx_string_or_null($inner) . " " . _hx_string_or_null($pos) . " " . _hx_string_or_null($exceptionStack) . "</details>\x0A\x09\x09";
+		return $content;
 	}
 }
 function ufront_handler_ErrorPageHandler_1(&$__hx__this, $title, $content) {
 	{
-		$GLOBALS['%s']->push("ufront.handler.ErrorPageHandler::new");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = "<!DOCTYPE html>\x0A<html>\x0A<head>\x0A\x09<title>" . _hx_string_or_null($title) . "</title>\x0A\x09<link href=\"//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css\" rel=\"stylesheet\" />\x0A\x09<style>\x0A\x09\x09p[frown] {\x0A\x09\x09\x09text-align: center;\x0A\x09\x09}\x0A\x09\x09p[frown] span { \x0A\x09\x09\x09transform: rotate(90deg); \x0A\x09\x09\x09display: inline-block; \x0A\x09\x09\x09color: #bbb; \x0A\x09\x09\x09font-size: 3em;\x0A\x09\x09}\x0A\x09</style>\x0A</head>\x0A<body style=\"padding-top: 30px;\">\x0A\x09<div class=\"container\">\x0A\x09\x09<div class=\"jumbotron\">\x0A\x09\x09\x09<p frown><span>:(</span></p>\x0A\x09\x09\x09" . _hx_string_or_null($content) . "\x0A\x09\x09</div>\x0A\x09</div>\x0A</body>\x0A</html>";
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return "<!DOCTYPE html>\x0A<html>\x0A<head>\x0A\x09<title>" . _hx_string_or_null($title) . "</title>\x0A\x09<style>\x0A\x09\x09body {\x0A\x09\x09\x09font-family: sans-serif;\x0A\x09\x09}\x0A\x09\x09.container {\x0A\x09\x09\x09max-width: 800px;\x0A\x09\x09\x09margin: 30px auto;\x0A\x09\x09}\x0A\x09\x09.jumbotron {\x0A\x09\x09\x09padding: 30px;\x0A\x09\x09\x09border-radius: 30px;\x0A\x09\x09\x09background-color: rgb(230,230,230);\x0A\x09\x09}\x0A\x09\x09p[frown] {\x0A\x09\x09\x09text-align: center;\x0A\x09\x09}\x0A\x09\x09p[frown] span { \x0A\x09\x09\x09transform: rotate(90deg); \x0A\x09\x09\x09display: inline-block; \x0A\x09\x09\x09color: #bbb; \x0A\x09\x09\x09font-size: 3em;\x0A\x09\x09}\x0A\x09</style>\x0A</head>\x0A<body>\x0A\x09<div class=\"container\">\x0A\x09\x09<div class=\"jumbotron\">\x0A\x09\x09\x09<p frown><span>:(</span></p>\x0A\x09\x09\x09" . _hx_string_or_null($content) . "\x0A\x09\x09</div>\x0A\x09</div>\x0A</body>\x0A</html>";
 	}
 }

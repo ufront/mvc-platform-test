@@ -10,5 +10,7 @@ interface ufront_auth_UFAuthHandler {
 	function requirePermission($permission);
 	function requirePermissions($permissions);
 	function getUserByID($id);
+	function setCurrentUser($user);
+	function toString();
 	//;
 }

@@ -3,18 +3,6 @@
 class haxe_io_Path {
 	public function __construct($path) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("haxe.io.Path::new");
-		$__hx__spos = $GLOBALS['%s']->length;
-		switch($path) {
-		case ".":case "..":{
-			$this->dir = $path;
-			$this->file = "";
-			{
-				$GLOBALS['%s']->pop();
-				return;
-			}
-		}break;
-		}
 		$c1 = _hx_last_index_of($path, "/", null);
 		$c2 = _hx_last_index_of($path, "\\", null);
 		if($c1 < $c2) {
@@ -37,21 +25,13 @@ class haxe_io_Path {
 			$this->ext = null;
 			$this->file = $path;
 		}
-		$GLOBALS['%s']->pop();
 	}}
 	public $dir;
 	public $file;
 	public $ext;
 	public $backslash;
 	public function toString() {
-		$GLOBALS['%s']->push("haxe.io.Path::toString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = _hx_string_or_null((haxe_io_Path_0($this))) . _hx_string_or_null($this->file) . _hx_string_or_null((haxe_io_Path_1($this)));
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return _hx_string_or_null((haxe_io_Path_0($this))) . _hx_string_or_null($this->file) . _hx_string_or_null((haxe_io_Path_1($this)));
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -64,148 +44,63 @@ class haxe_io_Path {
 			throw new HException('Unable to call <'.$m.'>');
 	}
 	static function withoutDirectory($path) {
-		$GLOBALS['%s']->push("haxe.io.Path::withoutDirectory");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$s = new haxe_io_Path($path);
 		$s->dir = null;
-		{
-			$tmp = $s->toString();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $s->toString();
 	}
 	static function directory($path) {
-		$GLOBALS['%s']->push("haxe.io.Path::directory");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$s = new haxe_io_Path($path);
 		if($s->dir === null) {
-			$GLOBALS['%s']->pop();
 			return "";
 		}
-		{
-			$tmp = $s->dir;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $s->dir;
 	}
 	static function extension($path) {
-		$GLOBALS['%s']->push("haxe.io.Path::extension");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$s = new haxe_io_Path($path);
 		if($s->ext === null) {
-			$GLOBALS['%s']->pop();
 			return "";
 		}
-		{
-			$tmp = $s->ext;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $s->ext;
 	}
 	static function withExtension($path, $ext) {
-		$GLOBALS['%s']->push("haxe.io.Path::withExtension");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$s = new haxe_io_Path($path);
 		$s->ext = $ext;
-		{
-			$tmp = $s->toString();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
-	}
-	static function normalize($path) {
-		$GLOBALS['%s']->push("haxe.io.Path::normalize");
-		$__hx__spos = $GLOBALS['%s']->length;
-		$slash = "/";
-		$path = _hx_explode("\\", $path)->join("/");
-		if($path === null || $path === $slash) {
-			$GLOBALS['%s']->pop();
-			return $slash;
-		}
-		$target = (new _hx_array(array()));
-		{
-			$_g = 0;
-			$_g1 = _hx_explode($slash, $path);
-			while($_g < $_g1->length) {
-				$token = $_g1[$_g];
-				++$_g;
-				if($token === ".." && $target->length > 0 && $target[$target->length - 1] !== "..") {
-					$target->pop();
-				} else {
-					if($token !== ".") {
-						$target->push($token);
-					}
-				}
-				unset($token);
-			}
-		}
-		$tmp = $target->join($slash);
-		$regex = new EReg("([^:])/+", "g");
-		$result = $regex->replace($tmp, "\$1" . _hx_string_or_null($slash));
-		{
-			$GLOBALS['%s']->pop();
-			return $result;
-		}
-		$GLOBALS['%s']->pop();
+		return $s->toString();
 	}
 	static function addTrailingSlash($path) {
-		$GLOBALS['%s']->push("haxe.io.Path::addTrailingSlash");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(strlen($path) === 0) {
-			$GLOBALS['%s']->pop();
 			return "/";
 		}
 		$c1 = _hx_last_index_of($path, "/", null);
 		$c2 = _hx_last_index_of($path, "\\", null);
 		if($c1 < $c2) {
 			if($c2 !== strlen($path) - 1) {
-				$tmp = _hx_string_or_null($path) . "\\";
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return _hx_string_or_null($path) . "\\";
 			} else {
-				$GLOBALS['%s']->pop();
 				return $path;
 			}
 		} else {
 			if($c1 !== strlen($path) - 1) {
-				$tmp = _hx_string_or_null($path) . "/";
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return _hx_string_or_null($path) . "/";
 			} else {
-				$GLOBALS['%s']->pop();
 				return $path;
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	static function removeTrailingSlashes($path) {
-		$GLOBALS['%s']->push("haxe.io.Path::removeTrailingSlashes");
-		$__hx__spos = $GLOBALS['%s']->length;
 		while(true) {
 			$_g = _hx_char_code_at($path, strlen($path) - 1);
-			if($_g !== null) {
-				switch($_g) {
-				case 47:case 92:{
-					$path = _hx_substr($path, 0, -1);
-				}break;
-				default:{
-					break 2;
-				}break;
-				}
-			} else {
-				break;
+			switch($_g) {
+			case 47:case 92:{
+				$path = _hx_substr($path, 0, -1);
+			}break;
+			default:{
+				break 2;
+			}break;
 			}
 			unset($_g);
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return $path;
-		}
-		$GLOBALS['%s']->pop();
+		return $path;
 	}
 	function __toString() { return $this->toString(); }
 }

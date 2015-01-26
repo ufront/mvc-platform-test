@@ -3,14 +3,10 @@
 class ufront_web_context_ActionContext {
 	public function __construct($httpContext) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("ufront.web.context.ActionContext::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if(null === $httpContext) {
-			throw new HException(new thx_error_NullArgument("httpContext", "invalid null argument '{0}' for method {1}.{2}()", _hx_anonymous(array("fileName" => "ActionContext.hx", "lineNumber" => 51, "className" => "ufront.web.context.ActionContext", "methodName" => "new"))));
+			throw new HException(new thx_core_error_NullArgument("argument \"httpContext\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.context.ActionContext", "methodName" => "new"))));
 		}
 		$this->httpContext = $httpContext;
-		$httpContext->actionContext = $this;
-		$GLOBALS['%s']->pop();
 	}}
 	public $httpContext;
 	public $handler;
@@ -20,8 +16,6 @@ class ufront_web_context_ActionContext {
 	public $actionResult;
 	public $uriParts;
 	public function get_uriParts() {
-		$GLOBALS['%s']->push("ufront.web.context.ActionContext::get_uriParts");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->uriParts === null) {
 			$this->uriParts = _hx_explode("/", $this->httpContext->getRequestUri());
 			if($this->uriParts->length > 0 && $this->uriParts[0] === "") {
@@ -31,22 +25,10 @@ class ufront_web_context_ActionContext {
 				$this->uriParts->pop();
 			}
 		}
-		{
-			$tmp = $this->uriParts;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->uriParts;
 	}
 	public function toString() {
-		$GLOBALS['%s']->push("ufront.web.context.ActionContext::toString");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = "ActionContext(" . Std::string($this->controller) . ", " . _hx_string_or_null($this->action) . ", " . Std::string($this->args) . ")";
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return "ActionContext(" . Std::string($this->controller) . ", " . _hx_string_or_null($this->action) . ", " . Std::string($this->args) . ")";
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

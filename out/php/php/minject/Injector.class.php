@@ -3,111 +3,66 @@
 class minject_Injector {
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("minject.Injector::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->injectionConfigs = new haxe_ds_StringMap();
 		$this->injecteeDescriptions = new minject_ClassHash();
 		$this->attendedToInjectees = new minject__Injector_InjecteeSet();
-		$GLOBALS['%s']->pop();
 	}}
 	public $attendedToInjectees;
 	public $parentInjector;
 	public $injectionConfigs;
 	public $injecteeDescriptions;
 	public function mapValue($whenAskedFor, $useValue, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::mapValue");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
 		$config = $this->getMapping($whenAskedFor, $named);
 		$config->setResult(new minject_result_InjectValueResult($useValue));
-		{
-			$GLOBALS['%s']->pop();
-			return $config;
-		}
-		$GLOBALS['%s']->pop();
+		return $config;
 	}
 	public function mapClass($whenAskedFor, $instantiateClass, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::mapClass");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
 		$config = $this->getMapping($whenAskedFor, $named);
 		$config->setResult(new minject_result_InjectClassResult($instantiateClass));
-		{
-			$GLOBALS['%s']->pop();
-			return $config;
-		}
-		$GLOBALS['%s']->pop();
+		return $config;
 	}
 	public function mapSingleton($whenAskedFor, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::mapSingleton");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
-		{
-			$tmp = $this->mapSingletonOf($whenAskedFor, $whenAskedFor, $named);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->mapSingletonOf($whenAskedFor, $whenAskedFor, $named);
 	}
 	public function mapSingletonOf($whenAskedFor, $useSingletonOf, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::mapSingletonOf");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
 		$config = $this->getMapping($whenAskedFor, $named);
 		$config->setResult(new minject_result_InjectSingletonResult($useSingletonOf));
-		{
-			$GLOBALS['%s']->pop();
-			return $config;
-		}
-		$GLOBALS['%s']->pop();
+		return $config;
 	}
 	public function mapRule($whenAskedFor, $useRule, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::mapRule");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
 		$config = $this->getMapping($whenAskedFor, $named);
 		$config->setResult(new minject_result_InjectOtherRuleResult($useRule));
-		{
-			$GLOBALS['%s']->pop();
-			return $useRule;
-		}
-		$GLOBALS['%s']->pop();
+		return $useRule;
 	}
 	public function getMapping($forClass, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::getMapping");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
 		$requestName = _hx_string_or_null($this->getClassName($forClass)) . "#" . _hx_string_or_null($named);
 		if($this->injectionConfigs->exists($requestName)) {
-			$tmp = $this->injectionConfigs->get($requestName);
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return $this->injectionConfigs->get($requestName);
 		}
 		$config = new minject_InjectionConfig($forClass, $named);
 		$this->injectionConfigs->set($requestName, $config);
-		{
-			$GLOBALS['%s']->pop();
-			return $config;
-		}
-		$GLOBALS['%s']->pop();
+		return $config;
 	}
 	public function injectInto($target) {
-		$GLOBALS['%s']->push("minject.Injector::injectInto");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->attendedToInjectees->contains($target)) {
-			$GLOBALS['%s']->pop();
 			return;
 		}
 		$this->attendedToInjectees->add($target);
@@ -119,7 +74,6 @@ class minject_Injector {
 			$injecteeDescription = $this->getInjectionPoints($targetClass);
 		}
 		if($injecteeDescription === null) {
-			$GLOBALS['%s']->pop();
 			return;
 		}
 		$injectionPoints = $injecteeDescription->injectionPoints;
@@ -133,11 +87,8 @@ class minject_Injector {
 				unset($injectionPoint,$i);
 			}
 		}
-		$GLOBALS['%s']->pop();
 	}
 	public function construct($theClass) {
-		$GLOBALS['%s']->push("minject.Injector::construct");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$injecteeDescription = null;
 		if($this->injecteeDescriptions->exists($theClass)) {
 			$injecteeDescription = $this->injecteeDescriptions->get($theClass);
@@ -145,27 +96,14 @@ class minject_Injector {
 			$injecteeDescription = $this->getInjectionPoints($theClass);
 		}
 		$injectionPoint = $injecteeDescription->ctor;
-		{
-			$tmp = $injectionPoint->applyInjection($theClass, $this);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $injectionPoint->applyInjection($theClass, $this);
 	}
 	public function instantiate($theClass) {
-		$GLOBALS['%s']->push("minject.Injector::instantiate");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$instance = $this->construct($theClass);
 		$this->injectInto($instance);
-		{
-			$GLOBALS['%s']->pop();
-			return $instance;
-		}
-		$GLOBALS['%s']->pop();
+		return $instance;
 	}
 	public function unmap($theClass, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::unmap");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
@@ -174,29 +112,18 @@ class minject_Injector {
 			throw new HException("Error while removing an injector mapping: No mapping defined for class " . _hx_string_or_null($this->getClassName($theClass)) . ", named \"" . _hx_string_or_null($named) . "\"");
 		}
 		$mapping->setResult(null);
-		$GLOBALS['%s']->pop();
 	}
 	public function hasMapping($forClass, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::hasMapping");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
 		$mapping = $this->getConfigurationForRequest($forClass, $named, null);
 		if($mapping === null) {
-			$GLOBALS['%s']->pop();
 			return false;
 		}
-		{
-			$tmp = $mapping->hasResponse($this);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $mapping->hasResponse($this);
 	}
 	public function getInstance($ofClass, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::getInstance");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($named === null) {
 			$named = "";
 		}
@@ -204,46 +131,26 @@ class minject_Injector {
 		if($mapping === null || !$mapping->hasResponse($this)) {
 			throw new HException("Error while getting mapping response: No mapping defined for class " . _hx_string_or_null($this->getClassName($ofClass)) . ", named \"" . _hx_string_or_null($named) . "\"");
 		}
-		{
-			$tmp = $mapping->getResponse($this);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $mapping->getResponse($this);
 	}
 	public function createChildInjector() {
-		$GLOBALS['%s']->push("minject.Injector::createChildInjector");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$injector = new minject_Injector();
 		$injector->set_parentInjector($this);
-		{
-			$GLOBALS['%s']->pop();
-			return $injector;
-		}
-		$GLOBALS['%s']->pop();
+		return $injector;
 	}
 	public function getAncestorMapping($forClass, $named = null) {
-		$GLOBALS['%s']->push("minject.Injector::getAncestorMapping");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$parent = $this->parentInjector;
 		while($parent !== null) {
 			$parentConfig = $parent->getConfigurationForRequest($forClass, $named, false);
 			if($parentConfig !== null && $parentConfig->hasOwnResponse()) {
-				$GLOBALS['%s']->pop();
 				return $parentConfig;
 			}
 			$parent = $parent->parentInjector;
 			unset($parentConfig);
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return null;
-		}
-		$GLOBALS['%s']->pop();
+		return null;
 	}
 	public function getInjectionPoints($forClass) {
-		$GLOBALS['%s']->push("minject.Injector::getInjectionPoints");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$typeMeta = haxe_rtti_Meta::getType($forClass);
 		if($typeMeta !== null && _hx_has_field($typeMeta, "interface")) {
 			throw new HException("Interfaces can't be used as instantiatable classes.");
@@ -308,40 +215,22 @@ class minject_Injector {
 		}
 		$injecteeDescription = new minject_InjecteeDescription($ctorInjectionPoint, $injectionPoints);
 		$this->injecteeDescriptions->set($forClass, $injecteeDescription);
-		{
-			$GLOBALS['%s']->pop();
-			return $injecteeDescription;
-		}
-		$GLOBALS['%s']->pop();
+		return $injecteeDescription;
 	}
 	public function getConfigurationForRequest($forClass, $named, $traverseAncestors = null) {
-		$GLOBALS['%s']->push("minject.Injector::getConfigurationForRequest");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($traverseAncestors === null) {
 			$traverseAncestors = true;
 		}
 		$requestName = _hx_string_or_null($this->getClassName($forClass)) . "#" . _hx_string_or_null($named);
 		if(!$this->injectionConfigs->exists($requestName)) {
 			if($traverseAncestors && $this->parentInjector !== null && $this->parentInjector->hasMapping($forClass, $named)) {
-				$tmp = $this->getAncestorMapping($forClass, $named);
-				$GLOBALS['%s']->pop();
-				return $tmp;
+				return $this->getAncestorMapping($forClass, $named);
 			}
-			{
-				$GLOBALS['%s']->pop();
-				return null;
-			}
+			return null;
 		}
-		{
-			$tmp = $this->injectionConfigs->get($requestName);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->injectionConfigs->get($requestName);
 	}
 	public function set_parentInjector($value) {
-		$GLOBALS['%s']->push("minject.Injector::set_parentInjector");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->parentInjector !== null && $value === null) {
 			$this->attendedToInjectees = new minject__Injector_InjecteeSet();
 		}
@@ -349,29 +238,16 @@ class minject_Injector {
 		if($this->parentInjector !== null) {
 			$this->attendedToInjectees = $this->parentInjector->attendedToInjectees;
 		}
-		{
-			$tmp = $this->parentInjector;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->parentInjector;
 	}
 	public function getClassName($forClass) {
-		$GLOBALS['%s']->push("minject.Injector::getClassName");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($forClass === null) {
-			$GLOBALS['%s']->pop();
 			return "Dynamic";
 		} else {
-			$tmp = Type::getClassName($forClass);
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return Type::getClassName($forClass);
 		}
-		$GLOBALS['%s']->pop();
 	}
 	public function getFields($type) {
-		$GLOBALS['%s']->push("minject.Injector::getFields");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$meta = _hx_anonymous(array());
 		while($type !== null) {
 			$typeMeta = haxe_rtti_Meta::getFields($type);
@@ -393,11 +269,7 @@ class minject_Injector {
 			$type = Type::getSuperClass($type);
 			unset($typeMeta);
 		}
-		{
-			$GLOBALS['%s']->pop();
-			return $meta;
-		}
-		$GLOBALS['%s']->pop();
+		return $meta;
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -414,13 +286,6 @@ class minject_Injector {
 }
 function minject_Injector_0(&$ctorInjectionPoint, &$fieldsMeta, &$forClass, &$injectionPoints, &$postConstructMethodPoints, &$typeMeta, $a, $b) {
 	{
-		$GLOBALS['%s']->push("minject.Injector::getInjectionPoints@407");
-		$__hx__spos2 = $GLOBALS['%s']->length;
-		{
-			$tmp = $a->order - $b->order;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $a->order - $b->order;
 	}
 }

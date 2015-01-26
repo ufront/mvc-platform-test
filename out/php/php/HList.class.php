@@ -3,17 +3,12 @@
 class HList implements IteratorAggregate{
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("List::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->length = 0;
-		$GLOBALS['%s']->pop();
 	}}
 	public $h;
 	public $q;
 	public $length;
 	public function add($item) {
-		$GLOBALS['%s']->push("List::add");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$x = array($item, null);
 		if($this->h === null) {
 			$this->h =& $x;
@@ -22,37 +17,24 @@ class HList implements IteratorAggregate{
 		}
 		$this->q =& $x;
 		$this->length++;
-		$GLOBALS['%s']->pop();
 	}
 	public function push($item) {
-		$GLOBALS['%s']->push("List::push");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$x = array($item, &$this->h);
 		$this->h =& $x;
 		if($this->q === null) {
 			$this->q =& $x;
 		}
 		$this->length++;
-		$GLOBALS['%s']->pop();
 	}
 	public function first() {
-		$GLOBALS['%s']->push("List::first");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->h === null) {
-			$GLOBALS['%s']->pop();
 			return null;
 		} else {
-			$tmp = $this->h[0];
-			$GLOBALS['%s']->pop();
-			return $tmp;
+			return $this->h[0];
 		}
-		$GLOBALS['%s']->pop();
 	}
 	public function pop() {
-		$GLOBALS['%s']->push("List::pop");
-		$__hx__spos = $GLOBALS['%s']->length;
 		if($this->h === null) {
-			$GLOBALS['%s']->pop();
 			return null;
 		}
 		$x = $this->h[0];
@@ -61,41 +43,16 @@ class HList implements IteratorAggregate{
 			$this->q = null;
 		}
 		$this->length--;
-		{
-			$GLOBALS['%s']->pop();
-			return $x;
-		}
-		$GLOBALS['%s']->pop();
+		return $x;
 	}
 	public function isEmpty() {
-		$GLOBALS['%s']->push("List::isEmpty");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = $this->h === null;
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->h === null;
 	}
 	public function iterator() {
-		$GLOBALS['%s']->push("List::iterator");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = new _hx_list_iterator($this);
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return new _hx_list_iterator($this);
 	}
 	public function getIterator() {
-		$GLOBALS['%s']->push("List::getIterator");
-		$__hx__spos = $GLOBALS['%s']->length;
-		{
-			$tmp = $this->iterator();
-			$GLOBALS['%s']->pop();
-			return $tmp;
-		}
-		$GLOBALS['%s']->pop();
+		return $this->iterator();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

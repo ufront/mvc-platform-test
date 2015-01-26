@@ -3,11 +3,8 @@
 class minject_point_ParameterInjectionConfig {
 	public function __construct($typeName, $injectionName) {
 		if(!php_Boot::$skip_constructor) {
-		$GLOBALS['%s']->push("minject.point.ParameterInjectionConfig::new");
-		$__hx__spos = $GLOBALS['%s']->length;
 		$this->typeName = $typeName;
 		$this->injectionName = $injectionName;
-		$GLOBALS['%s']->pop();
 	}}
 	public $typeName;
 	public $injectionName;
