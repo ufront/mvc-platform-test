@@ -4,7 +4,7 @@
 
 ###
 
--lib ufront-mvc
+-lib ufront-mvc:1.0.0-rc.12
 -cp src 
 -D server 
 

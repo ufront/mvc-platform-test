@@ -19,6 +19,8 @@ class Server
 				indexController: Routes,
 				logFile: 'log.txt',
 				contentDirectory:'../uf-content/',
+				authImplementation: ufront.auth.NobodyAuthHandler,
+				sessionImplementation: ufront.web.session.VoidSession,
 				basePath:
 					#if (neko && cachemodule) "/neko_cache/"
 					#elseif neko "/neko_nocache/"
@@ -29,7 +31,7 @@ class Server
 		}
 
 		#if (neko || php)
-			ufrontApp.execute( HttpContext.create() );
+			ufrontApp.executeRequest();
 		#elseif nodejs
 			ufrontApp.listen( 2987 );
 		#end
