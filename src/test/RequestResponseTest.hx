@@ -41,6 +41,9 @@ class RequestResponseTest {
 		var h = new Http( base()+'/querystring?query' );
 		assertResponseEquals( "query", h );
 
+		var h = new Http( base()+'/querystring?J%C3%A5%C2%A7%C3%B4%C5%86' );
+		assertResponseEquals( "Jå§ôņ", h );
+
 		var h = new Http( base()+'/querystring?a=1&b=2&b=3' );
 		assertResponseEquals( "a=1&b=2&b=3", h );
 
@@ -108,17 +111,21 @@ class RequestResponseTest {
 		var expected = 'drink=coffee\ngame=baseball,football';
 		assertResponseEquals( expected, h, true );
 
+		// Test UTF8 characters
+		var h = new Http( base()+'/post' );
+		h.setParameter( 'name', 'J%C3%A5%C2%A7%C3%B4%C5%86' );
+		assertResponseEquals( "name=Jå§ôņ", h, true );
+
 		// Test multipart data
 		var h = new Http( base()+'/post' );
-		
-		h.addParameter( "names[]", "Larry" );
-		h.addParameter( "names[]", "Charlie" );
-		h.addParameter( "group", "Team Winner" );
+		h.setParameter( "group", "Team Winner" );
+		h.setParameter( "names[]", "Larry" );
+		h.addParameter( "names[]", "%C3%A7h%C3%A5%C5%97%C4%BC%C3%AE%C3%AA" );
 		var filename = "test.json";
 		var fileInput = File.read( filename );
 		var size = sys.FileSystem.stat( filename ).size;
 		h.fileTransfer( "upload", "data.json", fileInput, size, "application/json" );
-		var expected = 'group=Team Winner\nnames=Charlie,Larry\nupload=data.json';
+		var expected = 'group=Team Winner\nnames=Larry,çhåŗļîê\nupload=data.json';
 		assertResponseEquals( expected, h, true );
 	}
 
@@ -170,6 +177,9 @@ class RequestResponseTest {
 
 		var h3 = new Http( base()+'/uri/this?that#there' );
 		assertResponseEquals( baseUrl+"/uri/this", h3 );
+
+		var h4 = new Http( base()+'/uri/J%C3%A5%C2%A7%C3%B4%C5%86' );
+		assertResponseEquals( baseUrl+"/uri/Jå§ôņ", h4 );
 	}
 
 	public function testHttpMethod() {
