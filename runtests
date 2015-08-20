@@ -1,9 +1,15 @@
 haxe requestresponsetester.hxml
+echo "=================="
 echo "Test Neko No Cache"
 neko out/requestresponsetester.n http://uftest.dev/neko_nocache out/neko_nocache/
+echo "=================="
 echo "Test Neko With Cache"
 neko out/requestresponsetester.n http://uftest.dev/neko_cache out/neko_cache/
+echo "=================="
 echo "Test PHP"
 neko out/requestresponsetester.n http://uftest.dev/php out/php/
-echo "Test NodeJS"
-neko out/requestresponsetester.n http://localhost:2987/ out/node/
+#echo "=================="
+#echo "Test NodeJS"
+#neko out/requestresponsetester.n http://localhost:2987/ out/node/
+echo "==================="
+echo "Done"

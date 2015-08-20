@@ -4,9 +4,9 @@
 
 ###
 
--lib ufront-mvc:1.0.0-rc.12
--cp src 
--D server 
+-lib ufront-mvc
+-cp src
+-D server
 
 -main testsite.Server
 
@@ -17,7 +17,7 @@
 --remap php:neko
 -neko out/neko_nocache/index.n
 
---next 
+--next
 
 # Neko, with caching
 
@@ -25,7 +25,7 @@
 -neko out/neko_cache/index.n
 -D cachemodule
 
---next 
+--next
 
 # PHP
 
@@ -37,7 +37,7 @@
 
 # NodeJS
 
--lib js-kit
--D nodejs
+-lib hxnodejs
+-lib express
+--macro allowPackage("sys")
 -js out/node/server.js
---macro npm.Package.export('out/node/package.json')

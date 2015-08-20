@@ -8,13 +8,13 @@ import ufront.web.result.EmptyResult;
 
 class Routes extends Controller {
 
-	@:route("/") 
+	@:route("/")
 	public function index():String return "Index";
 
-	@:route("/querystring") 
+	@:route("/querystring")
 	public function queryString() return context.request.queryString;
 
-	@:route("/poststring") 
+	@:route("/poststring")
 	public function postString() return context.request.postString;
 
 	@:route("/query")
@@ -79,7 +79,7 @@ class Routes extends Controller {
 
 	@:route("/testresponse/$status/$charset")
 	public function testResponse( status:Int, charset:String, ?args:{ language:String, contentType:String, content:String, cookieName:String, cookieVal:String } ) {
-		
+
 		if ( args.language==null ) args.language = "en-au";
 		if ( args.contentType==null ) args.contentType = "text/html";
 		if ( args.content==null ) args.content = "response content";
@@ -90,10 +90,10 @@ class Routes extends Controller {
 		context.response.charset = charset;
 		context.response.contentType = args.contentType;
 
-		var expiryDate = new Date(2015,00,01,0,0,0);
+		var expiryDate = new Date(2015,0,1,0,0,0);
 		var c1 = new HttpCookie( args.cookieName, args.cookieVal, expiryDate, '/testresponse/' );
 		context.response.setCookie( c1 );
-		
+
 		// haxe.Http can only show one HTTP header of each name,
 		// but it is best to output each cookie on a different header line.
 		// Therefore, we can only test one cookie at a time, sadly.

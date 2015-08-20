@@ -265,7 +265,7 @@ class RequestResponseTest {
 			Assert.equals( expected.language, http.responseHeaders.get("Content-Language") );
 			Assert.equals( '${expected.content.length}', http.responseHeaders.get("Content-Length") );
 			Assert.equals( expected.content, responseData );
-			
+
 			// Displaying a semicolon at the end is optional and differs between platforms
 			var cookieHeader = http.responseHeaders.get("Set-Cookie");
 			var semiColonAtEnd = StringTools.endsWith(cookieHeader,";") ? ";" : "";
