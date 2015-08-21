@@ -1,17 +1,11 @@
 <?php
 
 class minject_point_ConstructorInjectionPoint extends minject_point_MethodInjectionPoint {
-	public function __construct($meta, $forClass, $injector = null) { if(!php_Boot::$skip_constructor) {
-		parent::__construct($meta,$injector);
+	public function __construct($args) { if(!php_Boot::$skip_constructor) {
+		parent::__construct("new",$args);
 	}}
-	public function applyInjection($target, $injector) {
-		$ofClass = $target;
-		$withArgs = $this->gatherParameterValues($target, $injector);
-		return mcore_util_Types::createInstance($ofClass, $withArgs);
-	}
-	public function initializeInjection($meta) {
-		$this->methodName = "new";
-		$this->gatherParameters($meta);
+	public function createInstance($type, $injector) {
+		return Type::createInstance($type, $this->gatherArgs($type, $injector));
 	}
 	function __toString() { return 'minject.point.ConstructorInjectionPoint'; }
 }

@@ -18,8 +18,6 @@ class haxe_io_Input {
 		}
 		return $len;
 	}
-	public function close() {
-	}
 	public function readAll($bufsize = null) {
 		if($bufsize === null) {
 			$bufsize = 8192;
@@ -42,8 +40,7 @@ class haxe_io_Input {
 			}
 		}catch(Exception $__hx__e) {
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-			if(($e = $_ex_) instanceof haxe_io_Eof){
-			} else throw $__hx__e;;
+			if(($e = $_ex_) instanceof haxe_io_Eof){} else throw $__hx__e;;
 		}
 		return $total->getBytes();
 	}

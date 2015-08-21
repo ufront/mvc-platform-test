@@ -6,7 +6,7 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 		$this->appTemplatingEngines = new HList();
 		$this->firstRun = true;
 		parent::__construct();
-		$this->configuration = ufront_web_DefaultUfrontConfiguration::get();
+		$this->configuration = ufront_app_DefaultUfrontConfiguration::get();
 		{
 			$_g = 0;
 			$_g1 = Reflect::fields($optionsIn);
@@ -18,23 +18,33 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 				unset($value,$field);
 			}
 		}
-		$this->mvcHandler = new ufront_handler_MVCHandler();
-		$this->remotingHandler = new ufront_handler_RemotingHandler();
+		$this->mvcHandler = new ufront_web_MVCHandler($this->configuration->indexController);
+		$this->remotingHandler = new ufront_remoting_RemotingHandler();
+		if($this->configuration->remotingApi !== null) {
+			$_this = $this->remotingHandler;
+			$apiContext = $this->configuration->remotingApi;
+			$_this->apiContexts->push($apiContext);
+			{
+				$newAPIs = ufront_api_UFApiContext::getApisInContext($apiContext);
+				if(null == $newAPIs) throw new HException('null iterable');
+				$__hx__it = $newAPIs->iterator();
+				while($__hx__it->hasNext()) {
+					unset($api);
+					$api = $__hx__it->next();
+					$_this->apis->push($api);
+				}
+			}
+		}
 		if(null == $this->configuration->controllers) throw new HException('null iterable');
 		$__hx__it = $this->configuration->controllers->iterator();
 		while($__hx__it->hasNext()) {
+			unset($controller);
 			$controller = $__hx__it->next();
-			ufront_core_InjectionTools::inject($this->injector, $controller, null, null, null, null);
-		}
-		if(null == $this->configuration->apis) throw new HException('null iterable');
-		$__hx__it = $this->configuration->apis->iterator();
-		while($__hx__it->hasNext()) {
-			$api = $__hx__it->next();
-			ufront_core_InjectionTools::inject($this->injector, $api, null, null, null, null);
+			$this->injector->mapRuntimeTypeOf($controller, null)->_toClass($controller);
 		}
 		$this->addModule($this->requestMiddleware, null, $this->configuration->requestMiddleware, false);
 		$this->addModule($this->requestHandlers, null, (new _hx_array(array($this->remotingHandler, $this->mvcHandler))), false);
-		$this->addModule($this->responseMiddleware, null, $this->configuration->responseMiddleware, false);
+		$this->addModule($this->responseMiddleware, null, $this->configuration->responseMiddleware, true);
 		$this->addModule($this->errorHandlers, null, $this->configuration->errorHandlers, false);
 		if(!$this->configuration->disableServerTrace) {
 			$logger = new ufront_log_ServerConsoleLogger();
@@ -54,7 +64,13 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 			$logger3 = new ufront_log_FileLogger($this->configuration->logFile);
 			$this->addModule($this->logHandlers, $logger3, null, false);
 		}
-		$path = trim($this->configuration->basePath, "/");
+		$path = $this->configuration->basePath;
+		if(StringTools::endsWith($path, "/")) {
+			$path = _hx_substr($path, 0, strlen($path) - 1);
+		}
+		if(StringTools::startsWith($path, "/")) {
+			$path = _hx_substr($path, 1, null);
+		}
 		if(strlen($path) > 0) {
 			parent::addUrlFilter(new ufront_web_url_filter_DirectoryUrlFilter($path));
 		}
@@ -62,20 +78,22 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 			parent::addUrlFilter(new ufront_web_url_filter_PathInfoUrlFilter(null, null));
 		}
 		if($this->configuration->sessionImplementation !== null) {
-			$this->inject(_hx_qtype("ufront.web.session.UFHttpSession"), null, $this->configuration->sessionImplementation, null, null);
+			$this->injector->mapType("ufront.web.session.UFHttpSession", null, null)->_toClass($this->configuration->sessionImplementation);
+			$this->injector->mapRuntimeTypeOf($this->configuration->sessionImplementation, null)->_toClass($this->configuration->sessionImplementation);
 		}
 		if($this->configuration->authImplementation !== null) {
-			$this->inject(_hx_qtype("ufront.auth.UFAuthHandler"), null, $this->configuration->authImplementation, null, null);
+			$this->injector->mapType("ufront.auth.UFAuthHandler", null, null)->_toClass($this->configuration->authImplementation);
+			$this->injector->mapRuntimeTypeOf($this->configuration->authImplementation, null)->_toClass($this->configuration->authImplementation);
 		}
 		if($this->configuration->viewEngine !== null) {
-			$this->inject(_hx_qtype("String"), $this->configuration->viewPath, null, null, "viewPath");
-			$this->inject(_hx_qtype("ufront.view.UFViewEngine"), null, $this->configuration->viewEngine, true, null);
+			$this->injector->mapType("String", "viewPath", null)->toValue($this->configuration->viewPath);
+			$this->injector->mapType("ufront.view.UFViewEngine", null, null)->_toSingleton($this->configuration->viewEngine);
 		}
 		if($this->configuration->contentDirectory !== null) {
 			$this->setContentDirectory($this->configuration->contentDirectory);
 		}
 		if($this->configuration->defaultLayout !== null) {
-			$this->inject(_hx_qtype("String"), $this->configuration->defaultLayout, null, null, "defaultLayout");
+			$this->injector->mapType("String", "defaultLayout", null)->toValue($this->configuration->defaultLayout);
 		}
 		{
 			$_g2 = 0;
@@ -93,26 +111,36 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 	public $remotingHandler;
 	public $viewEngine;
 	public function execute($httpContext) {
-		if(null === $httpContext) {
-			throw new HException(new thx_core_error_NullArgument("argument \"httpContext\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.app.UfrontApplication", "methodName" => "execute"))));
-		}
+		ufront_web_HttpError::throwIfNull($httpContext, "httpContext", _hx_anonymous(array("fileName" => "UfrontApplication.hx", "lineNumber" => 173, "className" => "ufront.app.UfrontApplication", "methodName" => "execute")));
 		if($this->firstRun) {
 			$this->initOnFirstExecute($httpContext);
+		}
+		if(null == $this->configuration->apis) throw new HException('null iterable');
+		$__hx__it = $this->configuration->apis->iterator();
+		while($__hx__it->hasNext()) {
+			unset($api);
+			$api = $__hx__it->next();
+			$httpContext->injector->mapRuntimeTypeOf($api, null)->_toSingleton($api);
+			$asyncApi = ufront_api_UFAsyncApi::getAsyncApi($api);
+			if($asyncApi !== null) {
+				$httpContext->injector->mapRuntimeTypeOf($asyncApi, null)->_toSingleton($asyncApi);
+			}
+			unset($asyncApi);
 		}
 		return parent::execute($httpContext);
 	}
 	public $firstRun;
 	public function initOnFirstExecute($httpContext) {
 		$this->firstRun = false;
-		$this->inject(_hx_qtype("String"), $httpContext->request->get_scriptDirectory(), null, null, "scriptDirectory");
-		$this->inject(_hx_qtype("String"), $httpContext->get_contentDirectory(), null, null, "contentDirectory");
+		$this->injector->mapType("String", "scriptDirectory", null)->toValue($httpContext->request->get_scriptDirectory());
+		$this->injector->mapType("String", "contentDirectory", null)->toValue($httpContext->get_contentDirectory());
 		if($this->configuration->viewEngine !== null) {
 			try {
-				$this->inject($this->configuration->viewEngine, null, null, null, null);
-				$this->viewEngine = $this->injector->getInstance(_hx_qtype("ufront.view.UFViewEngine"), null);
+				$this->viewEngine = $this->injector->getValueForType("ufront.view.UFViewEngine", null);
 				if(null == $this->appTemplatingEngines) throw new HException('null iterable');
 				$__hx__it = $this->appTemplatingEngines->iterator();
 				while($__hx__it->hasNext()) {
+					unset($te);
 					$te = $__hx__it->next();
 					$this->viewEngine->engines->push($te);
 				}
@@ -121,13 +149,26 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 				$e = $_ex_;
 				{
 					$msg = "Failed to load view engine " . _hx_string_or_null(Type::getClassName($this->configuration->viewEngine)) . ": " . Std::string($e);
-					$httpContext->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "UfrontApplication.hx", "lineNumber" => 192, "className" => "ufront.app.UfrontApplication", "methodName" => "initOnFirstExecute")), "type" => ufront_log_MessageType::$Warning)));
+					$httpContext->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "UfrontApplication.hx", "lineNumber" => 206, "className" => "ufront.app.UfrontApplication", "methodName" => "initOnFirstExecute")), "type" => ufront_log_MessageType::$MWarning)));
 				}
 			}
 		}
 	}
 	public function loadApiContext($apiContext) {
-		$this->remotingHandler->apiContexts->push($apiContext);
+		{
+			$_this = $this->remotingHandler;
+			$_this->apiContexts->push($apiContext);
+			{
+				$newAPIs = ufront_api_UFApiContext::getApisInContext($apiContext);
+				if(null == $newAPIs) throw new HException('null iterable');
+				$__hx__it = $newAPIs->iterator();
+				while($__hx__it->hasNext()) {
+					unset($api);
+					$api = $__hx__it->next();
+					$_this->apis->push($api);
+				}
+			}
+		}
 		return $this;
 	}
 	public $appTemplatingEngines;
@@ -137,12 +178,6 @@ class ufront_app_UfrontApplication extends ufront_app_HttpApplication {
 			$this->viewEngine->engines->push($engine);
 		}
 		return $this;
-	}
-	public function inject($cl, $val = null, $cl2 = null, $singleton = null, $named = null) {
-		if($singleton === null) {
-			$singleton = false;
-		}
-		return parent::inject($cl,$val,$cl2,$singleton,$named);
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

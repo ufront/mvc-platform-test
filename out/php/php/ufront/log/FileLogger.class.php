@@ -7,11 +7,11 @@ class ufront_log_FileLogger implements ufront_app_UFInitRequired, ufront_app_UFL
 	}}
 	public $path;
 	public function init($app) {
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	public function dispose($app) {
 		$this->path = null;
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	public function log($context, $appMessages) {
 		$logFile = _hx_string_or_null($context->get_contentDirectory()) . _hx_string_or_null($this->path);
@@ -44,11 +44,31 @@ class ufront_log_FileLogger implements ufront_app_UFInitRequired, ufront_app_UFL
 				unset($msg1);
 			}
 		}
-		ufront_sys_SysUtil::mkdir(haxe_io_Path::directory($logFile));
+		{
+			$path = haxe_io_Path::directory($logFile);
+			$path1 = haxe_io_Path::addTrailingSlash($path);
+			$_p = null;
+			$parts = (new _hx_array(array()));
+			while($path1 !== ($_p = haxe_io_Path::directory($path1))) {
+				$parts->unshift($path1);
+				$path1 = $_p;
+			}
+			{
+				$_g3 = 0;
+				while($_g3 < $parts->length) {
+					$part = $parts[$_g3];
+					++$_g3;
+					if(_hx_char_code_at($part, strlen($part) - 1) !== 58 && !file_exists($part)) {
+						@mkdir($part, 493);
+					}
+					unset($part);
+				}
+			}
+		}
 		$file = sys_io_File::append(_hx_string_or_null($context->get_contentDirectory()) . _hx_string_or_null($this->path), null);
 		$file->writeString($content);
 		$file->close();
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -60,14 +80,14 @@ class ufront_log_FileLogger implements ufront_app_UFInitRequired, ufront_app_UFL
 		else
 			throw new HException('Unable to call <'.$m.'>');
 	}
-	static $REMOVENL;
 	static function format($msg) {
 		$msgStr = Std::string($msg->msg);
 		$text = ufront_log_FileLogger::$REMOVENL->replace($msgStr, "\\n");
-		$type = Type::enumConstructor($msg->type);
+		$type = _hx_substr(Type::enumConstructor($msg->type), 1, null);
 		$pos = $msg->pos;
 		return "[" . _hx_string_or_null($type) . "] " . _hx_string_or_null($pos->className) . "." . _hx_string_or_null($pos->methodName) . "(" . _hx_string_rec($pos->lineNumber, "") . "): " . _hx_string_or_null($text);
 	}
+	static $REMOVENL;
 	function __toString() { return 'ufront.log.FileLogger'; }
 }
 ufront_log_FileLogger::$REMOVENL = new EReg("[\x0A\x0D]", "g");

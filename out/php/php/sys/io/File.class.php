@@ -11,11 +11,6 @@ class sys_io_File {
 	static function saveContent($path, $content) {
 		file_put_contents($path, $content);
 	}
-	static function saveBytes($path, $bytes) {
-		$f = sys_io_File::write($path, null);
-		$f->write($bytes);
-		$f->close();
-	}
 	static function read($path, $binary = null) {
 		if($binary === null) {
 			$binary = true;

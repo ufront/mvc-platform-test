@@ -3,7 +3,7 @@
 class tink_core__Pair_Pair_Impl_ {
 	public function __construct(){}
 	static function _new($a, $b) {
-		return new tink_core__Pair_Data($a, $b);
+		return new tink_core_MPair($a, $b);
 	}
 	static function get_a($this1) {
 		return $this1->a;

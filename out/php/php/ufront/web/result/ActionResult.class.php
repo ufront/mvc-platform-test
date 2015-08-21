@@ -3,7 +3,7 @@
 class ufront_web_result_ActionResult {
 	public function __construct(){}
 	public function executeResult($actionContext) {
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	static function wrap($resultValue) {
 		if($resultValue === null) {

@@ -3,21 +3,28 @@
 class ufront_web_url_filter_DirectoryUrlFilter implements ufront_web_url_filter_UFUrlFilter{
 	public function __construct($directory) {
 		if(!php_Boot::$skip_constructor) {
+		if(StringTools::startsWith($directory, "/")) {
+			$directory = _hx_substr($directory, 1, strlen($directory));
+		}
 		if(StringTools::endsWith($directory, "/")) {
 			$directory = _hx_substr($directory, 0, strlen($directory) - 1);
 		}
 		$this->directory = $directory;
-		$this->segments = _hx_explode("/", $directory);
+		if($directory !== "") {
+			$this->segments = _hx_explode("/", $directory);
+		} else {
+			$this->segments = (new _hx_array(array()));
+		}
 	}}
 	public $directory;
 	public $segments;
-	public function filterIn($url, $request) {
+	public function filterIn($url) {
 		$pos = 0;
 		while($url->segments->length > 0 && $url->segments[0] === $this->segments[$pos++]) {
 			$url->segments->shift();
 		}
 	}
-	public function filterOut($url, $request) {
+	public function filterOut($url) {
 		$url->segments = $this->segments->concat($url->segments);
 	}
 	public function __call($m, $a) {

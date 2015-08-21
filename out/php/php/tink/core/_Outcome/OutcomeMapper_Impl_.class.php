@@ -20,11 +20,11 @@ function tink_core__Outcome_OutcomeMapper_Impl__0(&$f, $o) {
 	{
 		switch($o->index) {
 		case 0:{
-			$d = $o->params[0];
+			$d = _hx_deref($o)->params[0];
 			return call_user_func_array($f, array($d));
 		}break;
 		case 1:{
-			$f1 = $o->params[0];
+			$f1 = _hx_deref($o)->params[0];
 			return tink_core_Outcome::Failure($f1);
 		}break;
 		}
@@ -34,23 +34,23 @@ function tink_core__Outcome_OutcomeMapper_Impl__1(&$f, $o) {
 	{
 		switch($o->index) {
 		case 0:{
-			$d = $o->params[0];
+			$d = _hx_deref($o)->params[0];
 			{
 				$_g = call_user_func_array($f, array($d));
 				switch($_g->index) {
 				case 0:{
-					$d1 = $_g->params[0];
+					$d1 = _hx_deref($_g)->params[0];
 					return tink_core_Outcome::Success($d1);
 				}break;
 				case 1:{
-					$f1 = $_g->params[0];
+					$f1 = _hx_deref($_g)->params[0];
 					return tink_core_Outcome::Failure(tink_core_Either::Right($f1));
 				}break;
 				}
 			}
 		}break;
 		case 1:{
-			$f2 = $o->params[0];
+			$f2 = _hx_deref($o)->params[0];
 			return tink_core_Outcome::Failure(tink_core_Either::Left($f2));
 		}break;
 		}

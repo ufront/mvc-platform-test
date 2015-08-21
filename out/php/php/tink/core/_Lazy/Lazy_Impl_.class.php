@@ -34,13 +34,13 @@ function tink_core__Lazy_Lazy_Impl__0(&$f, &$result) {
 }
 function tink_core__Lazy_Lazy_Impl__1(&$f, &$this1) {
 	{
-		return call_user_func_array($f, array(call_user_func($this1)));
+		return call_user_func_array($f, array($this1()));
 	}
 }
 function tink_core__Lazy_Lazy_Impl__2(&$f, &$this1) {
 	{
-		$this2 = call_user_func_array($f, array(call_user_func($this1)));
-		return call_user_func($this2);
+		$this2 = call_user_func_array($f, array($this1()));
+		return $this2();
 	}
 }
 function tink_core__Lazy_Lazy_Impl__3(&$c) {

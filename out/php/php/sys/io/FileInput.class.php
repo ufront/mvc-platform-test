@@ -7,10 +7,10 @@ class sys_io_FileInput extends haxe_io_Input {
 	}}
 	public $__f;
 	public function readByte() {
+		$r = fread($this->__f, 1);
 		if(feof($this->__f)) {
 			throw new HException(new haxe_io_Eof());
 		}
-		$r = fread($this->__f, 1);
 		if(($r === false)) {
 			throw new HException(haxe_io_Error::Custom("An error occurred"));
 		}
@@ -27,12 +27,6 @@ class sys_io_FileInput extends haxe_io_Input {
 		$b = haxe_io_Bytes::ofString($r);
 		$s->blit($p, $b, 0, strlen($r));
 		return strlen($r);
-	}
-	public function close() {
-		parent::close();
-		if($this->__f !== null) {
-			fclose($this->__f);
-		}
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

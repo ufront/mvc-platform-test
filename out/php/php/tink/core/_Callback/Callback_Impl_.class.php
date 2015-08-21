@@ -27,7 +27,7 @@ function tink_core__Callback_Callback_Impl__1(&$callbacks, $v) {
 		while($_g < $callbacks->length) {
 			$callback = $callbacks[$_g];
 			++$_g;
-			call_user_func_array($callback, array($v));
+			$callback($v);
 			unset($callback);
 		}
 	}

@@ -28,7 +28,7 @@ class ufront_view_UFViewEngine {
 			$finalPath = $path;
 			{
 				$this1 = $this->getTemplateString($finalPath);
-				call_user_func_array($this1, array(array(new _hx_lambda(array(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$this1, &$tplStrReady), "ufront_view_UFViewEngine_0"), 'execute')));
+				$this1(array(new _hx_lambda(array(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$this1, &$tplStrReady), "ufront_view_UFViewEngine_0"), 'execute'));
 			}
 		} else {
 			if($templatingEngine !== null && $ext === "") {
@@ -71,7 +71,7 @@ class ufront_view_UFViewEngine {
 		return tink_core__Future_Future_Impl_::_tryFailingMap($tplStrReady->future, array(new _hx_lambda(array(&$_g, &$ext, &$finalPath, &$path, &$templatingEngine, &$tplStrReady), "ufront_view_UFViewEngine_4"), 'execute'));
 	}
 	public function getTemplateString($path) {
-		return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(new tink_core_TypedError(null, "Attempting to fetch template " . _hx_string_or_null($path) . " with UFViewEngine.  This is an abstract class, you must use one of the ViewEngine implementations.", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 214, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplateString")))));
+		return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(new tink_core_TypedError(null, "Attempting to fetch template " . _hx_string_or_null($path) . " with UFViewEngine.  This is an abstract class, you must use one of the ViewEngine implementations.", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 208, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplateString")))));
 	}
 	public function addTemplatingEngine($engine) {
 		$this->engines->push($engine);
@@ -92,7 +92,7 @@ function ufront_view_UFViewEngine_0(&$_g, &$ext, &$finalPath, &$path, &$templati
 	{
 		switch($result->index) {
 		case 1:{
-			$err = $result->params[0];
+			$err = _hx_deref($result)->params[0];
 			{
 				$result1 = tink_core_Outcome::Failure($err);
 				if($tplStrReady->{"list"} === null) {
@@ -108,9 +108,9 @@ function ufront_view_UFViewEngine_0(&$_g, &$ext, &$finalPath, &$path, &$templati
 			}
 		}break;
 		case 0:{
-			switch($result->params[0]->index) {
+			switch(_hx_deref($result)->params[0]->index) {
 			case 0:{
-				$tpl = $result->params[0]->params[0];
+				$tpl = _hx_deref(_hx_deref($result)->params[0])->params[0];
 				{
 					$result2 = tink_core_Outcome::Success($tpl);
 					if($tplStrReady->{"list"} === null) {
@@ -126,7 +126,7 @@ function ufront_view_UFViewEngine_0(&$_g, &$ext, &$finalPath, &$path, &$templati
 				}
 			}break;
 			case 1:{
-				$result3 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "Template " . _hx_string_or_null($path) . " not found", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 103, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
+				$result3 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "Template " . _hx_string_or_null($path) . " not found", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 98, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 				if($tplStrReady->{"list"} === null) {
 					false;
 				} else {
@@ -150,10 +150,10 @@ function ufront_view_UFViewEngine_1(&$_g, &$ext, &$exts, &$finalPath, &$path, &$
 			$finalPath = haxe_io_Path::withExtension($path, $ext1);
 			{
 				$this2 = $_g->getTemplateString($finalPath);
-				call_user_func_array($this2, array(array(new _hx_lambda(array(&$_g, &$ext, &$ext1, &$exts, &$finalPath, &$path, &$templatingEngine, &$testNextExtension, &$testNextExtension1, &$this2, &$tplStrReady), "ufront_view_UFViewEngine_5"), 'execute')));
+				$this2(array(new _hx_lambda(array(&$_g, &$ext, &$ext1, &$exts, &$finalPath, &$path, &$templatingEngine, &$testNextExtension, &$testNextExtension1, &$this2, &$tplStrReady), "ufront_view_UFViewEngine_5"), 'execute'));
 			}
 		} else {
-			$result7 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No template found for " . _hx_string_or_null($path) . " with extensions " . Std::string($templatingEngine->extensions), _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 119, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
+			$result7 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No template found for " . _hx_string_or_null($path) . " with extensions " . Std::string($templatingEngine->extensions), _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 114, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 			if($tplStrReady->{"list"} === null) {
 				false;
 			} else {
@@ -175,13 +175,13 @@ function ufront_view_UFViewEngine_2(&$_g, &$ext, &$finalPath, &$path, &$templati
 				$finalPath = $path;
 				{
 					$this3 = $_g->getTemplateString($finalPath);
-					call_user_func_array($this3, array(array(new _hx_lambda(array(&$_g, &$engine, &$ext, &$finalPath, &$path, &$templatingEngine, &$testNextEngine, &$testNextEngine1, &$this3, &$tplEngines, &$tplStrReady), "ufront_view_UFViewEngine_6"), 'execute')));
+					$this3(array(new _hx_lambda(array(&$_g, &$engine, &$ext, &$finalPath, &$path, &$templatingEngine, &$testNextEngine, &$testNextEngine1, &$this3, &$tplEngines, &$tplStrReady), "ufront_view_UFViewEngine_6"), 'execute'));
 				}
 			} else {
 				call_user_func($testNextEngine1);
 			}
 		} else {
-			$result12 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No templating engine found for " . _hx_string_or_null($path) . " (None support extension " . _hx_string_or_null($ext) . ")", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 139, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
+			$result12 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No templating engine found for " . _hx_string_or_null($path) . " (None support extension " . _hx_string_or_null($ext) . ")", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 134, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 			if($tplStrReady->{"list"} === null) {
 				false;
 			} else {
@@ -199,7 +199,7 @@ function ufront_view_UFViewEngine_3(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 	{
 		if($extensions->length === 0 && $tplEngines1->length === 0) {
 			{
-				$result13 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No template found for " . _hx_string_or_null($path) . " with extensions " . Std::string($extensionsUsed), _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 153, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
+				$result13 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "No template found for " . _hx_string_or_null($path) . " with extensions " . Std::string($extensionsUsed), _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 148, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 				if($tplStrReady->{"list"} === null) {
 					false;
 				} else {
@@ -225,7 +225,7 @@ function ufront_view_UFViewEngine_3(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 		$finalPath = haxe_io_Path::withExtension($path, $ext2);
 		{
 			$this4 = $_g->getTemplateString($finalPath);
-			call_user_func_array($this4, array(array(new _hx_lambda(array(&$_g, &$engine1, &$ext, &$ext2, &$extensions, &$extensionsUsed, &$finalPath, &$path, &$templatingEngine, &$testNextEngineOrExtension, &$testNextEngineOrExtension1, &$this4, &$tplEngines1, &$tplStrReady), "ufront_view_UFViewEngine_7"), 'execute')));
+			$this4(array(new _hx_lambda(array(&$_g, &$engine1, &$ext, &$ext2, &$extensions, &$extensionsUsed, &$finalPath, &$path, &$templatingEngine, &$testNextEngineOrExtension, &$testNextEngineOrExtension1, &$this4, &$tplEngines1, &$tplStrReady), "ufront_view_UFViewEngine_7"), 'execute'));
 		}
 		return;
 	}
@@ -235,7 +235,7 @@ function ufront_view_UFViewEngine_4(&$_g, &$ext, &$finalPath, &$path, &$templati
 		try {
 			$tpl4 = $templatingEngine->factory($tplStr);
 			{
-				$v = new tink_core__Pair_Data($templatingEngine->type, $tpl4);
+				$v = new tink_core_MPair($templatingEngine->type, $tpl4);
 				$_g->cache->set($path, $v);
 				$v;
 			}
@@ -244,7 +244,7 @@ function ufront_view_UFViewEngine_4(&$_g, &$ext, &$finalPath, &$path, &$templati
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 			$e = $_ex_;
 			{
-				return tink_core_Outcome::Failure(tink_core_TypedError::withData(null, "Failed to pass template " . _hx_string_or_null($finalPath) . " using " . _hx_string_or_null($templatingEngine->type), $e, _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 192, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
+				return tink_core_Outcome::Failure(tink_core_TypedError::withData(null, "Failed to pass template " . _hx_string_or_null($finalPath) . " using " . _hx_string_or_null($templatingEngine->type), $e, _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 187, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 			}
 		}
 	}
@@ -253,7 +253,7 @@ function ufront_view_UFViewEngine_5(&$_g, &$ext, &$ext1, &$exts, &$finalPath, &$
 	{
 		switch($result4->index) {
 		case 1:{
-			$err1 = $result4->params[0];
+			$err1 = _hx_deref($result4)->params[0];
 			{
 				$result5 = tink_core_Outcome::Failure($err1);
 				if($tplStrReady->{"list"} === null) {
@@ -269,9 +269,9 @@ function ufront_view_UFViewEngine_5(&$_g, &$ext, &$ext1, &$exts, &$finalPath, &$
 			}
 		}break;
 		case 0:{
-			switch($result4->params[0]->index) {
+			switch(_hx_deref($result4)->params[0]->index) {
 			case 0:{
-				$tpl1 = $result4->params[0]->params[0];
+				$tpl1 = _hx_deref(_hx_deref($result4)->params[0])->params[0];
 				{
 					$result6 = tink_core_Outcome::Success($tpl1);
 					if($tplStrReady->{"list"} === null) {
@@ -298,7 +298,7 @@ function ufront_view_UFViewEngine_6(&$_g, &$engine, &$ext, &$finalPath, &$path, 
 	{
 		switch($result8->index) {
 		case 1:{
-			$err2 = $result8->params[0];
+			$err2 = _hx_deref($result8)->params[0];
 			{
 				$result9 = tink_core_Outcome::Failure($err2);
 				if($tplStrReady->{"list"} === null) {
@@ -314,9 +314,9 @@ function ufront_view_UFViewEngine_6(&$_g, &$engine, &$ext, &$finalPath, &$path, 
 			}
 		}break;
 		case 0:{
-			switch($result8->params[0]->index) {
+			switch(_hx_deref($result8)->params[0]->index) {
 			case 0:{
-				$tpl2 = $result8->params[0]->params[0];
+				$tpl2 = _hx_deref(_hx_deref($result8)->params[0])->params[0];
 				{
 					$templatingEngine = $engine;
 					{
@@ -335,7 +335,7 @@ function ufront_view_UFViewEngine_6(&$_g, &$engine, &$ext, &$finalPath, &$path, 
 				}
 			}break;
 			case 1:{
-				$result11 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "Template " . _hx_string_or_null($path) . " not found", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 135, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
+				$result11 = tink_core_Outcome::Failure(new tink_core_TypedError(null, "Template " . _hx_string_or_null($path) . " not found", _hx_anonymous(array("fileName" => "UFViewEngine.hx", "lineNumber" => 130, "className" => "ufront.view.UFViewEngine", "methodName" => "getTemplate"))));
 				if($tplStrReady->{"list"} === null) {
 					false;
 				} else {
@@ -356,7 +356,7 @@ function ufront_view_UFViewEngine_7(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 	{
 		switch($result14->index) {
 		case 1:{
-			$err3 = $result14->params[0];
+			$err3 = _hx_deref($result14)->params[0];
 			{
 				$result15 = tink_core_Outcome::Failure($err3);
 				if($tplStrReady->{"list"} === null) {
@@ -372,9 +372,9 @@ function ufront_view_UFViewEngine_7(&$_g, &$engine1, &$ext, &$ext2, &$extensions
 			}
 		}break;
 		case 0:{
-			switch($result14->params[0]->index) {
+			switch(_hx_deref($result14)->params[0]->index) {
 			case 0:{
-				$tpl3 = $result14->params[0]->params[0];
+				$tpl3 = _hx_deref(_hx_deref($result14)->params[0])->params[0];
 				{
 					$templatingEngine = $engine1;
 					{

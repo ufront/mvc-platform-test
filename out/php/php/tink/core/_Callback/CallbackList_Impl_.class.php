@@ -10,14 +10,14 @@ class tink_core__Callback_CallbackList_Impl_ {
 	}
 	static function add($this1, $cb) {
 		$cell = null;
-		if(tink_core__Callback_Cell::$pool->length > 0) {
-			$cell = tink_core__Callback_Cell::$pool->pop();
-		} else {
-			$cell = new tink_core__Callback_Cell();
+		{
+			$ret = null;
+			$ret = tink_core__Callback_CallbackList_Impl__0($cb, $cell, $ret, $this1);
+			$ret[0] = $cb;
+			$cell = $ret;
 		}
-		$cell->cb = $cb;
 		$this1->push($cell);
-		return array(new _hx_lambda(array(&$cb, &$cell, &$this1), "tink_core__Callback_CallbackList_Impl__0"), 'execute');
+		return array(new _hx_lambda(array(&$cb, &$cell, &$this1), "tink_core__Callback_CallbackList_Impl__1"), 'execute');
 	}
 	static function invoke($this1, $data) {
 		$_g = 0;
@@ -25,8 +25,8 @@ class tink_core__Callback_CallbackList_Impl_ {
 		while($_g < $_g1->length) {
 			$cell = $_g1[$_g];
 			++$_g;
-			if($cell->cb !== null) {
-				$cell->cb($data);
+			if($cell[0] !== null) {
+				$cell[0]($data);
 			}
 			unset($cell);
 		}
@@ -37,19 +37,25 @@ class tink_core__Callback_CallbackList_Impl_ {
 		while($_g < $_g1->length) {
 			$cell = $_g1[$_g];
 			++$_g;
-			$cell->cb = null;
-			tink_core__Callback_Cell::$pool->push($cell);
+			$cell[0] = null;
 			unset($cell);
 		}
 	}
 	static $__properties__ = array("get_length" => "get_length");
 	function __toString() { return 'tink.core._Callback.CallbackList_Impl_'; }
 }
-function tink_core__Callback_CallbackList_Impl__0(&$cb, &$cell, &$this1) {
+function tink_core__Callback_CallbackList_Impl__0(&$cb, &$cell, &$ret, &$this1) {
+	{
+		$this2 = null;
+		$this2 = (new _hx_array(array()));
+		$this2->length = 1;
+		return $this2;
+	}
+}
+function tink_core__Callback_CallbackList_Impl__1(&$cb, &$cell, &$this1) {
 	{
 		if($this1->remove($cell)) {
-			$cell->cb = null;
-			tink_core__Callback_Cell::$pool->push($cell);
+			$cell[0] = null;
 		}
 		$cell = null;
 	}

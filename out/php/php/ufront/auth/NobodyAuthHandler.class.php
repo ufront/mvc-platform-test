@@ -1,20 +1,19 @@
 <?php
 
 class ufront_auth_NobodyAuthHandler implements ufront_auth_UFAuthHandler{
-	public function __construct() {
-		;
-	}
+	public function __construct() {}
 	public function isLoggedIn() {
+		if(!php_Boot::$skip_constructor) {
 		return false;
-	}
+	}}
 	public function requireLogin() {
-		throw new HException(ufront_auth_AuthError::$NotLoggedIn);
+		throw new HException(ufront_web_HttpError::authError(ufront_auth_AuthError::$ANotLoggedIn, _hx_anonymous(array("fileName" => "NobodyAuthHandler.hx", "lineNumber" => 20, "className" => "ufront.auth.NobodyAuthHandler", "methodName" => "requireLogin"))));
 	}
 	public function isLoggedInAs($user) {
 		return false;
 	}
 	public function requireLoginAs($user) {
-		throw new HException(ufront_auth_AuthError::NotLoggedInAs($user));
+		throw new HException(ufront_web_HttpError::authError(ufront_auth_AuthError::ANotLoggedInAs($user), _hx_anonymous(array("fileName" => "NobodyAuthHandler.hx", "lineNumber" => 24, "className" => "ufront.auth.NobodyAuthHandler", "methodName" => "requireLoginAs"))));
 	}
 	public function hasPermission($permission) {
 		return false;
@@ -23,21 +22,16 @@ class ufront_auth_NobodyAuthHandler implements ufront_auth_UFAuthHandler{
 		return false;
 	}
 	public function requirePermission($permission) {
-		throw new HException(ufront_auth_AuthError::NoPermission($permission));
+		throw new HException(ufront_web_HttpError::authError(ufront_auth_AuthError::ANoPermission($permission), _hx_anonymous(array("fileName" => "NobodyAuthHandler.hx", "lineNumber" => 30, "className" => "ufront.auth.NobodyAuthHandler", "methodName" => "requirePermission"))));
 	}
 	public function requirePermissions($permissions) {
 		if(null == $permissions) throw new HException('null iterable');
 		$__hx__it = $permissions->iterator();
 		while($__hx__it->hasNext()) {
+			unset($p);
 			$p = $__hx__it->next();
-			throw new HException(ufront_auth_AuthError::NoPermission($p));
+			throw new HException(ufront_web_HttpError::authError(ufront_auth_AuthError::ANoPermission($p), _hx_anonymous(array("fileName" => "NobodyAuthHandler.hx", "lineNumber" => 32, "className" => "ufront.auth.NobodyAuthHandler", "methodName" => "requirePermissions"))));
 		}
-	}
-	public function getUserByID($id) {
-		return null;
-	}
-	public function setCurrentUser($u) {
-		throw new HException("Nobodies cannot become somebodies. It's against the rules!");
 	}
 	public function toString() {
 		return "NobodyAuthHandler";

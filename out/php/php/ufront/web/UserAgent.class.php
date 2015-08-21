@@ -15,7 +15,7 @@ class ufront_web_UserAgent {
 	public $minorVersion;
 	public $platform;
 	public function toString() {
-		return _hx_string_or_null($this->browser) . " v." . _hx_string_rec($this->majorVersion, "") . "." . _hx_string_rec($this->minorVersion, "") . " (" . _hx_string_or_null($this->version) . ") on " . _hx_string_or_null($this->platform);
+		return "" . _hx_string_or_null($this->browser) . " v." . _hx_string_rec($this->majorVersion, "") . "." . _hx_string_rec($this->minorVersion, "") . " (" . _hx_string_or_null($this->version) . ") on " . _hx_string_or_null($this->platform);
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -32,7 +32,7 @@ class ufront_web_UserAgent {
 	static function fromString($s) {
 		$ua = new ufront_web_UserAgent("unknown", "", 0, 0, "unknown");
 		$info = ufront_web_UserAgent::searchString(ufront_web_UserAgent::$dataBrowser, $s);
-		if(null !== $info) {
+		if($info !== null) {
 			$ua->browser = $info->app;
 			$version = ufront_web_UserAgent::extractVersion($info->versionString, $s);
 			if(null !== $version) {
@@ -42,7 +42,7 @@ class ufront_web_UserAgent {
 			}
 		}
 		$info1 = ufront_web_UserAgent::searchString(ufront_web_UserAgent::$dataOS, $s);
-		if(null !== $info1) {
+		if($info1 !== null) {
 			$ua->platform = $info1->app;
 		}
 		return $ua;
@@ -77,7 +77,7 @@ class ufront_web_UserAgent {
 ufront_web_UserAgent::$dataBrowser = (new _hx_array(array(_hx_anonymous(array("subString" => "Chrome", "identity" => "Chrome")), _hx_anonymous(array("subString" => "OmniWeb", "versionSearch" => "OmniWeb/", "identity" => "OmniWeb")), _hx_anonymous(array("subString" => "Apple", "identity" => "Safari", "versionSearch" => "Version")), _hx_anonymous(array("subString" => "Opera", "versionSearch" => "Version", "identity" => "Opera")), _hx_anonymous(array("subString" => "iCab", "identity" => "iCab")), _hx_anonymous(array("subString" => "KDE", "identity" => "Konqueror")), _hx_anonymous(array("subString" => "Firefox", "identity" => "Firefox")), _hx_anonymous(array("subString" => "Camino", "identity" => "Camino")), _hx_anonymous(array("subString" => "Netscape", "identity" => "Netscape")), _hx_anonymous(array("subString" => "MSIE", "identity" => "Explorer", "versionSearch" => "MSIE")), _hx_anonymous(array("subString" => "Gecko", "identity" => "Mozilla", "versionSearch" => "rv")), _hx_anonymous(array("subString" => "Mozilla", "identity" => "Netscape", "versionSearch" => "Mozilla")))));
 ufront_web_UserAgent::$dataOS = (new _hx_array(array(_hx_anonymous(array("subString" => "Win", "identity" => "Windows")), _hx_anonymous(array("subString" => "Mac", "identity" => "Mac")), _hx_anonymous(array("subString" => "iPhone", "identity" => "iPhone/iPod")), _hx_anonymous(array("subString" => "Linux", "identity" => "Linux")))));
 function ufront_web_UserAgent_0(&$_g, &$d, &$data, &$s) {
-	if(null === _hx_field($d, "versionSearch")) {
+	if(_hx_field($d, "versionSearch") === null) {
 		return $d->identity;
 	} else {
 		return $d->versionSearch;

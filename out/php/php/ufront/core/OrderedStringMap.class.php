@@ -42,7 +42,7 @@ class ufront_core_OrderedStringMap {
 				unset($i);
 			}
 		}
-		throw new HException("this should never happen");
+		throw new HException(ufront_web_HttpError::internalServerError("" . _hx_string_or_null($key) . " exists in hash but not in array", null, _hx_anonymous(array("fileName" => "OrderedStringMap.hx", "lineNumber" => 51, "className" => "ufront.core.OrderedStringMap", "methodName" => "indexOf"))));
 	}
 	public function exists($key) {
 		return $this->__hash->exists($key);
@@ -102,6 +102,7 @@ class ufront_core_OrderedStringMap {
 		$it = $this->keys();
 		$__hx__it = $it;
 		while($__hx__it->hasNext()) {
+			unset($i);
 			$i = $__hx__it->next();
 			$s->add($i);
 			$s->add(" => ");

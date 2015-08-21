@@ -1,10 +1,9 @@
 <?php
 
 class ufront_log_RemotingLogger implements ufront_app_UFLogHandler{
-	public function __construct() { 
-	}
-	public function log($httpContext, $appMessages) {
-		if($httpContext->response->get_contentType() === "application/x-haxe-remoting") {
+	public function __construct() {}
+	public function log($httpContext, $appMessages) { if(!php_Boot::$skip_constructor) {
+		if(ufront_log_RemotingLogger_0($this, $appMessages, $httpContext) && $httpContext->response->get_contentType() === "application/x-haxe-remoting") {
 			$results = (new _hx_array(array()));
 			{
 				$_g = 0;
@@ -20,8 +19,8 @@ class ufront_log_RemotingLogger implements ufront_app_UFLogHandler{
 				$httpContext->response->write("\x0A" . _hx_string_or_null($results->join("\x0A")));
 			}
 		}
-		return ufront_core_Sync::success();
-	}
+		return ufront_core_SurpriseTools::success();
+	}}
 	static function formatMessage($m) {
 		$m->msg = "" . Std::string($m->msg);
 		if($m->pos->customParams !== null) {
@@ -41,4 +40,10 @@ class ufront_log_RemotingLogger implements ufront_app_UFLogHandler{
 		return "hxt" . _hx_string_or_null(haxe_Serializer::run($m));
 	}
 	function __toString() { return 'ufront.log.RemotingLogger'; }
+}
+function ufront_log_RemotingLogger_0(&$__hx__this, &$appMessages, &$httpContext) {
+	{
+		$this1 = $httpContext->request->get_clientHeaders();
+		return $this1->exists("X-Ufront-Remoting");
+	}
 }

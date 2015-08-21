@@ -1,10 +1,13 @@
 <?php
 
 class ufront_web_url_VirtualUrl extends ufront_web_url_PartialUrl {
-	public function __construct() {
+	public function __construct($isPhysical = null) {
 		if(!php_Boot::$skip_constructor) {
+		if($isPhysical === null) {
+			$isPhysical = false;
+		}
 		parent::__construct();
-		$this->isPhysical = false;
+		$this->isPhysical = $isPhysical;
 	}}
 	public $isPhysical;
 	public function __call($m, $a) {
@@ -17,8 +20,11 @@ class ufront_web_url_VirtualUrl extends ufront_web_url_PartialUrl {
 		else
 			throw new HException('Unable to call <'.$m.'>');
 	}
-	static function parse($url) {
-		$u = new ufront_web_url_VirtualUrl();
+	static function parse($url, $isPhysical = null) {
+		if($isPhysical === null) {
+			$isPhysical = false;
+		}
+		$u = new ufront_web_url_VirtualUrl($isPhysical);
 		ufront_web_url_VirtualUrl::feed($u, $url);
 		return $u;
 	}
@@ -30,8 +36,6 @@ class ufront_web_url_VirtualUrl extends ufront_web_url_PartialUrl {
 				$u->segments->pop();
 			}
 			$u->isPhysical = true;
-		} else {
-			$u->isPhysical = false;
 		}
 	}
 	function __toString() { return 'ufront.web.url.VirtualUrl'; }

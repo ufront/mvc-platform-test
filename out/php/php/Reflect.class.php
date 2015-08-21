@@ -26,9 +26,6 @@ class Reflect {
 		}
 	}
 	static function callMethod($o, $func, $args) {
-		if(is_string($o) && !is_array($func)) {
-			return call_user_func_array(Reflect::field($o, $func), $args->a);
-		}
 		return call_user_func_array(((is_callable($func)) ? $func : array($o, $func)), ((null === $args) ? array() : $args->a));
 	}
 	static function fields($o) {
@@ -52,21 +49,16 @@ class Reflect {
 		if((is_object($_t = $a) && !($_t instanceof Enum) ? $_t === $b : $_t == $b)) {
 			return 0;
 		} else {
-			if($a > $b) {
-				return 1;
+			if(is_string($a)) {
+				return strcmp($a, $b);
 			} else {
-				return -1;
+				if($a > $b) {
+					return 1;
+				} else {
+					return -1;
+				}
 			}
 		}
-	}
-	static function compareMethods($f1, $f2) {
-		if(is_array($f1) && is_array($f1)) {
-			return $f1[0] === $f2[0] && $f1[1] == $f2[1];
-		}
-		if(is_string($f1) && is_string($f2)) {
-			return _hx_equal($f1, $f2);
-		}
-		return false;
 	}
 	static function isObject($v) {
 		if($v === null) {

@@ -14,17 +14,11 @@ class haxe_io_Bytes {
 		}
 		$this->b = substr($this->b, 0, $pos) . substr($src->b, $srcpos, $len) . substr($this->b, $pos+$len);
 	}
-	public function compare($other) {
-		return $this->b < $other->b ? -1 : ($this->b == $other->b ? 0 : 1);
-	}
 	public function getString($pos, $len) {
 		if($pos < 0 || $len < 0 || $pos + $len > $this->length) {
 			throw new HException(haxe_io_Error::$OutsideBounds);
 		}
 		return substr($this->b, $pos, $len);
-	}
-	public function toString() {
-		return $this->b;
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -42,5 +36,5 @@ class haxe_io_Bytes {
 	static function ofString($s) {
 		return new haxe_io_Bytes(strlen($s), $s);
 	}
-	function __toString() { return $this->toString(); }
+	function __toString() { return 'haxe.io.Bytes'; }
 }

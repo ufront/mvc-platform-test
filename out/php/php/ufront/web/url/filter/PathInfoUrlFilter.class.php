@@ -6,7 +6,7 @@ class ufront_web_url_filter_PathInfoUrlFilter implements ufront_web_url_filter_U
 		if($useCleanRoot === null) {
 			$useCleanRoot = true;
 		}
-		if(null === $frontScript) {
+		if($frontScript === null) {
 			$frontScript = "index.php";
 		}
 		$this->frontScript = $frontScript;
@@ -14,14 +14,13 @@ class ufront_web_url_filter_PathInfoUrlFilter implements ufront_web_url_filter_U
 	}}
 	public $frontScript;
 	public $useCleanRoot;
-	public function filterIn($url, $request) {
+	public function filterIn($url) {
 		if($url->segments[0] === $this->frontScript) {
 			$url->segments->shift();
 		}
 	}
-	public function filterOut($url, $request) {
-		if($url->isPhysical || $url->segments->length === 0 && $this->useCleanRoot) {
-		} else {
+	public function filterOut($url) {
+		if($url->isPhysical || $url->segments->length === 0 && $this->useCleanRoot) {} else {
 			$url->segments->unshift($this->frontScript);
 		}
 	}

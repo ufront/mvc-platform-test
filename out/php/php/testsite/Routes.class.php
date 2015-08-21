@@ -30,6 +30,7 @@ class testsite_Routes extends ufront_web_Controller {
 		if(null == $map) throw new HException('null iterable');
 		$__hx__it = $map->keys();
 		while($__hx__it->hasNext()) {
+			unset($key);
 			$key = $__hx__it->next();
 			$line = "" . _hx_string_or_null($key) . "=";
 			$values = ufront_core__MultiValueMap_MultiValueMap_Impl_::getAll($map, $key);
@@ -98,7 +99,11 @@ class testsite_Routes extends ufront_web_Controller {
 				$this->context->actionContext->action = "index";
 				$this->context->actionContext->args = (new _hx_array(array()));
 				$this->context->actionContext->get_uriParts()->splice(0, 0);
-				$wrappingRequired = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->index->wrapResult[0];
+				$wrappingRequired = null;
+				{
+					$i = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->index->wrapResult[0];
+					$wrappingRequired = $i;
+				}
 				$result = $this->wrapResult($this->index(), $wrappingRequired);
 				$this->setContextActionResultWhenFinished($result);
 				return $result;
@@ -107,7 +112,11 @@ class testsite_Routes extends ufront_web_Controller {
 					$this->context->actionContext->action = "queryString";
 					$this->context->actionContext->args = (new _hx_array(array()));
 					$this->context->actionContext->get_uriParts()->splice(0, 1);
-					$wrappingRequired1 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->queryString->wrapResult[0];
+					$wrappingRequired1 = null;
+					{
+						$i1 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->queryString->wrapResult[0];
+						$wrappingRequired1 = $i1;
+					}
 					$result1 = $this->wrapResult($this->queryString(), $wrappingRequired1);
 					$this->setContextActionResultWhenFinished($result1);
 					return $result1;
@@ -116,7 +125,11 @@ class testsite_Routes extends ufront_web_Controller {
 						$this->context->actionContext->action = "postString";
 						$this->context->actionContext->args = (new _hx_array(array()));
 						$this->context->actionContext->get_uriParts()->splice(0, 1);
-						$wrappingRequired2 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->postString->wrapResult[0];
+						$wrappingRequired2 = null;
+						{
+							$i2 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->postString->wrapResult[0];
+							$wrappingRequired2 = $i2;
+						}
 						$result2 = $this->wrapResult($this->postString(), $wrappingRequired2);
 						$this->setContextActionResultWhenFinished($result2);
 						return $result2;
@@ -125,7 +138,11 @@ class testsite_Routes extends ufront_web_Controller {
 							$this->context->actionContext->action = "query";
 							$this->context->actionContext->args = (new _hx_array(array()));
 							$this->context->actionContext->get_uriParts()->splice(0, 1);
-							$wrappingRequired3 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->query->wrapResult[0];
+							$wrappingRequired3 = null;
+							{
+								$i3 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->query->wrapResult[0];
+								$wrappingRequired3 = $i3;
+							}
 							$result3 = $this->wrapResult($this->query(), $wrappingRequired3);
 							$this->setContextActionResultWhenFinished($result3);
 							return $result3;
@@ -134,7 +151,11 @@ class testsite_Routes extends ufront_web_Controller {
 								$this->context->actionContext->action = "post";
 								$this->context->actionContext->args = (new _hx_array(array()));
 								$this->context->actionContext->get_uriParts()->splice(0, 1);
-								$wrappingRequired4 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->post->wrapResult[0];
+								$wrappingRequired4 = null;
+								{
+									$i4 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->post->wrapResult[0];
+									$wrappingRequired4 = $i4;
+								}
 								$result4 = $this->wrapResult($this->post(), $wrappingRequired4);
 								$this->setContextActionResultWhenFinished($result4);
 								return $result4;
@@ -143,7 +164,11 @@ class testsite_Routes extends ufront_web_Controller {
 									$this->context->actionContext->action = "cookies";
 									$this->context->actionContext->args = (new _hx_array(array()));
 									$this->context->actionContext->get_uriParts()->splice(0, 1);
-									$wrappingRequired5 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->cookies->wrapResult[0];
+									$wrappingRequired5 = null;
+									{
+										$i5 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->cookies->wrapResult[0];
+										$wrappingRequired5 = $i5;
+									}
 									$result5 = $this->wrapResult($this->cookies(), $wrappingRequired5);
 									$this->setContextActionResultWhenFinished($result5);
 									return $result5;
@@ -152,7 +177,11 @@ class testsite_Routes extends ufront_web_Controller {
 										$this->context->actionContext->action = "clientHeaders";
 										$this->context->actionContext->args = (new _hx_array(array()));
 										$this->context->actionContext->get_uriParts()->splice(0, 1);
-										$wrappingRequired6 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->clientHeaders->wrapResult[0];
+										$wrappingRequired6 = null;
+										{
+											$i6 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->clientHeaders->wrapResult[0];
+											$wrappingRequired6 = $i6;
+										}
 										$result6 = $this->wrapResult($this->clientHeaders(), $wrappingRequired6);
 										$this->setContextActionResultWhenFinished($result6);
 										return $result6;
@@ -161,7 +190,11 @@ class testsite_Routes extends ufront_web_Controller {
 											$this->context->actionContext->action = "hostname";
 											$this->context->actionContext->args = (new _hx_array(array()));
 											$this->context->actionContext->get_uriParts()->splice(0, 1);
-											$wrappingRequired7 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->hostname->wrapResult[0];
+											$wrappingRequired7 = null;
+											{
+												$i7 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->hostname->wrapResult[0];
+												$wrappingRequired7 = $i7;
+											}
 											$result7 = $this->wrapResult($this->hostname(), $wrappingRequired7);
 											$this->setContextActionResultWhenFinished($result7);
 											return $result7;
@@ -170,7 +203,11 @@ class testsite_Routes extends ufront_web_Controller {
 												$this->context->actionContext->action = "clientIP";
 												$this->context->actionContext->args = (new _hx_array(array()));
 												$this->context->actionContext->get_uriParts()->splice(0, 1);
-												$wrappingRequired8 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->clientIP->wrapResult[0];
+												$wrappingRequired8 = null;
+												{
+													$i8 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->clientIP->wrapResult[0];
+													$wrappingRequired8 = $i8;
+												}
 												$result8 = $this->wrapResult($this->clientIP(), $wrappingRequired8);
 												$this->setContextActionResultWhenFinished($result8);
 												return $result8;
@@ -179,7 +216,11 @@ class testsite_Routes extends ufront_web_Controller {
 													$this->context->actionContext->action = "uri";
 													$this->context->actionContext->args = (new _hx_array(array()));
 													$this->context->actionContext->get_uriParts()->splice(0, 1);
-													$wrappingRequired9 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->uri->wrapResult[0];
+													$wrappingRequired9 = null;
+													{
+														$i9 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->uri->wrapResult[0];
+														$wrappingRequired9 = $i9;
+													}
 													$result9 = $this->wrapResult($this->uri(), $wrappingRequired9);
 													$this->setContextActionResultWhenFinished($result9);
 													return $result9;
@@ -188,7 +229,11 @@ class testsite_Routes extends ufront_web_Controller {
 														$this->context->actionContext->action = "httpMethod";
 														$this->context->actionContext->args = (new _hx_array(array()));
 														$this->context->actionContext->get_uriParts()->splice(0, 1);
-														$wrappingRequired10 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->httpMethod->wrapResult[0];
+														$wrappingRequired10 = null;
+														{
+															$i10 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->httpMethod->wrapResult[0];
+															$wrappingRequired10 = $i10;
+														}
 														$result10 = $this->wrapResult($this->httpMethod(), $wrappingRequired10);
 														$this->setContextActionResultWhenFinished($result10);
 														return $result10;
@@ -197,7 +242,11 @@ class testsite_Routes extends ufront_web_Controller {
 															$this->context->actionContext->action = "scriptDir";
 															$this->context->actionContext->args = (new _hx_array(array()));
 															$this->context->actionContext->get_uriParts()->splice(0, 1);
-															$wrappingRequired11 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->scriptDir->wrapResult[0];
+															$wrappingRequired11 = null;
+															{
+																$i11 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->scriptDir->wrapResult[0];
+																$wrappingRequired11 = $i11;
+															}
 															$result11 = $this->wrapResult($this->scriptDir(), $wrappingRequired11);
 															$this->setContextActionResultWhenFinished($result11);
 															return $result11;
@@ -206,7 +255,11 @@ class testsite_Routes extends ufront_web_Controller {
 																$this->context->actionContext->action = "authorization";
 																$this->context->actionContext->args = (new _hx_array(array()));
 																$this->context->actionContext->get_uriParts()->splice(0, 1);
-																$wrappingRequired12 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->authorization->wrapResult[0];
+																$wrappingRequired12 = null;
+																{
+																	$i12 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->authorization->wrapResult[0];
+																	$wrappingRequired12 = $i12;
+																}
 																$result12 = $this->wrapResult($this->authorization(), $wrappingRequired12);
 																$this->setContextActionResultWhenFinished($result12);
 																return $result12;
@@ -226,7 +279,11 @@ class testsite_Routes extends ufront_web_Controller {
 																	$this->context->actionContext->action = "testResponse";
 																	$this->context->actionContext->args = (new _hx_array(array($status, $charset, $args)));
 																	$this->context->actionContext->get_uriParts()->splice(0, 3);
-																	$wrappingRequired13 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->testResponse->wrapResult[0];
+																	$wrappingRequired13 = null;
+																	{
+																		$i13 = haxe_rtti_Meta::getFields(_hx_qtype("testsite.Routes"))->testResponse->wrapResult[0];
+																		$wrappingRequired13 = $i13;
+																	}
 																	$result13 = $this->wrapResult($this->testResponse($status, $charset, $args), $wrappingRequired13);
 																	$this->setContextActionResultWhenFinished($result13);
 																	return $result13;
@@ -244,12 +301,12 @@ class testsite_Routes extends ufront_web_Controller {
 					}
 				}
 			}
-			throw new HException(ufront_web_HttpError::pageNotFound(_hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 433, "className" => "testsite.Routes", "methodName" => "execute"))));
+			throw new HException(ufront_web_HttpError::pageNotFound(_hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 442, "className" => "testsite.Routes", "methodName" => "execute"))));
 		}catch(Exception $__hx__e) {
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 			$e = $_ex_;
 			{
-				return ufront_core_Sync::httpError("Uncaught error while executing " . Std::string($this->context->actionContext->controller) . "." . _hx_string_or_null($this->context->actionContext->action) . "()", $e, _hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 436, "className" => "testsite.Routes", "methodName" => "execute")));
+				return ufront_core_SurpriseTools::asSurpriseError($e, "Uncaught error while executing " . Std::string($this->context->actionContext->controller) . "." . _hx_string_or_null($this->context->actionContext->action) . "()", _hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 445, "className" => "testsite.Routes", "methodName" => "execute")));
 			}
 		}
 	}
@@ -265,6 +322,6 @@ function testsite_Routes_0(&$__hx__this, &$method, &$params, &$status, &$uriPart
 		if($reason !== null) {
 			$message .= ": " . _hx_string_or_null($reason);
 		}
-		return new tink_core_TypedError(400, $message, _hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 624, "className" => "testsite.Routes", "methodName" => "execute")));
+		return new tink_core_TypedError(400, $message, _hx_anonymous(array("fileName" => "ControllerMacros.hx", "lineNumber" => 633, "className" => "testsite.Routes", "methodName" => "execute")));
 	}
 }

@@ -12,7 +12,25 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 		return $this1->exists($name);
 	}
 	static function iterator($this1) {
-		return _hx_deref((ufront_core__MultiValueMap_MultiValueMap_Impl__0($this1)))->iterator();
+		return ufront_core__MultiValueMap_MultiValueMap_Impl_::allValues($this1)->iterator();
+	}
+	static function allValues($this1) {
+		$_g = (new _hx_array(array()));
+		if(null == $this1) throw new HException('null iterable');
+		$__hx__it = $this1->iterator();
+		while($__hx__it->hasNext()) {
+			unset($arr);
+			$arr = $__hx__it->next();
+			$_g1 = 0;
+			while($_g1 < $arr->length) {
+				$v = $arr[$_g1];
+				++$_g1;
+				$_g->push($v);
+				unset($v);
+			}
+			unset($_g1);
+		}
+		return $_g;
 	}
 	static function get($this1, $name) {
 		if($this1->exists($name)) {
@@ -65,6 +83,7 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 		if(null == $this1) throw new HException('null iterable');
 		$__hx__it = $this1->keys();
 		while($__hx__it->hasNext()) {
+			unset($k);
 			$k = $__hx__it->next();
 			$_g = 0;
 			$_g1 = $this1->get($k);
@@ -84,6 +103,7 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 		if(null == $this1) throw new HException('null iterable');
 		$__hx__it = $this1->keys();
 		while($__hx__it->hasNext()) {
+			unset($key);
 			$key = $__hx__it->next();
 			$sb->add("\x0A\x09" . _hx_string_or_null($key) . " = [");
 			$sb->add(ufront_core__MultiValueMap_MultiValueMap_Impl_::getAll($this1, $key)->join(", "));
@@ -113,6 +133,7 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 		if(null == $this1) throw new HException('null iterable');
 		$__hx__it = $this1->keys();
 		while($__hx__it->hasNext()) {
+			unset($key);
 			$key = $__hx__it->next();
 			$sm->set($key, ufront_core__MultiValueMap_MultiValueMap_Impl_::get($this1, $key));
 		}
@@ -127,6 +148,7 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 			if(null == $stringMap) throw new HException('null iterable');
 			$__hx__it = $stringMap->keys();
 			while($__hx__it->hasNext()) {
+				unset($key);
 				$key = $__hx__it->next();
 				ufront_core__MultiValueMap_MultiValueMap_Impl_::set($qm, $key, $stringMap->get($key));
 			}
@@ -146,6 +168,7 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 				if(null == $map) throw new HException('null iterable');
 				$__hx__it = $map->keys();
 				while($__hx__it->hasNext()) {
+					unset($key);
 					$key = $__hx__it->next();
 					$_g1 = 0;
 					$_g2 = ufront_core__MultiValueMap_MultiValueMap_Impl_::getAll($map, $key);
@@ -163,23 +186,4 @@ class ufront_core__MultiValueMap_MultiValueMap_Impl_ {
 		return $qm;
 	}
 	function __toString() { return 'ufront.core._MultiValueMap.MultiValueMap_Impl_'; }
-}
-function ufront_core__MultiValueMap_MultiValueMap_Impl__0(&$this1) {
-	{
-		$_g = (new _hx_array(array()));
-		if(null == $this1) throw new HException('null iterable');
-		$__hx__it = $this1->iterator();
-		while($__hx__it->hasNext()) {
-			$arr = $__hx__it->next();
-			$_g1 = 0;
-			while($_g1 < $arr->length) {
-				$v = $arr[$_g1];
-				++$_g1;
-				$_g->push($v);
-				unset($v);
-			}
-			unset($_g1);
-		}
-		return $_g;
-	}
 }

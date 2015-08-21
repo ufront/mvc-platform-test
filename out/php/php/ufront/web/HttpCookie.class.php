@@ -10,7 +10,7 @@ class ufront_web_HttpCookie {
 			$secure = false;
 		}
 		$this->name = $name;
-		$this->set_value($value);
+		$this->value = $value;
 		$this->expires = $expires;
 		$this->domain = $domain;
 		$this->path = $path;
@@ -29,18 +29,6 @@ class ufront_web_HttpCookie {
 	}
 	public function toString() {
 		return "" . _hx_string_or_null($this->name) . ": " . _hx_string_or_null($this->get_description());
-	}
-	public function setName($v) {
-		if(null === $v) {
-			throw new HException(new thx_core_error_NullArgument("argument \"v\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.HttpCookie", "methodName" => "setName"))));
-		}
-		return $this->name = $v;
-	}
-	public function set_value($v) {
-		if(null === $v) {
-			throw new HException(new thx_core_error_NullArgument("argument \"v\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.HttpCookie", "methodName" => "set_value"))));
-		}
-		return $this->value = $v;
 	}
 	public function get_description() {
 		$buf = new StringBuf();
@@ -96,7 +84,7 @@ class ufront_web_HttpCookie {
 		$buf->add("=");
 		$buf->add($value);
 	}
-	static $__properties__ = array("get_description" => "get_description","set_value" => "set_value");
+	static $__properties__ = array("get_description" => "get_description");
 	function __toString() { return $this->toString(); }
 }
 ufront_web_HttpCookie::$dayNames = (new _hx_array(array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")));

@@ -2,6 +2,7 @@
 
 class ufront_view_TemplatingEngines {
 	public function __construct(){}
+	static $all;
 	static $haxe;
 	static function get_haxe() {
 		return _hx_anonymous(array("factory" => array(new _hx_lambda(array(), "ufront_view_TemplatingEngines_0"), 'execute'), "type" => "haxe.Template", "extensions" => (new _hx_array(array("html", "tpl")))));
@@ -9,6 +10,7 @@ class ufront_view_TemplatingEngines {
 	static $__properties__ = array("get_haxe" => "get_haxe");
 	function __toString() { return 'ufront.view.TemplatingEngines'; }
 }
+ufront_view_TemplatingEngines::$all = (new _hx_array(array(ufront_view_TemplatingEngines::get_haxe())));
 function ufront_view_TemplatingEngines_0($tplString) {
 	{
 		$t = new haxe_Template($tplString);

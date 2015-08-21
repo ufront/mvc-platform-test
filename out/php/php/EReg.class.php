@@ -49,54 +49,11 @@ class EReg {
 	public function matchedPos() {
 		return _hx_anonymous(array("pos" => $this->matches[0][1], "len" => strlen($this->matches[0][0])));
 	}
-	public function matchSub($s, $pos, $len = null) {
-		if($len === null) {
-			$len = -1;
-		}
-		$p = preg_match($this->re, (($len < 0) ? $s : _hx_substr($s, 0, $pos + $len)), $this->matches, PREG_OFFSET_CAPTURE, $pos);
-		if($p > 0) {
-			$this->last = $s;
-		} else {
-			$this->last = null;
-		}
-		return $p > 0;
-	}
-	public function split($s) {
-		return new _hx_array(preg_split($this->re, $s, $this->{"global"} ? -1 : 2));
-	}
 	public function replace($s, $by) {
 		$by = str_replace("\\\$", "\\\\\$", $by);
 		$by = str_replace("\$\$", "\\\$", $by);
 		if(!preg_match('/\\([^?].+?\\)/', $this->re)) $by = preg_replace('/\$(\d+)/', '\\\$\1', $by);
 		return preg_replace($this->re, $by, $s, (($this->{"global"}) ? -1 : 1));
-	}
-	public function map($s, $f) {
-		$offset = 0;
-		$buf = new StringBuf();
-		do {
-			if($offset >= strlen($s)) {
-				break;
-			} else {
-				if(!$this->matchSub($s, $offset, null)) {
-					$buf->add(_hx_substr($s, $offset, null));
-					break;
-				}
-			}
-			$p = $this->matchedPos();
-			$buf->add(_hx_substr($s, $offset, $p->pos - $offset));
-			$buf->add(call_user_func_array($f, array($this)));
-			if($p->len === 0) {
-				$buf->add(_hx_substr($s, $p->pos, 1));
-				$offset = $p->pos + 1;
-			} else {
-				$offset = $p->pos + $p->len;
-			}
-			unset($p);
-		} while($this->{"global"});
-		if(!$this->{"global"} && $offset > 0 && $offset < strlen($s)) {
-			$buf->add(_hx_substr($s, $offset, null));
-		}
-		return $buf->b;
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

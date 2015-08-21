@@ -28,13 +28,6 @@ class Type {
 			return _hx_ttype($c);
 		}
 	}
-	static function getEnum($o) {
-		if(!$o instanceof Enum) {
-			return null;
-		} else {
-			return _hx_ttype(get_class($o));
-		}
-	}
 	static function getSuperClass($c) {
 		$s = get_parent_class($c->__tname__);
 		if($s === false) {
@@ -131,36 +124,6 @@ class Type {
 		}
 		return $f;
 	}
-	static function createEnumIndex($e, $index, $params = null) {
-		$c = _hx_array_get(Type::getEnumConstructs($e), $index);
-		if($c === null) {
-			throw new HException(_hx_string_rec($index, "") . " is not a valid enum constructor index");
-		}
-		return Type::createEnum($e, $c, $params);
-	}
-	static function getInstanceFields($c) {
-		if($c->__qname__ === "String") {
-			return (new _hx_array(array("substr", "charAt", "charCodeAt", "indexOf", "lastIndexOf", "split", "toLowerCase", "toUpperCase", "toString", "length")));
-		}
-		if($c->__qname__ === "Array") {
-			return (new _hx_array(array("push", "concat", "join", "pop", "reverse", "shift", "slice", "sort", "splice", "toString", "copy", "unshift", "insert", "remove", "iterator", "length")));
-		}
-		
-		$rfl = $c->__rfl__();
-		if($rfl === null) return new _hx_array(array());
-		$r = array();
-		$internals = array('__construct', '__call', '__get', '__set', '__isset', '__unset', '__toString');
-		$ms = $rfl->getMethods();
-		while(list(, $m) = each($ms)) {
-			$n = $m->getName();
-			if(!$m->isStatic() && !in_array($n, $internals)) $r[] = $n;
-		}
-		$ps = $rfl->getProperties();
-		while(list(, $p) = each($ps))
-			if(!$p->isStatic() && ($name = $p->getName()) !== '__dynamics') $r[] = $name;
-		;
-		return new _hx_array(array_values(array_unique($r)));
-	}
 	static function getEnumConstructs($e) {
 		if($e->__tname__ == 'Bool') {
 			return (new _hx_array(array("true", "false")));
@@ -215,30 +178,6 @@ class Type {
 	}
 	static function enumConstructor($e) {
 		return $e->tag;
-	}
-	static function enumParameters($e) {
-		if(_hx_field($e, "params") === null) {
-			return (new _hx_array(array()));
-		} else {
-			return new _hx_array($e->params);
-		}
-	}
-	static function allEnums($e) {
-		$all = (new _hx_array(array()));
-		{
-			$_g = 0;
-			$_g1 = Type::getEnumConstructs($e);
-			while($_g < $_g1->length) {
-				$c = $_g1[$_g];
-				++$_g;
-				$v = Reflect::field($e, $c);
-				if(!Reflect::isFunction($v)) {
-					$all->push($v);
-				}
-				unset($v,$c);
-			}
-		}
-		return $all;
 	}
 	function __toString() { return 'Type'; }
 }

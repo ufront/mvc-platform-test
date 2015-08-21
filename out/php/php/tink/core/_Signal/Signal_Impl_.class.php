@@ -55,8 +55,8 @@ class tink_core__Signal_Signal_Impl_ {
 	static function next($this1) {
 		$ret = new tink_core_FutureTrigger();
 		{
-			$handler = tink_core__Callback_CallbackLink_Impl_::toCallback(call_user_func_array($this1, array((isset($ret->trigger) ? $ret->trigger: array($ret, "trigger")))));
-			call_user_func_array($this1, array($handler));
+			$handler = tink_core__Callback_CallbackLink_Impl_::toCallback($this1((isset($ret->trigger) ? $ret->trigger: array($ret, "trigger"))));
+			$this1($handler);
 		}
 		return $ret->future;
 	}
@@ -65,7 +65,7 @@ class tink_core__Signal_Signal_Impl_ {
 	}
 	static function gather($this1) {
 		$ret = tink_core__Signal_Signal_Impl_::trigger();
-		call_user_func_array($this1, array(array(new _hx_lambda(array(&$ret, &$this1), "tink_core__Signal_Signal_Impl__5"), 'execute')));
+		$this1(array(new _hx_lambda(array(&$ret, &$this1), "tink_core__Signal_Signal_Impl__5"), 'execute'));
 		return tink_core__Signal_SignalTrigger_Impl_::asSignal($ret);
 	}
 	static function trigger() {
@@ -86,22 +86,22 @@ class tink_core__Signal_Signal_Impl_ {
 }
 function tink_core__Signal_Signal_Impl__0(&$f, &$gather, &$this1, $cb) {
 	{
-		return call_user_func_array($this1, array(array(new _hx_lambda(array(&$cb, &$f, &$gather, &$this1), "tink_core__Signal_Signal_Impl__7"), 'execute')));
+		return $this1(array(new _hx_lambda(array(&$cb, &$f, &$gather, &$this1), "tink_core__Signal_Signal_Impl__7"), 'execute'));
 	}
 }
 function tink_core__Signal_Signal_Impl__1(&$f, &$gather, &$this1, $cb) {
 	{
-		return call_user_func_array($this1, array(array(new _hx_lambda(array(&$cb, &$f, &$gather, &$this1), "tink_core__Signal_Signal_Impl__8"), 'execute')));
+		return $this1(array(new _hx_lambda(array(&$cb, &$f, &$gather, &$this1), "tink_core__Signal_Signal_Impl__8"), 'execute'));
 	}
 }
 function tink_core__Signal_Signal_Impl__2(&$f, &$gather, &$this1, $cb) {
 	{
-		return call_user_func_array($this1, array(array(new _hx_lambda(array(&$cb, &$f, &$gather, &$this1), "tink_core__Signal_Signal_Impl__9"), 'execute')));
+		return $this1(array(new _hx_lambda(array(&$cb, &$f, &$gather, &$this1), "tink_core__Signal_Signal_Impl__9"), 'execute'));
 	}
 }
 function tink_core__Signal_Signal_Impl__3(&$gather, &$other, &$this1, $cb) {
 	{
-		return tink_core__Callback_CallbackLink_Impl_::fromMany((new _hx_array(array(call_user_func_array($this1, array($cb)), call_user_func_array($other, array($cb))))));
+		return tink_core__Callback_CallbackLink_Impl_::fromMany((new _hx_array(array($this1($cb), $other($cb)))));
 	}
 }
 function tink_core__Signal_Signal_Impl__4(&$this1, $_) {
@@ -124,25 +124,25 @@ function tink_core__Signal_Signal_Impl__6(&$add, &$gather, &$remove, $cb) {
 function tink_core__Signal_Signal_Impl__7(&$cb, &$f, &$gather, &$this1, $result) {
 	{
 		$data = call_user_func_array($f, array($result));
-		call_user_func_array($cb, array($data));
+		$cb($data);
 	}
 }
 function tink_core__Signal_Signal_Impl__8(&$cb, &$f, &$gather, &$this1, $result) {
 	{
 		$this2 = call_user_func_array($f, array($result));
-		call_user_func_array($this2, array($cb));
+		$this2($cb);
 	}
 }
 function tink_core__Signal_Signal_Impl__9(&$cb, &$f, &$gather, &$this1, $result) {
 	{
 		if(call_user_func_array($f, array($result))) {
-			call_user_func_array($cb, array($result));
+			$cb($result);
 		}
 	}
 }
 function tink_core__Signal_Signal_Impl__10(&$add, &$cb, &$gather, &$remove, $a) {
 	{
-		call_user_func_array($cb, array($a));
+		$cb($a);
 	}
 }
 function tink_core__Signal_Signal_Impl__11(&$add, &$cb, &$f, &$gather, &$remove) {
@@ -155,6 +155,5 @@ function tink_core__Signal_Signal_Impl__11(&$add, &$cb, &$f, &$gather, &$remove)
 function tink_core__Signal_Signal_Impl__12(&$a1, &$add, &$cb, &$f, &$f1, &$gather, &$remove) {
 	{
 		call_user_func_array($f1, array($a1));
-		return;
 	}
 }

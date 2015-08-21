@@ -1,6 +1,6 @@
 <?php
 
-class haxe_ds_IntMap implements IMap, IteratorAggregate{
+class haxe_ds_IntMap implements haxe_IMap, IteratorAggregate{
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
 		$this->h = array();
@@ -15,9 +15,6 @@ class haxe_ds_IntMap implements IMap, IteratorAggregate{
 		} else {
 			return null;
 		}
-	}
-	public function exists($key) {
-		return array_key_exists($key, $this->h);
 	}
 	public function keys() {
 		return new _hx_array_iterator(array_keys($this->h));

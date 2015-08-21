@@ -1,19 +1,22 @@
 <?php
 
 class ufront_view_FileViewEngine extends ufront_view_UFViewEngine {
-	public function __construct($cachingEnabled = null) {
+	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
-		parent::__construct($cachingEnabled);
+		parent::__construct(null);
 	}}
 	public $scriptDir;
 	public $path;
 	public $isPathAbsolute;
+	public function get_isPathAbsolute() {
+		return StringTools::startsWith($this->path, "/");
+	}
 	public $viewDirectory;
 	public function get_viewDirectory() {
 		if($this->get_isPathAbsolute()) {
 			return haxe_io_Path::addTrailingSlash($this->path);
 		} else {
-			return _hx_string_or_null($this->scriptDir) . _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->path));
+			return _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->scriptDir)) . _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->path));
 		}
 	}
 	public function getTemplateString($viewRelativePath) {
@@ -28,12 +31,9 @@ class ufront_view_FileViewEngine extends ufront_view_UFViewEngine {
 			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 			$e = $_ex_;
 			{
-				return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(tink_core_TypedError::withData(null, "Failed to load template " . _hx_string_or_null($viewRelativePath), $e, _hx_anonymous(array("fileName" => "FileViewEngine.hx", "lineNumber" => 49, "className" => "ufront.view.FileViewEngine", "methodName" => "getTemplateString")))));
+				return $e->asSurpriseError("Failed to load template " . _hx_string_or_null($viewRelativePath));
 			}
 		}
-	}
-	public function get_isPathAbsolute() {
-		return StringTools::startsWith($this->path, "/");
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -50,4 +50,4 @@ class ufront_view_FileViewEngine extends ufront_view_UFViewEngine {
 	static $__properties__ = array("get_viewDirectory" => "get_viewDirectory","get_isPathAbsolute" => "get_isPathAbsolute");
 	function __toString() { return 'ufront.view.FileViewEngine'; }
 }
-ufront_view_FileViewEngine::$__meta__ = _hx_anonymous(array("fields" => _hx_anonymous(array("scriptDir" => _hx_anonymous(array("name" => (new _hx_array(array("scriptDir"))), "type" => (new _hx_array(array("String"))), "inject" => (new _hx_array(array("scriptDirectory"))))), "path" => _hx_anonymous(array("name" => (new _hx_array(array("path"))), "type" => (new _hx_array(array("String"))), "inject" => (new _hx_array(array("viewPath")))))))));
+ufront_view_FileViewEngine::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("rtti" => (new _hx_array(array((new _hx_array(array("scriptDir", "String", "scriptDirectory"))), (new _hx_array(array("path", "String", "viewPath"))))))))));

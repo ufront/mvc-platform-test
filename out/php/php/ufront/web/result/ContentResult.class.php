@@ -3,7 +3,11 @@
 class ufront_web_result_ContentResult extends ufront_web_result_ActionResult {
 	public function __construct($content = null, $contentType = null) {
 		if(!php_Boot::$skip_constructor) {
-		$this->content = $content;
+		if($content !== null) {
+			$this->content = $content;
+		} else {
+			$this->content = "";
+		}
 		$this->contentType = $contentType;
 	}}
 	public $content;
@@ -13,7 +17,7 @@ class ufront_web_result_ContentResult extends ufront_web_result_ActionResult {
 			$actionContext->httpContext->response->set_contentType($this->contentType);
 		}
 		$actionContext->httpContext->response->write($this->content);
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -24,6 +28,9 @@ class ufront_web_result_ContentResult extends ufront_web_result_ActionResult {
 			return $this->__toString();
 		else
 			throw new HException('Unable to call <'.$m.'>');
+	}
+	static function create($content) {
+		return new ufront_web_result_ContentResult($content, null);
 	}
 	function __toString() { return 'ufront.web.result.ContentResult'; }
 }

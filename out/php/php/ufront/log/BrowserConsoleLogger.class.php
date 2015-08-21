@@ -1,10 +1,9 @@
 <?php
 
 class ufront_log_BrowserConsoleLogger implements ufront_app_UFLogHandler{
-	public function __construct() { 
-	}
-	public function log($ctx, $appMessages) {
-		if($ctx->response->get_contentType() === "text/html") {
+	public function __construct() {}
+	public function log($ctx, $appMessages) { if(!php_Boot::$skip_constructor) {
+		if($ctx->response->get_contentType() === "text/html" && !$ctx->response->isRedirect()) {
 			$results = (new _hx_array(array()));
 			{
 				$_g = 0;
@@ -17,11 +16,14 @@ class ufront_log_BrowserConsoleLogger implements ufront_app_UFLogHandler{
 				}
 			}
 			if($results->length > 0) {
-				$ctx->response->write("\x0A<script type=\"text/javascript\">\x0A" . _hx_string_or_null($results->join("\x0A")) . "\x0A</script>");
+				$script = "\x0A<script type=\"text/javascript\">\x0A" . _hx_string_or_null($results->join("\x0A")) . "\x0A</script>";
+				$newContent = ufront_web_result_CallJavascriptResult::insertScriptsBeforeBodyTag($ctx->response->getBuffer(), (new _hx_array(array($script))));
+				$ctx->response->clearContent();
+				$ctx->response->write($newContent);
 			}
 		}
-		return ufront_core_Sync::success();
-	}
+		return ufront_core_SurpriseTools::success();
+	}}
 	static function formatMessage($m) {
 		$type = null;
 		{

@@ -3,9 +3,7 @@
 class ufront_web_context_ActionContext {
 	public function __construct($httpContext) {
 		if(!php_Boot::$skip_constructor) {
-		if(null === $httpContext) {
-			throw new HException(new thx_core_error_NullArgument("argument \"httpContext\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.context.ActionContext", "methodName" => "new"))));
-		}
+		ufront_web_HttpError::throwIfNull($httpContext, "httpContext", _hx_anonymous(array("fileName" => "ActionContext.hx", "lineNumber" => 80, "className" => "ufront.web.context.ActionContext", "methodName" => "new")));
 		$this->httpContext = $httpContext;
 	}}
 	public $httpContext;

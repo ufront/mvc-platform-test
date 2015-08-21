@@ -126,7 +126,7 @@ class tink_core__Future_Future_Impl_ {
 function tink_core__Future_Future_Impl__0(&$op, &$self, &$this1, $cb) {
 	{
 		if($self !== null) {
-			call_user_func_array($this1, array((isset($op->trigger) ? $op->trigger: array($op, "trigger"))));
+			$this1((isset($op->trigger) ? $op->trigger: array($op, "trigger")));
 			$self = null;
 		}
 		return $op->future($cb);
@@ -134,8 +134,8 @@ function tink_core__Future_Future_Impl__0(&$op, &$self, &$this1, $cb) {
 }
 function tink_core__Future_Future_Impl__1(&$other, &$this1, $cb) {
 	{
-		call_user_func_array($this1, array($cb));
-		call_user_func_array($other, array($cb));
+		$this1($cb);
+		$other($cb);
 	}
 }
 function tink_core__Future_Future_Impl__2(&$f, &$gather, &$this1, $callback) {
@@ -151,7 +151,7 @@ function tink_core__Future_Future_Impl__3(&$gather, &$merger, &$other, &$this1, 
 function tink_core__Future_Future_Impl__4(&$f, $callback) {
 	{
 		$ret = null;
-		$ret = call_user_func_array($f, array(array(new _hx_lambda(array(&$callback, &$f, &$ret), "tink_core__Future_Future_Impl__16"), 'execute')));
+		$ret = $f(array(new _hx_lambda(array(&$callback, &$f, &$ret), "tink_core__Future_Future_Impl__16"), 'execute'));
 		return $ret;
 	}
 }
@@ -163,15 +163,15 @@ function tink_core__Future_Future_Impl__5(&$_g, &$f, &$futures, &$gather, &$ret,
 function tink_core__Future_Future_Impl__6(&$l, $cb) {
 	{
 		{
-			$data = call_user_func($l);
-			call_user_func_array($cb, array($data));
+			$data = $l();
+			$cb($data);
 		}
 		return null;
 	}
 }
 function tink_core__Future_Future_Impl__7(&$v, $callback) {
 	{
-		call_user_func_array($callback, array($v));
+		$callback($v);
 		return null;
 	}
 }
@@ -183,18 +183,18 @@ function tink_core__Future_Future_Impl__8(&$f, &$lazy) {
 }
 function tink_core__Future_Future_Impl__9(&$a, &$b, $a1, $b1) {
 	{
-		return new tink_core__Pair_Data($a1, $b1);
+		return new tink_core_MPair($a1, $b1);
 	}
 }
 function tink_core__Future_Future_Impl__10(&$f, &$map, $o) {
 	{
 		switch($o->index) {
 		case 0:{
-			$d = $o->params[0];
+			$d = _hx_deref($o)->params[0];
 			return call_user_func_array($map, array($d));
 		}break;
 		case 1:{
-			$f1 = $o->params[0];
+			$f1 = _hx_deref($o)->params[0];
 			return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure($f1));
 		}break;
 		}
@@ -204,11 +204,11 @@ function tink_core__Future_Future_Impl__11(&$f, &$map, $o) {
 	{
 		switch($o->index) {
 		case 0:{
-			$d = $o->params[0];
+			$d = _hx_deref($o)->params[0];
 			return tink_core__Future_Future_Impl_::map(call_user_func_array($map, array($d)), (isset(tink_core_Outcome::$Success) ? tink_core_Outcome::$Success: array("tink_core_Outcome", "Success")), null);
 		}break;
 		case 1:{
-			$f1 = $o->params[0];
+			$f1 = _hx_deref($o)->params[0];
 			return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure($f1));
 		}break;
 		}
@@ -223,11 +223,11 @@ function tink_core__Future_Future_Impl__13(&$f, &$map, $o) {
 	{
 		switch($o->index) {
 		case 0:{
-			$a = $o->params[0];
+			$a = _hx_deref($o)->params[0];
 			return tink_core_Outcome::Success(call_user_func_array($map, array($a)));
 		}break;
 		case 1:{
-			$f1 = $o->params[0];
+			$f1 = _hx_deref($o)->params[0];
 			return tink_core_Outcome::Failure($f1);
 		}break;
 		}
@@ -236,7 +236,7 @@ function tink_core__Future_Future_Impl__13(&$f, &$map, $o) {
 function tink_core__Future_Future_Impl__14(&$callback, &$f, &$gather, &$this1, $result) {
 	{
 		$data = call_user_func_array($f, array($result));
-		call_user_func_array($callback, array($data));
+		$callback($data);
 	}
 }
 function tink_core__Future_Future_Impl__15(&$gather, &$merger, &$other, &$t, &$this1, $a) {
@@ -246,7 +246,7 @@ function tink_core__Future_Future_Impl__15(&$gather, &$merger, &$other, &$t, &$t
 }
 function tink_core__Future_Future_Impl__16(&$callback, &$f, &$ret, $next) {
 	{
-		$ret = call_user_func_array($next, array(array(new _hx_lambda(array(&$callback, &$f, &$next, &$ret), "tink_core__Future_Future_Impl__19"), 'execute')));
+		$ret = $next(array(new _hx_lambda(array(&$callback, &$f, &$next, &$ret), "tink_core__Future_Future_Impl__19"), 'execute'));
 	}
 }
 function tink_core__Future_Future_Impl__17(&$_g, &$f, &$futures, &$gather, &$results, &$ret, $result) {
@@ -261,6 +261,6 @@ function tink_core__Future_Future_Impl__18(&$f, &$f1, &$lazy) {
 }
 function tink_core__Future_Future_Impl__19(&$callback, &$f, &$next, &$ret, $result) {
 	{
-		call_user_func_array($callback, array($result));
+		$callback($result);
 	}
 }

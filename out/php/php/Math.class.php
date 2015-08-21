@@ -6,9 +6,6 @@ class Math {
 	static $NaN;
 	static $POSITIVE_INFINITY;
 	static $NEGATIVE_INFINITY;
-	static function round($v) {
-		return (int) floor($v + 0.5);
-	}
 	static function floor($v) {
 		return (int) floor($v);
 	}

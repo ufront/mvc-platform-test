@@ -10,7 +10,6 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		$this->expiryFlag = false;
 		$this->sessionData = null;
 		$this->sessionID = null;
-		$this->oldSessionID = null;
 	}}
 	public $started;
 	public $commitFlag;
@@ -18,28 +17,27 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 	public $regenerateFlag;
 	public $expiryFlag;
 	public $sessionID;
-	public $oldSessionID;
 	public $sessionData;
 	public $context;
-	public function injectConfig() {
-		if($this->context->injector->hasMapping(_hx_qtype("String"), "sessionName")) {
-			$this->sessionName = $this->context->injector->getInstance(_hx_qtype("String"), "sessionName");
+	public function injectConfig($context) {
+		if($context->injector->hasMappingForType("String", "sessionName")) {
+			$this->sessionName = $context->injector->getValueForType("String", "sessionName");
 		} else {
 			$this->sessionName = ufront_web_session_FileSession::$defaultSessionName;
 		}
-		if($this->context->injector->hasMapping(_hx_qtype("ufront.core.InjectionRef"), "sessionExpiry")) {
-			$this->expiry = $this->context->injector->getInstance(_hx_qtype("ufront.core.InjectionRef"), "sessionExpiry")->get();
+		if($context->injector->hasMappingForType("Int", "sessionExpiry")) {
+			$this->expiry = $context->injector->getValueForType("Int", "sessionExpiry");
 		} else {
 			$this->expiry = ufront_web_session_FileSession::$defaultExpiry;
 		}
-		if($this->context->injector->hasMapping(_hx_qtype("String"), "sessionSavePath")) {
-			$this->savePath = $this->context->injector->getInstance(_hx_qtype("String"), "sessionSavePath");
+		if($context->injector->hasMappingForType("String", "sessionSavePath")) {
+			$this->savePath = $context->injector->getValueForType("String", "sessionSavePath");
 		} else {
 			$this->savePath = ufront_web_session_FileSession::$defaultSavePath;
 		}
 		$this->savePath = haxe_io_Path::addTrailingSlash($this->savePath);
 		if(!StringTools::startsWith($this->savePath, "/")) {
-			$this->savePath = _hx_string_or_null($this->context->get_contentDirectory()) . _hx_string_or_null($this->savePath);
+			$this->savePath = _hx_string_or_null($context->get_contentDirectory()) . _hx_string_or_null($this->savePath);
 		}
 	}
 	public $sessionName;
@@ -49,106 +47,50 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		$this->expiry = $e;
 	}
 	public function init() {
-		$t = new tink_core_FutureTrigger();
+		$_g = $this;
 		if(!$this->started) {
-			ufront_sys_SysUtil::mkdir(haxe_io_Path::removeTrailingSlashes($this->savePath));
-			$file = null;
-			$fileData = null;
 			$this->get_id();
-			if($this->sessionID !== null) {
+			$this->sessionData = new haxe_ds_StringMap();
+			return tink_core__Future_Future_Impl_::_tryMap(tink_core__Future_Future_Impl_::_tryMap(tink_core__Future_Future_Impl_::_tryFailingFlatMap($this->doCreateSessionDirectory(), (isset($this->doReadSessionFile) ? $this->doReadSessionFile: array($this, "doReadSessionFile"))), (isset($this->doUnserializeSessionData) ? $this->doUnserializeSessionData: array($this, "doUnserializeSessionData"))), array(new _hx_lambda(array(&$_g), "ufront_web_session_FileSession_0"), 'execute'));
+		} else {
+			return ufront_core_SurpriseTools::success();
+		}
+	}
+	public function doCreateSessionDirectory() {
+		$dir = haxe_io_Path::removeTrailingSlashes($this->savePath);
+		return ufront_core_SurpriseTools::tryCatchSurprise(array(new _hx_lambda(array(&$dir), "ufront_web_session_FileSession_1"), 'execute'), "Failed to create directory " . _hx_string_or_null($dir), _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 203, "className" => "ufront.web.session.FileSession", "methodName" => "doCreateSessionDirectory")));
+	}
+	public function doReadSessionFile($_) {
+		if(ufront_web_session_FileSession_2($this, $_)) {
+			$filename = "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->sessionID) . ".sess";
+			try {
+				return ufront_core_SurpriseTools::asGoodSurprise(sys_io_File::getContent($filename));
+			}catch(Exception $__hx__e) {
+				$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
+				$e = $_ex_;
 				{
-					$id = $this->get_id();
-					if($id !== null) {
-						if(!ufront_web_session_FileSession::$validID->match($id)) {
-							throw new HException("Invalid session ID.");
-						}
-					}
-				}
-				{
-					$id1 = $this->get_id();
-					$file = "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($id1) . ".sess";
-				}
-				if(!file_exists($file)) {
-					$this->sessionID = null;
-				} else {
-					try {
-						$fileData = sys_io_File::getContent($file);
-					}catch(Exception $__hx__e) {
-						$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-						$e = $_ex_;
-						{
-							$fileData = null;
-						}
-					}
-					if($fileData !== null) {
-						try {
-							$this->sessionData = haxe_Unserializer::run($fileData);
-						}catch(Exception $__hx__e) {
-							$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-							$e1 = $_ex_;
-							{
-								{
-									$msg = "Failed to unserialize session data, resetting session: " . Std::string($e1);
-									$this->context->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 199, "className" => "ufront.web.session.FileSession", "methodName" => "init")), "type" => ufront_log_MessageType::$Warning)));
-								}
-								$fileData = null;
-							}
-						}
-					}
-					if($fileData === null) {
-						$this->sessionID = null;
-						try {
-							@unlink($file);
-						}catch(Exception $__hx__e) {
-							$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-							$e2 = $_ex_;
-							{
-							}
-						}
-					}
-				}
-			}
-			if($this->sessionID === null) {
-				$this->sessionData = new haxe_ds_StringMap();
-				$this->started = true;
-				$tryID = null;
-				do {
-					$tryID = Random::string(40, null);
-					$file = _hx_string_or_null($this->savePath) . _hx_string_or_null($tryID) . ".sess";
-				} while(file_exists($file));
-				$this->sessionID = $tryID;
-				sys_io_File::saveContent($file, "");
-				$this->setCookie($tryID, $this->expiry);
-				$this->commit();
-			}
-			$this->started = true;
-			{
-				$result = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-				if($t->{"list"} === null) {
-					false;
-				} else {
-					$list = $t->{"list"};
-					$t->{"list"} = null;
-					$t->result = $result;
-					tink_core__Callback_CallbackList_Impl_::invoke($list, $result);
-					tink_core__Callback_CallbackList_Impl_::clear($list);
-					true;
+					return ufront_core_SurpriseTools::asGoodSurprise(null);
 				}
 			}
 		} else {
-			$result1 = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-			if($t->{"list"} === null) {
-				false;
-			} else {
-				$list1 = $t->{"list"};
-				$t->{"list"} = null;
-				$t->result = $result1;
-				tink_core__Callback_CallbackList_Impl_::invoke($list1, $result1);
-				tink_core__Callback_CallbackList_Impl_::clear($list1);
-				true;
+			$this->context->messages->push(_hx_anonymous(array("msg" => "Session ID " . _hx_string_or_null($this->sessionID) . " was invalid, resetting session.", "pos" => _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 243, "className" => "ufront.web.session.FileSession", "methodName" => "doReadSessionFile")), "type" => ufront_log_MessageType::$MWarning)));
+			$this->sessionID = null;
+			return ufront_core_SurpriseTools::asGoodSurprise(null);
+		}
+	}
+	public function doUnserializeSessionData($content) {
+		if($content !== null) {
+			try {
+				$this->sessionData = haxe_Unserializer::run($content);
+			}catch(Exception $__hx__e) {
+				$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
+				$e = $_ex_;
+				{
+					$this->context->messages->push(_hx_anonymous(array("msg" => "Failed to unserialize session data: " . Std::string($e), "pos" => _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 256, "className" => "ufront.web.session.FileSession", "methodName" => "doUnserializeSessionData")), "type" => ufront_log_MessageType::$MWarning)));
+				}
 			}
 		}
-		return $t->future;
+		return tink_core_Noise::$Noise;
 	}
 	public function setCookie($id, $expiryLength) {
 		$expireAt = null;
@@ -168,116 +110,56 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		$this->context->response->setCookie($sessionCookie);
 	}
 	public function commit() {
-		$t = new tink_core_FutureTrigger();
-		$handled = false;
-		try {
-			if($this->regenerateFlag) {
-				$handled = true;
-				rename("" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->oldSessionID) . ".sess", "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->sessionID) . ".sess");
-				$this->setCookie($this->sessionID, $this->expiry);
-				{
-					$result = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-					if($t->{"list"} === null) {
-						false;
-					} else {
-						$list = $t->{"list"};
-						$t->{"list"} = null;
-						$t->result = $result;
-						tink_core__Callback_CallbackList_Impl_::invoke($list, $result);
-						tink_core__Callback_CallbackList_Impl_::clear($list);
-						true;
-					}
-				}
-			}
-			if($this->commitFlag && $this->sessionData !== null) {
-				$handled = true;
-				$filePath = "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->sessionID) . ".sess";
-				$content = haxe_Serializer::run($this->sessionData);
-				sys_io_File::saveContent($filePath, $content);
-				{
-					$result1 = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-					if($t->{"list"} === null) {
-						false;
-					} else {
-						$list1 = $t->{"list"};
-						$t->{"list"} = null;
-						$t->result = $result1;
-						tink_core__Callback_CallbackList_Impl_::invoke($list1, $result1);
-						tink_core__Callback_CallbackList_Impl_::clear($list1);
-						true;
-					}
-				}
-			}
-			if($this->closeFlag) {
-				$handled = true;
-				$this->setCookie("", -1);
-				@unlink("" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->sessionID) . ".sess");
-				{
-					$result2 = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-					if($t->{"list"} === null) {
-						false;
-					} else {
-						$list2 = $t->{"list"};
-						$t->{"list"} = null;
-						$t->result = $result2;
-						tink_core__Callback_CallbackList_Impl_::invoke($list2, $result2);
-						tink_core__Callback_CallbackList_Impl_::clear($list2);
-						true;
-					}
-				}
-			}
-			if($this->expiryFlag) {
-				$handled = true;
-				$this->setCookie($this->sessionID, $this->expiry);
-				{
-					$result3 = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-					if($t->{"list"} === null) {
-						false;
-					} else {
-						$list3 = $t->{"list"};
-						$t->{"list"} = null;
-						$t->result = $result3;
-						tink_core__Callback_CallbackList_Impl_::invoke($list3, $result3);
-						tink_core__Callback_CallbackList_Impl_::clear($list3);
-						true;
-					}
-				}
-			}
-			if(!$handled) {
-				$result4 = tink_core_Outcome::Success(tink_core_Noise::$Noise);
-				if($t->{"list"} === null) {
-					false;
-				} else {
-					$list4 = $t->{"list"};
-					$t->{"list"} = null;
-					$t->result = $result4;
-					tink_core__Callback_CallbackList_Impl_::invoke($list4, $result4);
-					tink_core__Callback_CallbackList_Impl_::clear($list4);
-					true;
-				}
-			}
-		}catch(Exception $__hx__e) {
-			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
-			$e = $_ex_;
-			{
-				$result5 = tink_core_Outcome::Failure("Unable to save session: " . Std::string($e));
-				if($t->{"list"} === null) {
-					false;
-				} else {
-					$list5 = $t->{"list"};
-					$t->{"list"} = null;
-					$t->result = $result5;
-					tink_core__Callback_CallbackList_Impl_::invoke($list5, $result5);
-					tink_core__Callback_CallbackList_Impl_::clear($list5);
-					true;
-				}
-			}
+		if($this->sessionID === null && $this->sessionData !== null) {
+			$this->regenerateID();
 		}
-		return $t->future;
+		return tink_core__Future_Future_Impl_::_tryFailingFlatMap(tink_core__Future_Future_Impl_::_tryFailingFlatMap(tink_core__Future_Future_Impl_::_tryFailingFlatMap($this->doRegenerateID(), (isset($this->doSaveSessionContent) ? $this->doSaveSessionContent: array($this, "doSaveSessionContent"))), (isset($this->doSetExpiry) ? $this->doSetExpiry: array($this, "doSetExpiry"))), (isset($this->doCloseSession) ? $this->doCloseSession: array($this, "doCloseSession")));
+	}
+	public function doRegenerateID() {
+		$_g = $this;
+		if($this->regenerateFlag) {
+			$oldSessionID = $this->sessionID;
+			return ufront_core_SurpriseTools::tryCatchSurprise(array(new _hx_lambda(array(&$_g, &$oldSessionID), "ufront_web_session_FileSession_3"), 'execute'), null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 295, "className" => "ufront.web.session.FileSession", "methodName" => "doRegenerateID")));
+		} else {
+			return ufront_core_SurpriseTools::success();
+		}
+	}
+	public function doSaveSessionContent($_) {
+		if($this->commitFlag && $this->sessionData !== null) {
+			$filePath = "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->sessionID) . ".sess";
+			$content = null;
+			try {
+				$content = haxe_Serializer::run($this->sessionData);
+			}catch(Exception $__hx__e) {
+				$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
+				$e = $_ex_;
+				{
+					return $e->asSurpriseError("Failed to serialize session content");
+				}
+			}
+			return ufront_core_SurpriseTools::tryCatchSurprise(array(new _hx_lambda(array(&$_, &$content, &$e, &$filePath), "ufront_web_session_FileSession_4"), 'execute'), null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 344, "className" => "ufront.web.session.FileSession", "methodName" => "doSaveSessionContent")));
+		} else {
+			return ufront_core_SurpriseTools::success();
+		}
+	}
+	public function doSetExpiry($_) {
+		if($this->expiryFlag) {
+			$this->setCookie($this->sessionID, $this->expiry);
+		}
+		return ufront_core_SurpriseTools::success();
+	}
+	public function doCloseSession($_) {
+		if($this->closeFlag) {
+			$this->setCookie("", -1);
+			$filename = "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($this->sessionID) . ".sess";
+			return ufront_core_SurpriseTools::tryCatchSurprise(array(new _hx_lambda(array(&$_, &$filename), "ufront_web_session_FileSession_5"), 'execute'), null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 369, "className" => "ufront.web.session.FileSession", "methodName" => "doCloseSession")));
+		} else {
+			return ufront_core_SurpriseTools::success();
+		}
 	}
 	public function get($name) {
 		if(!$this->started) {
-			throw new HException("Trying to access session data before calling init()");
+			throw new HException(ufront_web_HttpError::internalServerError("Trying to access session data before init() has been run", null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 497, "className" => "ufront.web.session.FileSession", "methodName" => "checkStarted"))));
 		}
 		if($this->sessionData !== null) {
 			return $this->sessionData->get($name);
@@ -286,24 +168,23 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		}
 	}
 	public function set($name, $value) {
-		$this->init();
+		if(!$this->started) {
+			throw new HException(ufront_web_HttpError::internalServerError("Trying to access session data before init() has been run", null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 497, "className" => "ufront.web.session.FileSession", "methodName" => "checkStarted"))));
+		}
 		if($this->sessionData !== null) {
 			$this->sessionData->set($name, $value);
 			$this->commitFlag = true;
 		}
 	}
 	public function exists($name) {
-		if(!($this->started && $this->get_id() !== null)) {
-			return false;
-		}
 		if(!$this->started) {
-			throw new HException("Trying to access session data before calling init()");
+			throw new HException(ufront_web_HttpError::internalServerError("Trying to access session data before init() has been run", null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 497, "className" => "ufront.web.session.FileSession", "methodName" => "checkStarted"))));
 		}
 		return $this->sessionData !== null && $this->sessionData->exists($name);
 	}
 	public function remove($name) {
 		if(!$this->started) {
-			throw new HException("Trying to access session data before calling init()");
+			throw new HException(ufront_web_HttpError::internalServerError("Trying to access session data before init() has been run", null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 497, "className" => "ufront.web.session.FileSession", "methodName" => "checkStarted"))));
 		}
 		if($this->sessionData !== null) {
 			$this->sessionData->remove($name);
@@ -311,7 +192,7 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		}
 	}
 	public function clear() {
-		if($this->sessionData !== null && ($this->started && $this->get_id() !== null)) {
+		if($this->sessionData !== null && ($this->started || $this->get_id() !== null)) {
 			$this->sessionData = new haxe_ds_StringMap();
 			$this->commitFlag = true;
 		}
@@ -320,27 +201,10 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		$this->commitFlag = true;
 	}
 	public function regenerateID() {
-		$t = new tink_core_FutureTrigger();
-		$this->oldSessionID = $this->sessionID;
-		$this->sessionID = Random::string(40, null);
 		$this->regenerateFlag = true;
-		{
-			$result = tink_core_Outcome::Success($this->sessionID);
-			if($t->{"list"} === null) {
-				false;
-			} else {
-				$list = $t->{"list"};
-				$t->{"list"} = null;
-				$t->result = $result;
-				tink_core__Callback_CallbackList_Impl_::invoke($list, $result);
-				tink_core__Callback_CallbackList_Impl_::clear($list);
-				true;
-			}
-		}
-		return $t->future;
 	}
 	public function isActive() {
-		return $this->started && $this->get_id() !== null;
+		return $this->started || $this->get_id() !== null;
 	}
 	public function get_id() {
 		if($this->sessionID === null) {
@@ -352,7 +216,9 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		return $this->sessionID;
 	}
 	public function close() {
-		$this->init();
+		if(!$this->started) {
+			throw new HException(ufront_web_HttpError::internalServerError("Trying to access session data before init() has been run", null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 497, "className" => "ufront.web.session.FileSession", "methodName" => "checkStarted"))));
+		}
 		$this->sessionData = null;
 		$this->closeFlag = true;
 	}
@@ -367,11 +233,11 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 		return "" . _hx_string_or_null($this->savePath) . _hx_string_or_null($id) . ".sess";
 	}
 	public function generateSessionID() {
-		return Random::string(40, null);
+		return ufront_core_Uuid::create();
 	}
-	public function checkStarted() {
+	public function checkStarted($pos = null) {
 		if(!$this->started) {
-			throw new HException("Trying to access session data before calling init()");
+			throw new HException(ufront_web_HttpError::internalServerError("Trying to access session data before init() has been run", null, _hx_anonymous(array("fileName" => "FileSession.hx", "lineNumber" => 497, "className" => "ufront.web.session.FileSession", "methodName" => "checkStarted"))));
 		}
 	}
 	public function __call($m, $a) {
@@ -389,16 +255,78 @@ class ufront_web_session_FileSession implements ufront_web_session_UFHttpSession
 	static $defaultSessionName = "UfrontSessionID";
 	static $defaultSavePath = "sessions/";
 	static $defaultExpiry = 0;
-	static $validID;
 	static function testValidId($id) {
-		if($id !== null) {
-			if(!ufront_web_session_FileSession::$validID->match($id)) {
-				throw new HException("Invalid session ID.");
-			}
-		}
+		return $id !== null && ufront_core_Uuid::isValid($id);
+	}
+	static function notImplemented($p = null) {
+		return ufront_core_SurpriseTools::asSurpriseError("FileSession is not implemented on this platform", null, $p);
 	}
 	static $__properties__ = array("get_id" => "get_id");
 	function __toString() { return $this->toString(); }
 }
-ufront_web_session_FileSession::$__meta__ = _hx_anonymous(array("fields" => _hx_anonymous(array("context" => _hx_anonymous(array("name" => (new _hx_array(array("context"))), "type" => (new _hx_array(array("ufront.web.context.HttpContext"))), "inject" => null)), "injectConfig" => _hx_anonymous(array("name" => (new _hx_array(array("injectConfig"))), "args" => null, "post" => null))))));
-ufront_web_session_FileSession::$validID = new EReg("^[a-zA-Z0-9]+\$", "");
+ufront_web_session_FileSession::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("rtti" => (new _hx_array(array((new _hx_array(array("context", "ufront.web.context.HttpContext", ""))), (new _hx_array(array("injectConfig", "", "ufront.web.context.HttpContext", "", ""))))))))));
+function ufront_web_session_FileSession_0(&$_g, $n) {
+	{
+		$_g->started = true;
+		return tink_core_Noise::$Noise;
+	}
+}
+function ufront_web_session_FileSession_1(&$dir) {
+	{
+		if(file_exists($dir) === false) {
+			$path = haxe_io_Path::addTrailingSlash($dir);
+			$_p = null;
+			$parts = (new _hx_array(array()));
+			while($path !== ($_p = haxe_io_Path::directory($path))) {
+				$parts->unshift($path);
+				$path = $_p;
+			}
+			{
+				$_g = 0;
+				while($_g < $parts->length) {
+					$part = $parts[$_g];
+					++$_g;
+					if(_hx_char_code_at($part, strlen($part) - 1) !== 58 && !file_exists($part)) {
+						@mkdir($part, 493);
+					}
+					unset($part);
+				}
+			}
+		}
+		return tink_core_Noise::$Noise;
+	}
+}
+function ufront_web_session_FileSession_2(&$__hx__this, &$_) {
+	{
+		$id = $__hx__this->sessionID;
+		return $id !== null && ufront_core_Uuid::isValid($id);
+	}
+}
+function ufront_web_session_FileSession_3(&$_g, &$oldSessionID) {
+	{
+		$file = null;
+		do {
+			$_g->sessionID = ufront_core_Uuid::create();
+			$file = "" . _hx_string_or_null($_g->savePath) . _hx_string_or_null($_g->sessionID) . ".sess";
+		} while(file_exists($file));
+		$_g->setCookie($_g->sessionID, $_g->expiry);
+		if($oldSessionID !== null) {
+			rename("" . _hx_string_or_null($_g->savePath) . _hx_string_or_null($oldSessionID) . ".sess", $file);
+		} else {
+			sys_io_File::saveContent($file, "");
+		}
+		return tink_core_Noise::$Noise;
+	}
+}
+function ufront_web_session_FileSession_4(&$_, &$content, &$e, &$filePath) {
+	{
+		sys_io_File::saveContent($filePath, $content);
+		return tink_core_Noise::$Noise;
+	}
+}
+function ufront_web_session_FileSession_5(&$_, &$filename) {
+	{
+		@unlink($filename);
+		return tink_core_Noise::$Noise;
+	}
+}

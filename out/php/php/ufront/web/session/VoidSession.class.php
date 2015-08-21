@@ -1,42 +1,33 @@
 <?php
 
 class ufront_web_session_VoidSession implements ufront_web_session_UFHttpSession{
-	public function __construct() {
-		;
-	}
+	public function __construct() {}
 	public $id;
-	public function setExpiry($e) {
-	}
+	public function setExpiry($e) {}
 	public function init() {
+		if(!php_Boot::$skip_constructor) {
 		return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Success(tink_core_Noise::$Noise));
-	}
+	}}
 	public function commit() {
 		return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Success(tink_core_Noise::$Noise));
 	}
-	public function triggerCommit() {
-	}
+	public function triggerCommit() {}
 	public function isActive() {
 		return false;
 	}
 	public function get($name) {
 		return null;
 	}
-	public function set($name, $value) {
-	}
+	public function set($name, $value) {}
 	public function exists($name) {
 		return false;
 	}
-	public function remove($name) {
-	}
-	public function clear() {
-	}
-	public function regenerateID() {
-		return tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Success(""));
-	}
-	public function close() {
-	}
+	public function remove($name) {}
+	public function clear() {}
+	public function regenerateID() {}
+	public function close() {}
 	public function get_id() {
-		return "";
+		return null;
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

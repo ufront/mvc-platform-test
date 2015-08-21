@@ -1,13 +1,12 @@
 <?php
 
 class ufront_auth_BossUser implements ufront_auth_UFAuthUser{
-	public function __construct() {
-		;
-	}
+	public function __construct() {}
 	public $userID;
 	public function can($p = null, $ps = null) {
+		if(!php_Boot::$skip_constructor) {
 		return true;
-	}
+	}}
 	public function get_userID() {
 		return "The Boss";
 	}

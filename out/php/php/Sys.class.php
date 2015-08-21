@@ -9,9 +9,5 @@ class Sys {
 		Sys::hprint($v);
 		Sys::hprint("\x0A");
 	}
-	static function sleep($seconds) {
-		usleep($seconds * 1000000);
-		return;
-	}
 	function __toString() { return 'Sys'; }
 }

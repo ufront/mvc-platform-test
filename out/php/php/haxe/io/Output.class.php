@@ -18,21 +18,7 @@ class haxe_io_Output {
 		}
 		return $len;
 	}
-	public function close() {
-	}
-	public function write($s) {
-		$l = $s->length;
-		$p = 0;
-		while($l > 0) {
-			$k = $this->writeBytes($s, $p, $l);
-			if($k === 0) {
-				throw new HException(haxe_io_Error::$Blocked);
-			}
-			$p += $k;
-			$l -= $k;
-			unset($k);
-		}
-	}
+	public function close() {}
 	public function writeFullBytes($s, $pos, $len) {
 		while($len > 0) {
 			$k = $this->writeBytes($s, $pos, $len);

@@ -13,7 +13,7 @@ class ufront_web_result_EmptyResult extends ufront_web_result_ActionResult {
 		if($this->preventFlush) {
 			$actionContext->httpContext->response->preventFlush();
 		}
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))

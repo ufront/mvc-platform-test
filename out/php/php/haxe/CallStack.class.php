@@ -2,9 +2,6 @@
 
 class haxe_CallStack {
 	public function __construct(){}
-	static function callStack() {
-		return haxe_CallStack::makeStack("%s");
-	}
 	static function exceptionStack() {
 		return haxe_CallStack::makeStack("%e");
 	}
@@ -28,16 +25,16 @@ class haxe_CallStack {
 			$b->add("a C function");
 		}break;
 		case 1:{
-			$m = $s->params[0];
+			$m = _hx_deref($s)->params[0];
 			{
 				$b->add("module ");
 				$b->add($m);
 			}
 		}break;
 		case 2:{
-			$line = $s->params[2];
-			$file = $s->params[1];
-			$s1 = $s->params[0];
+			$line = _hx_deref($s)->params[2];
+			$file = _hx_deref($s)->params[1];
+			$s1 = _hx_deref($s)->params[0];
 			{
 				if($s1 !== null) {
 					haxe_CallStack::itemToString($b, $s1);
@@ -52,8 +49,8 @@ class haxe_CallStack {
 			}
 		}break;
 		case 3:{
-			$meth = $s->params[1];
-			$cname = $s->params[0];
+			$meth = _hx_deref($s)->params[1];
+			$cname = _hx_deref($s)->params[0];
 			{
 				$b->add($cname);
 				$b->add(".");
@@ -61,7 +58,7 @@ class haxe_CallStack {
 			}
 		}break;
 		case 4:{
-			$n = $s->params[0];
+			$n = _hx_deref($s)->params[0];
 			{
 				$b->add("local function #");
 				$b->add($n);

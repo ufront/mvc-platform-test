@@ -1,9 +1,7 @@
 <?php
 
 class ufront_api_UFApiContext {
-	public function __construct() {
-		;
-	}
+	public function __construct() {}
 	public $injector;
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -15,5 +13,24 @@ class ufront_api_UFApiContext {
 		else
 			throw new HException('Unable to call <'.$m.'>');
 	}
+	static function getApisInContext($context) {
+		if(!php_Boot::$skip_constructor) {
+		$apis = (new _hx_array(array()));
+		$meta = haxe_rtti_Meta::getType($context);
+		if($meta->apiList !== null) {
+			$_g = 0;
+			$_g1 = $meta->apiList;
+			while($_g < $_g1->length) {
+				$apiName = $_g1[$_g];
+				++$_g;
+				$api = Type::resolveClass($apiName);
+				if($api !== null) {
+					$apis->push($api);
+				}
+				unset($apiName,$api);
+			}
+		}
+		return $apis;
+	}}
 	function __toString() { return 'ufront.api.UFApiContext'; }
 }

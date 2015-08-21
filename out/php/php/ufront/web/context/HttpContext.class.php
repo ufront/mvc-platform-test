@@ -6,12 +6,8 @@ class ufront_web_context_HttpContext {
 		if($relativeContentDir === null) {
 			$relativeContentDir = "uf-content";
 		}
-		if(null === $response) {
-			throw new HException(new thx_core_error_NullArgument("argument \"response\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.context.HttpContext", "methodName" => "new"))));
-		}
-		if(null === $request) {
-			throw new HException(new thx_core_error_NullArgument("argument \"request\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.context.HttpContext", "methodName" => "new"))));
-		}
+		ufront_web_HttpError::throwIfNull($response, null, _hx_anonymous(array("fileName" => "HttpContext.hx", "lineNumber" => 214, "className" => "ufront.web.context.HttpContext", "methodName" => "new")));
+		ufront_web_HttpError::throwIfNull($request, null, _hx_anonymous(array("fileName" => "HttpContext.hx", "lineNumber" => 215, "className" => "ufront.web.context.HttpContext", "methodName" => "new")));
 		$this->request = $request;
 		$this->response = $response;
 		if($urlFilters !== null) {
@@ -19,58 +15,61 @@ class ufront_web_context_HttpContext {
 		} else {
 			$this->urlFilters = (new _hx_array(array()));
 		}
-		$this->relativeContentDir = $relativeContentDir;
+		$this->_relativeContentDir = $relativeContentDir;
 		$this->actionContext = new ufront_web_context_ActionContext($this);
 		$this->messages = (new _hx_array(array()));
 		$this->completion = 0;
 		if($appInjector !== null) {
 			$this->injector = $appInjector->createChildInjector();
 		} else {
-			$this->injector = new minject_Injector();
+			$this->injector = new minject_Injector(null);
 		}
-		$this->injector->mapValue(_hx_qtype("ufront.web.context.HttpContext"), $this, null);
-		$this->injector->mapValue(_hx_qtype("ufront.web.context.HttpRequest"), $request, null);
-		$this->injector->mapValue(_hx_qtype("ufront.web.context.HttpResponse"), $response, null);
-		$this->injector->mapValue(_hx_qtype("ufront.web.context.ActionContext"), $this->actionContext, null);
-		$this->injector->mapValue(_hx_qtype("ufront.log.MessageList"), new ufront_log_MessageList($this->messages, null), null);
+		$this->injector->mapType("ufront.web.context.HttpContext", null, null)->toValue($this);
+		$this->injector->mapType("ufront.web.context.HttpRequest", null, null)->toValue($request);
+		$this->injector->mapType("ufront.web.context.HttpResponse", null, null)->toValue($response);
+		$this->injector->mapType("ufront.web.context.ActionContext", null, null)->toValue($this->actionContext);
+		$this->injector->mapType("ufront.log.MessageList", null, null)->toValue(new ufront_log_MessageList($this->messages, null));
+		$this->injector->mapType("minject.Injector", null, null)->toValue($this->injector);
 		if($session !== null) {
 			$this->session = $session;
 		}
 		if($this->session === null) {
 			try {
-				$this->session = $this->injector->getInstance(_hx_qtype("ufront.web.session.UFHttpSession"), null);
+				$this->session = $this->injector->getValueForType("ufront.web.session.UFHttpSession", null);
 			}catch(Exception $__hx__e) {
 				$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 				$e = $_ex_;
 				{
-					$msg = "Failed to load UFHttpSession: " . Std::string($e) . ". Using VoidSession instead.";
-					$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "HttpContext.hx", "lineNumber" => 87, "className" => "ufront.web.context.HttpContext", "methodName" => "new")), "type" => ufront_log_MessageType::$Log)));
+					$msg = "Failed to load UFHttpSession: " . Std::string($e) . ". Using VoidSession instead." . _hx_string_or_null(haxe_CallStack::toString(haxe_CallStack::exceptionStack()));
+					$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "HttpContext.hx", "lineNumber" => 236, "className" => "ufront.web.context.HttpContext", "methodName" => "new")), "type" => ufront_log_MessageType::$MLog)));
 				}
 			}
 		}
 		if($this->session === null) {
 			$this->session = new ufront_web_session_VoidSession();
 		}
-		ufront_core_InjectionTools::inject($this->injector, _hx_qtype("ufront.web.session.UFHttpSession"), $this->session, null, null, null);
+		$this->injector->mapType("ufront.web.session.UFHttpSession", null, null)->toValue($this->session);
+		$this->injector->mapRuntimeTypeOf($this->session, null)->toValue($this->session);
 		if($auth !== null) {
 			$this->auth = $auth;
 		}
 		if($this->auth === null) {
 			try {
-				$this->auth = $this->injector->getInstance(_hx_qtype("ufront.auth.UFAuthHandler"), null);
+				$this->auth = $this->injector->getValueForType("ufront.auth.UFAuthHandler", null);
 			}catch(Exception $__hx__e) {
 				$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 				$e1 = $_ex_;
 				{
-					$msg1 = "Failed to load UFAuthHandler: " . Std::string($e1) . ". Using NobodyAuthHandler instead.";
-					$this->messages->push(_hx_anonymous(array("msg" => $msg1, "pos" => _hx_anonymous(array("fileName" => "HttpContext.hx", "lineNumber" => 94, "className" => "ufront.web.context.HttpContext", "methodName" => "new")), "type" => ufront_log_MessageType::$Log)));
+					$msg1 = "Failed to load UFAuthHandler: " . Std::string($e1) . ". Using NobodyAuthHandler instead." . _hx_string_or_null(haxe_CallStack::toString(haxe_CallStack::exceptionStack()));
+					$this->messages->push(_hx_anonymous(array("msg" => $msg1, "pos" => _hx_anonymous(array("fileName" => "HttpContext.hx", "lineNumber" => 244, "className" => "ufront.web.context.HttpContext", "methodName" => "new")), "type" => ufront_log_MessageType::$MLog)));
 				}
 			}
 		}
 		if($this->auth === null) {
 			$this->auth = new ufront_auth_NobodyAuthHandler();
 		}
-		ufront_core_InjectionTools::inject($this->injector, _hx_qtype("ufront.auth.UFAuthHandler"), $this->auth, null, null, null);
+		$this->injector->mapType("ufront.auth.UFAuthHandler", null, null)->toValue($this->auth);
+		$this->injector->mapRuntimeTypeOf($this->auth, null)->toValue($this->auth);
 	}}
 	public $injector;
 	public $request;
@@ -83,26 +82,36 @@ class ufront_web_context_HttpContext {
 	public $actionContext;
 	public $completion;
 	public $urlFilters;
+	public $messages;
+	public $contentDirectory;
 	public $_requestUri;
+	public $_relativeContentDir;
+	public $_contentDir;
 	public function getRequestUri() {
 		if(null === $this->_requestUri) {
 			$url = ufront_web_url_PartialUrl::parse($this->request->get_uri());
-			if(null == $this->urlFilters) throw new HException('null iterable');
-			$__hx__it = $this->urlFilters->iterator();
-			while($__hx__it->hasNext()) {
-				$filter = $__hx__it->next();
-				$filter->filterIn($url, $this->request);
+			{
+				$_g = 0;
+				$_g1 = $this->urlFilters;
+				while($_g < $_g1->length) {
+					$filter = $_g1[$_g];
+					++$_g;
+					$filter->filterIn($url);
+					unset($filter);
+				}
 			}
 			$this->_requestUri = $url->toString();
 		}
 		return $this->_requestUri;
 	}
-	public function generateUri($uri) {
-		$uriOut = ufront_web_url_VirtualUrl::parse($uri);
-		$filters = $this->urlFilters;
-		$i = $filters->length - 1;
+	public function generateUri($uri, $isPhysical = null) {
+		if($isPhysical === null) {
+			$isPhysical = false;
+		}
+		$uriOut = ufront_web_url_VirtualUrl::parse($uri, $isPhysical);
+		$i = $this->urlFilters->length - 1;
 		while($i >= 0) {
-			_hx_array_get($filters, $i--)->filterOut($uriOut, $this->request);
+			_hx_array_get($this->urlFilters, $i--)->filterOut($uriOut);
 		}
 		return $uriOut->toString();
 	}
@@ -114,19 +123,6 @@ class ufront_web_context_HttpContext {
 		}
 		$this->_requestUri = null;
 	}
-	public $contentDirectory;
-	public $relativeContentDir;
-	public $_contentDir;
-	public function get_contentDirectory() {
-		if($this->_contentDir === null) {
-			if($this->request->get_scriptDirectory() !== null) {
-				$this->_contentDir = _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->request->get_scriptDirectory())) . _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->relativeContentDir));
-			} else {
-				$this->_contentDir = haxe_io_Path::addTrailingSlash($this->relativeContentDir);
-			}
-		}
-		return $this->_contentDir;
-	}
 	public function commitSession() {
 		if($this->session !== null) {
 			return $this->session->commit();
@@ -135,18 +131,20 @@ class ufront_web_context_HttpContext {
 		}
 	}
 	public function ufTrace($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Trace)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MTrace)));
 	}
 	public function ufLog($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Log)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MLog)));
 	}
 	public function ufWarn($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Warning)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MWarning)));
 	}
 	public function ufError($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Error)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MError)));
 	}
-	public $messages;
+	public function toString() {
+		return "HttpContext";
+	}
 	public function get_sessionID() {
 		if(null !== $this->session) {
 			return $this->session->get_id();
@@ -168,6 +166,16 @@ class ufront_web_context_HttpContext {
 			return null;
 		}
 	}
+	public function get_contentDirectory() {
+		if($this->_contentDir === null) {
+			if($this->request->get_scriptDirectory() !== null) {
+				$this->_contentDir = _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->request->get_scriptDirectory())) . _hx_string_or_null(haxe_io_Path::addTrailingSlash($this->_relativeContentDir));
+			} else {
+				$this->_contentDir = haxe_io_Path::addTrailingSlash($this->_relativeContentDir);
+			}
+		}
+		return $this->_contentDir;
+	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
 			return call_user_func_array($this->$m, $a);
@@ -178,7 +186,7 @@ class ufront_web_context_HttpContext {
 		else
 			throw new HException('Unable to call <'.$m.'>');
 	}
-	static function createSysContext($request = null, $response = null, $appInjector = null, $session = null, $auth = null, $urlFilters = null, $relativeContentDir = null) {
+	static function createContext($request = null, $response = null, $appInjector = null, $session = null, $auth = null, $urlFilters = null, $relativeContentDir = null) {
 		if($relativeContentDir === null) {
 			$relativeContentDir = "uf-content";
 		}
@@ -191,5 +199,5 @@ class ufront_web_context_HttpContext {
 		return new ufront_web_context_HttpContext($request, $response, $appInjector, $session, $auth, $urlFilters, $relativeContentDir);
 	}
 	static $__properties__ = array("get_contentDirectory" => "get_contentDirectory","get_currentUserID" => "get_currentUserID","get_currentUser" => "get_currentUser","get_sessionID" => "get_sessionID");
-	function __toString() { return 'ufront.web.context.HttpContext'; }
+	function __toString() { return $this->toString(); }
 }

@@ -3,11 +3,7 @@
 class ufront_view__TemplateData_TemplateData_Impl_ {
 	public function __construct(){}
 	static function _new($obj = null) {
-		if($obj !== null) {
-			return $obj;
-		} else {
-			return _hx_anonymous(array());
-		}
+		return (($obj !== null) ? $obj : _hx_anonymous(array()));
 	}
 	static function toObject($this1) {
 		return $this1;
@@ -49,6 +45,7 @@ class ufront_view__TemplateData_TemplateData_Impl_ {
 		if(null == $map) throw new HException('null iterable');
 		$__hx__it = $map->keys();
 		while($__hx__it->hasNext()) {
+			unset($k);
 			$k = $__hx__it->next();
 			ufront_view__TemplateData_TemplateData_Impl_::set($this1, $k, $map->get($k));
 		}
@@ -71,11 +68,7 @@ class ufront_view__TemplateData_TemplateData_Impl_ {
 		$m = null;
 		{
 			$obj = _hx_anonymous(array());
-			if($obj !== null) {
-				$m = $obj;
-			} else {
-				$m = _hx_anonymous(array());
-			}
+			$m = (($obj !== null) ? $obj : _hx_anonymous(array()));
 		}
 		ufront_view__TemplateData_TemplateData_Impl_::setMap($m, $d);
 		return $m;
@@ -87,24 +80,23 @@ class ufront_view__TemplateData_TemplateData_Impl_ {
 		$combined = null;
 		{
 			$obj = _hx_anonymous(array());
-			if($obj !== null) {
-				$combined = $obj;
-			} else {
-				$combined = _hx_anonymous(array());
-			}
+			$combined = (($obj !== null) ? $obj : _hx_anonymous(array()));
 		}
 		if(null == $dataSets) throw new HException('null iterable');
 		$__hx__it = $dataSets->iterator();
 		while($__hx__it->hasNext()) {
+			unset($d);
 			$d = $__hx__it->next();
-			if(Std::is($d, _hx_qtype("haxe.ds.StringMap"))) {
-				$map = $d;
-				ufront_view__TemplateData_TemplateData_Impl_::setMap($combined, $map);
-				unset($map);
-			} else {
-				$obj1 = $d;
-				ufront_view__TemplateData_TemplateData_Impl_::setObject($combined, $obj1);
-				unset($obj1);
+			if($d !== null) {
+				if(Std::is($d, _hx_qtype("haxe.ds.StringMap"))) {
+					$map = $d;
+					ufront_view__TemplateData_TemplateData_Impl_::setMap($combined, $map);
+					unset($map);
+				} else {
+					$obj1 = $d;
+					ufront_view__TemplateData_TemplateData_Impl_::setObject($combined, $obj1);
+					unset($obj1);
+				}
 			}
 		}
 		return $combined;

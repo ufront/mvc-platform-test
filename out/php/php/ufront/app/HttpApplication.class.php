@@ -4,9 +4,6 @@ class ufront_app_HttpApplication {
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
 		$this->pathToContentDir = null;
-		$_g = $this;
-		$this->injector = new minject_Injector();
-		$this->injector->mapValue(_hx_qtype("minject.Injector"), $this->injector, null);
 		$this->requestMiddleware = (new _hx_array(array()));
 		$this->requestHandlers = (new _hx_array(array()));
 		$this->responseMiddleware = (new _hx_array(array()));
@@ -14,7 +11,8 @@ class ufront_app_HttpApplication {
 		$this->errorHandlers = (new _hx_array(array()));
 		$this->urlFilters = (new _hx_array(array()));
 		$this->messages = (new _hx_array(array()));
-		haxe_Log::$trace = array(new _hx_lambda(array(&$_g), "ufront_app_HttpApplication_0"), 'execute');
+		$this->injector = new minject_Injector(null);
+		$this->injector->mapType("minject.Injector", null, null)->toValue($this->injector);
 	}}
 	public $injector;
 	public $requestMiddleware;
@@ -23,31 +21,28 @@ class ufront_app_HttpApplication {
 	public $logHandlers;
 	public $errorHandlers;
 	public $urlFilters;
+	public $originalTrace;
 	public $messages;
 	public $modulesReady;
 	public $currentModule;
 	public $pathToContentDir;
-	public function inject($cl, $val = null, $cl2 = null, $singleton = null, $named = null) {
-		if($singleton === null) {
-			$singleton = false;
-		}
-		ufront_core_InjectionTools::inject($this->injector, $cl, $val, $cl2, $singleton, $named);
-		return $this;
-	}
 	public function init() {
+		$_g = $this;
+		$this->originalTrace = (isset(haxe_Log::$trace) ? haxe_Log::$trace: array("haxe_Log", "trace"));
+		haxe_Log::$trace = array(new _hx_lambda(array(&$_g), "ufront_app_HttpApplication_0"), 'execute');
 		if($this->modulesReady === null) {
 			$futures = (new _hx_array(array()));
 			{
-				$_g = 0;
-				$_g1 = $this->getModulesThatRequireInit();
-				while($_g < $_g1->length) {
-					$module = $_g1[$_g];
-					++$_g;
+				$_g1 = 0;
+				$_g11 = $this->getModulesThatRequireInit();
+				while($_g1 < $_g11->length) {
+					$module = $_g11[$_g1];
+					++$_g1;
 					$futures->push($module->init($this));
 					unset($module);
 				}
 			}
-			$this->modulesReady = tink_core__Future_Future_Impl_::map(tink_core__Future_Future_Impl_::ofMany($futures, null), array(new _hx_lambda(array(&$futures), "ufront_app_HttpApplication_1"), 'execute'), null);
+			$this->modulesReady = tink_core__Future_Future_Impl_::map(tink_core__Future_Future_Impl_::ofMany($futures, null), array(new _hx_lambda(array(&$_g, &$futures), "ufront_app_HttpApplication_1"), 'execute'), null);
 		}
 		return $this->modulesReady;
 	}
@@ -106,11 +101,19 @@ class ufront_app_HttpApplication {
 		}
 		return $this->addModule($this->errorHandlers, $handler, $handlers, $first);
 	}
-	public function addResponseMiddleware($middlewareItem = null, $middleware = null, $first = null) {
-		if($first === null) {
-			$first = false;
+	public function addResponseMiddleware($middlewareItem = null, $middleware = null, $last = null) {
+		if($last === null) {
+			$last = false;
 		}
-		return $this->addModule($this->responseMiddleware, $middlewareItem, $middleware, $first);
+		return $this->addModule($this->responseMiddleware, $middlewareItem, $middleware, !$last);
+	}
+	public function addMiddleware($middlewareItem = null, $middleware = null, $firstInLastOut = null) {
+		if($firstInLastOut === null) {
+			$firstInLastOut = false;
+		}
+		$this->addModule($this->requestMiddleware, $middlewareItem, $middleware, $firstInLastOut);
+		$this->addModule($this->responseMiddleware, $middlewareItem, $middleware, !$firstInLastOut);
+		return $this;
 	}
 	public function addLogHandler($logger = null, $loggers = null, $first = null) {
 		if($first === null) {
@@ -131,6 +134,7 @@ class ufront_app_HttpApplication {
 			if(null == $newModules) throw new HException('null iterable');
 			$__hx__it = $newModules->iterator();
 			while($__hx__it->hasNext()) {
+				unset($newModule1);
 				$newModule1 = $__hx__it->next();
 				$this->injector->injectInto($newModule1);
 				if($first) {
@@ -150,7 +154,7 @@ class ufront_app_HttpApplication {
 		$resMidModules = $this->responseMiddleware->map(array(new _hx_lambda(array(&$_g, &$httpContext, &$reqHandModules, &$reqMidModules), "ufront_app_HttpApplication_5"), 'execute'));
 		$logHandModules = $this->logHandlers->map(array(new _hx_lambda(array(&$_g, &$httpContext, &$reqHandModules, &$reqMidModules, &$resMidModules), "ufront_app_HttpApplication_6"), 'execute'));
 		$allDone = tink_core__Future_Future_Impl_::_tryFailingFlatMap($this->init(), array(new _hx_lambda(array(&$_g, &$httpContext, &$logHandModules, &$reqHandModules, &$reqMidModules, &$resMidModules), "ufront_app_HttpApplication_7"), 'execute'));
-		call_user_func_array($allDone, array(array(new _hx_lambda(array(&$_g, &$allDone, &$httpContext, &$logHandModules, &$reqHandModules, &$reqMidModules, &$resMidModules), "ufront_app_HttpApplication_8"), 'execute')));
+		$allDone(array(new _hx_lambda(array(&$_g, &$allDone, &$httpContext, &$logHandModules, &$reqHandModules, &$reqMidModules, &$resMidModules), "ufront_app_HttpApplication_8"), 'execute'));
 		return $allDone;
 	}
 	public function executeModules($modules, $ctx, $flag = null) {
@@ -167,7 +171,8 @@ class ufront_app_HttpApplication {
 	}
 	public function handleError($err, $ctx, $doneTrigger) {
 		$_g = $this;
-		if(!(($ctx->completion & 1 << ufront_web_context_RequestCompletion::$CErrorHandlersComplete->index) !== 0)) {
+		if(!(($ctx->completion & 1 << ufront_web_context_RequestCompletion::$CErrorHandlersTriggered->index) !== 0)) {
+			$ctx->completion |= 1 << ufront_web_context_RequestCompletion::$CErrorHandlersTriggered->index;
 			$errHandlerModules = $this->errorHandlers->map(array(new _hx_lambda(array(&$_g, &$ctx, &$doneTrigger, &$err), "ufront_app_HttpApplication_10"), 'execute'));
 			$resMidModules = $this->responseMiddleware->map(array(new _hx_lambda(array(&$_g, &$ctx, &$doneTrigger, &$err, &$errHandlerModules), "ufront_app_HttpApplication_11"), 'execute'));
 			$logHandModules = $this->logHandlers->map(array(new _hx_lambda(array(&$_g, &$ctx, &$doneTrigger, &$err, &$errHandlerModules, &$resMidModules), "ufront_app_HttpApplication_12"), 'execute'));
@@ -183,11 +188,13 @@ class ufront_app_HttpApplication {
 					}
 					$callback = array(new _hx_lambda(array(&$_g, &$allDone, &$callback, &$ctx, &$doneTrigger, &$err, &$errHandlerModules, &$f3, &$logHandModules, &$resMidModules), "ufront_app_HttpApplication_16"), 'execute');
 				}
-				call_user_func_array($allDone, array($callback));
+				$allDone($callback);
 			}
 		} else {
 			$msg = "You had an error after your error handler had already run.  Last active module: " . _hx_string_or_null($this->currentModule->className) . "." . _hx_string_or_null($this->currentModule->methodName);
-			throw new HException("" . _hx_string_or_null($msg) . ". \x0A" . Std::string($err) . ". \x0AError data: " . Std::string($err->data));
+			Sys::println($msg);
+			Sys::println("Error Data: " . Std::string($err->data));
+			$err->throwSelf();
 		}
 	}
 	public function clearMessages() {
@@ -200,7 +207,7 @@ class ufront_app_HttpApplication {
 				unset($i);
 			}
 		}
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 	public function flush($ctx) {
 		if(!(($ctx->completion & 1 << ufront_web_context_RequestCompletion::$CFlushComplete->index) !== 0)) {
@@ -212,18 +219,15 @@ class ufront_app_HttpApplication {
 	public function executeRequest() {
 		$context = null;
 		if($this->pathToContentDir !== null) {
-			$context = ufront_web_context_HttpContext::createSysContext(null, null, $this->injector, null, null, $this->urlFilters, $this->pathToContentDir);
+			$context = ufront_web_context_HttpContext::createContext(null, null, $this->injector, null, null, $this->urlFilters, $this->pathToContentDir);
 		} else {
-			$context = ufront_web_context_HttpContext::createSysContext(null, null, $this->injector, null, null, $this->urlFilters, null);
+			$context = ufront_web_context_HttpContext::createContext(null, null, $this->injector, null, null, $this->urlFilters, null);
 		}
 		$this->execute($context);
 	}
-	public function useModNekoCache() {
-	}
+	public function useModNekoCache() {}
 	public function addUrlFilter($filter) {
-		if(null === $filter) {
-			throw new HException(new thx_core_error_NullArgument("argument \"filter\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.app.HttpApplication", "methodName" => "addUrlFilter"))));
-		}
+		ufront_web_HttpError::throwIfNull($filter, "filter", _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 565, "className" => "ufront.app.HttpApplication", "methodName" => "addUrlFilter")));
 		$this->urlFilters->push($filter);
 	}
 	public function clearUrlFilters() {
@@ -246,10 +250,10 @@ class ufront_app_HttpApplication {
 }
 function ufront_app_HttpApplication_0(&$_g, $msg, $pos) {
 	{
-		$_g->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Trace)));
+		$_g->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MTrace)));
 	}
 }
-function ufront_app_HttpApplication_1(&$futures, $outcomes) {
+function ufront_app_HttpApplication_1(&$_g, &$futures, $outcomes) {
 	{
 		{
 			$_g2 = 0;
@@ -258,11 +262,10 @@ function ufront_app_HttpApplication_1(&$futures, $outcomes) {
 				++$_g2;
 				switch($o->index) {
 				case 1:{
-					$err = $o->params[0];
+					$err = _hx_deref($o)->params[0];
 					return tink_core_Outcome::Failure($err);
 				}break;
-				case 0:{
-				}break;
+				case 0:{}break;
 				}
 				unset($o);
 			}
@@ -282,37 +285,37 @@ function ufront_app_HttpApplication_2(&$_g, &$futures, $outcomes) {
 				case 1:{
 					return $o;
 				}break;
-				case 0:{
-				}break;
+				case 0:{}break;
 				}
 				unset($o);
 			}
 		}
+		haxe_Log::$trace = (isset($_g->originalTrace) ? $_g->originalTrace: array($_g, "originalTrace"));
 		return tink_core_Outcome::Success(tink_core_Noise::$Noise);
 	}
 }
 function ufront_app_HttpApplication_3(&$_g, &$httpContext, $m) {
 	{
 		$b = _hx_anonymous(array("methodName" => "requestIn", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array())), "className" => Type::getClassName(Type::getClass($m))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_17($__hx__this, $_g, $b, $httpContext, $m), $b);
+		return new tink_core_MPair(ufront_app_HttpApplication_17($__hx__this, $_g, $b, $httpContext, $m), $b);
 	}
 }
 function ufront_app_HttpApplication_4(&$_g, &$httpContext, &$reqMidModules, $m1) {
 	{
 		$b1 = _hx_anonymous(array("methodName" => "handleRequest", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array())), "className" => Type::getClassName(Type::getClass($m1))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_18($__hx__this, $_g, $b1, $httpContext, $m1, $reqMidModules), $b1);
+		return new tink_core_MPair(ufront_app_HttpApplication_18($__hx__this, $_g, $b1, $httpContext, $m1, $reqMidModules), $b1);
 	}
 }
 function ufront_app_HttpApplication_5(&$_g, &$httpContext, &$reqHandModules, &$reqMidModules, $m2) {
 	{
-		$b2 = _hx_anonymous(array("methodName" => "responseOut", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array())), "className" => Type::getClassName(Type::getClass($m2))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_19($__hx__this, $_g, $b2, $httpContext, $m2, $reqHandModules, $reqMidModules), $b2);
+		$b2 = _hx_anonymous(array("methodName" => "requestOut", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array())), "className" => Type::getClassName(Type::getClass($m2))));
+		return new tink_core_MPair(ufront_app_HttpApplication_19($__hx__this, $_g, $b2, $httpContext, $m2, $reqHandModules, $reqMidModules), $b2);
 	}
 }
 function ufront_app_HttpApplication_6(&$_g, &$httpContext, &$reqHandModules, &$reqMidModules, &$resMidModules, $m3) {
 	{
-		$b3 = _hx_anonymous(array("methodName" => "log", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array("{HttpContext}", "messages"))), "className" => Type::getClassName(Type::getClass($m3))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_20($__hx__this, $_g, $b3, $httpContext, $m3, $reqHandModules, $reqMidModules, $resMidModules), $b3);
+		$b3 = _hx_anonymous(array("methodName" => "log", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array("httpContext", "appMessages"))), "className" => Type::getClassName(Type::getClass($m3))));
+		return new tink_core_MPair(ufront_app_HttpApplication_20($__hx__this, $_g, $b3, $httpContext, $m3, $reqHandModules, $reqMidModules, $resMidModules), $b3);
 	}
 }
 function ufront_app_HttpApplication_7(&$_g, &$httpContext, &$logHandModules, &$reqHandModules, &$reqMidModules, &$resMidModules, $n) {
@@ -368,40 +371,41 @@ function ufront_app_HttpApplication_9(&$_g, &$ctx, &$done, &$flag, &$modules, &$
 					$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
 					$e = $_ex_;
 					{
-						{
-							$msg = "Caught error " . Std::string($e) . " while executing module " . _hx_string_or_null($_g->currentModule->className) . "." . _hx_string_or_null($_g->currentModule->methodName) . " in HttpApplication.executeModules()";
-							$ctx->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 342, "className" => "ufront.app.HttpApplication", "methodName" => "executeModules")), "type" => ufront_log_MessageType::$Log)));
-						}
+						$ctx->messages->push(_hx_anonymous(array("msg" => "Caught error " . Std::string($e) . " while executing module " . _hx_string_or_null($_g->currentModule->className) . "." . _hx_string_or_null($_g->currentModule->methodName) . " in HttpApplication.executeModules()", "pos" => _hx_anonymous(array("fileName" => "HttpApplication.hx", "lineNumber" => 405, "className" => "ufront.app.HttpApplication", "methodName" => "executeModules")), "type" => ufront_log_MessageType::$MLog)));
 						$moduleResult = tink_core__Future_Future_Impl_::sync(tink_core_Outcome::Failure(ufront_web_HttpError::wrap($e, null, $_g->currentModule)));
 					}
 				}
-				call_user_func_array($moduleResult, array(array(new _hx_lambda(array(&$_g, &$ctx, &$done, &$e, &$flag, &$m, &$moduleCb, &$moduleResult, &$modules, &$runNext, &$runNext1), "ufront_app_HttpApplication_22"), 'execute')));
+				$moduleResult(array(new _hx_lambda(array(&$_g, &$ctx, &$done, &$e, &$flag, &$m, &$moduleCb, &$moduleResult, &$modules, &$runNext, &$runNext1), "ufront_app_HttpApplication_22"), 'execute'));
 			}
 		}
 	}
 }
 function ufront_app_HttpApplication_10(&$_g, &$ctx, &$doneTrigger, &$err, $m) {
 	{
-		$b = _hx_anonymous(array("methodName" => "handleError", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array("err"))), "className" => Type::getClassName(Type::getClass($m))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_23($__hx__this, $_g, $b, $ctx, $doneTrigger, $err, $m), $b);
+		$b = null;
+		{
+			$args = (new _hx_array(array($err->toString())));
+			$b = _hx_anonymous(array("methodName" => "handleError", "lineNumber" => -1, "fileName" => "", "customParams" => $args, "className" => Type::getClassName(Type::getClass($m))));
+		}
+		return new tink_core_MPair(ufront_app_HttpApplication_23($__hx__this, $_g, $b, $ctx, $doneTrigger, $err, $m), $b);
 	}
 }
 function ufront_app_HttpApplication_11(&$_g, &$ctx, &$doneTrigger, &$err, &$errHandlerModules, $m1) {
 	{
-		$b1 = _hx_anonymous(array("methodName" => "responseOut", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array())), "className" => Type::getClassName(Type::getClass($m1))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_24($__hx__this, $_g, $b1, $ctx, $doneTrigger, $err, $errHandlerModules, $m1), $b1);
+		$b1 = _hx_anonymous(array("methodName" => "requestOut", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array())), "className" => Type::getClassName(Type::getClass($m1))));
+		return new tink_core_MPair(ufront_app_HttpApplication_24($__hx__this, $_g, $b1, $ctx, $doneTrigger, $err, $errHandlerModules, $m1), $b1);
 	}
 }
 function ufront_app_HttpApplication_12(&$_g, &$ctx, &$doneTrigger, &$err, &$errHandlerModules, &$resMidModules, $m2) {
 	{
-		$b2 = _hx_anonymous(array("methodName" => "log", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array("{HttpContext}", "messages"))), "className" => Type::getClassName(Type::getClass($m2))));
-		return new tink_core__Pair_Data(ufront_app_HttpApplication_25($__hx__this, $_g, $b2, $ctx, $doneTrigger, $err, $errHandlerModules, $m2, $resMidModules), $b2);
+		$b2 = _hx_anonymous(array("methodName" => "log", "lineNumber" => -1, "fileName" => "", "customParams" => (new _hx_array(array("httpContext", "appMessages"))), "className" => Type::getClassName(Type::getClass($m2))));
+		return new tink_core_MPair(ufront_app_HttpApplication_25($__hx__this, $_g, $b2, $ctx, $doneTrigger, $err, $errHandlerModules, $m2, $resMidModules), $b2);
 	}
 }
 function ufront_app_HttpApplication_13(&$_g, &$ctx, &$doneTrigger, &$err, &$errHandlerModules, &$logHandModules, &$resMidModules, $n) {
 	{
 		$ctx->completion |= 1 << ufront_web_context_RequestCompletion::$CRequestHandlersComplete->index;
-		return ufront_core_Sync::success();
+		return ufront_core_SurpriseTools::success();
 	}
 }
 function ufront_app_HttpApplication_14(&$_g, &$ctx, &$doneTrigger, &$err, &$errHandlerModules, &$logHandModules, &$resMidModules, $n1) {
@@ -456,7 +460,7 @@ function ufront_app_HttpApplication_22(&$_g, &$ctx, &$done, &$e, &$flag, &$m, &$
 			call_user_func($runNext1);
 		}break;
 		case 1:{
-			$e1 = $result2->params[0];
+			$e1 = _hx_deref($result2)->params[0];
 			$_g->handleError($e1, $ctx, $done);
 		}break;
 		}

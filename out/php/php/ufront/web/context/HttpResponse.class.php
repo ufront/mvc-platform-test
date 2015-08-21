@@ -4,19 +4,31 @@ class ufront_web_context_HttpResponse {
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
 		$this->clear();
-		$this->_flushed = false;
+		$this->_flushedStatus = false;
+		$this->_flushedCookies = false;
+		$this->_flushedHeaders = false;
+		$this->_flushedContent = false;
 	}}
 	public $charset;
 	public $status;
 	public $_buff;
 	public $_headers;
 	public $_cookies;
-	public $_flushed;
+	public $_flushedStatus;
+	public $_flushedCookies;
+	public $_flushedHeaders;
+	public $_flushedContent;
 	public function preventFlush() {
-		$this->_flushed = true;
+		$this->_flushedStatus = true;
+		$this->_flushedCookies = true;
+		$this->_flushedHeaders = true;
+		$this->_flushedContent = true;
+	}
+	public function preventFlushContent() {
+		$this->_flushedContent = true;
 	}
 	public function flush() {
-		throw new HException(new thx_core_error_NotImplemented(_hx_anonymous(array("fileName" => "HttpResponse.hx", "lineNumber" => 108, "className" => "ufront.web.context.HttpResponse", "methodName" => "flush"))));
+		throw new HException(ufront_web_HttpError::notImplemented(_hx_anonymous(array("fileName" => "HttpResponse.hx", "lineNumber" => 138, "className" => "ufront.web.context.HttpResponse", "methodName" => "flush"))));
 	}
 	public function clear() {
 		$this->clearCookies();
@@ -47,12 +59,8 @@ class ufront_web_context_HttpResponse {
 		$this->_buff->add($b->getString($pos, $len));
 	}
 	public function setHeader($name, $value) {
-		if(null === $name) {
-			throw new HException(new thx_core_error_NullArgument("argument \"name\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.context.HttpResponse", "methodName" => "setHeader"))));
-		}
-		if(null === $value) {
-			throw new HException(new thx_core_error_NullArgument("argument \"value\" cannot be null", _hx_anonymous(array("fileName" => "NullArgument.hx", "lineNumber" => 32, "className" => "ufront.web.context.HttpResponse", "methodName" => "setHeader"))));
-		}
+		ufront_web_HttpError::throwIfNull($name, null, _hx_anonymous(array("fileName" => "HttpResponse.hx", "lineNumber" => 201, "className" => "ufront.web.context.HttpResponse", "methodName" => "setHeader")));
+		ufront_web_HttpError::throwIfNull($value, null, _hx_anonymous(array("fileName" => "HttpResponse.hx", "lineNumber" => 202, "className" => "ufront.web.context.HttpResponse", "methodName" => "setHeader")));
 		$this->_headers->set($name, $value);
 	}
 	public function setCookie($cookie) {
@@ -97,6 +105,25 @@ class ufront_web_context_HttpResponse {
 	public function isPermanentRedirect() {
 		return $this->status === 301;
 	}
+	public function hxSerialize($s) {
+		$s->serialize($this->_buff->b);
+		$s->serialize($this->_headers);
+		$s->serialize($this->_cookies);
+		$s->serialize($this->_flushedStatus);
+		$s->serialize($this->_flushedCookies);
+		$s->serialize($this->_flushedHeaders);
+		$s->serialize($this->_flushedContent);
+	}
+	public function hxUnserialize($u) {
+		$this->_buff = new StringBuf();
+		$this->_buff->add($u->unserialize());
+		$this->_headers = $u->unserialize();
+		$this->_cookies = $u->unserialize();
+		$this->_flushedStatus = $u->unserialize();
+		$this->_flushedCookies = $u->unserialize();
+		$this->_flushedHeaders = $u->unserialize();
+		$this->_flushedContent = $u->unserialize();
+	}
 	public function get_contentType() {
 		return $this->_headers->get("Content-type");
 	}
@@ -130,7 +157,7 @@ class ufront_web_context_HttpResponse {
 			throw new HException('Unable to call <'.$m.'>');
 	}
 	static function create() {
-		return new php_ufront_web_context_HttpResponse();
+		return new sys_ufront_web_context_HttpResponse();
 	}
 	static $CONTENT_TYPE = "Content-type";
 	static $LOCATION = "Location";

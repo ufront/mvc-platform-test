@@ -11,8 +11,10 @@ class tink_core__Callback_CallbackLink_Impl_ {
 		}
 	}
 	static function toCallback($this1) {
-		$f = $this1;
-		return array(new _hx_lambda(array(&$f, &$this1), "tink_core__Callback_CallbackLink_Impl__0"), 'execute');
+		{
+			$f = $this1;
+			return array(new _hx_lambda(array(&$f, &$this1), "tink_core__Callback_CallbackLink_Impl__0"), 'execute');
+		}
 	}
 	static function fromFunction($f) {
 		return $f;
@@ -34,7 +36,7 @@ function tink_core__Callback_CallbackLink_Impl__1(&$callbacks) {
 			$cb = $callbacks[$_g];
 			++$_g;
 			if($cb !== null) {
-				call_user_func($cb);
+				$cb();
 			}
 			unset($cb);
 		}

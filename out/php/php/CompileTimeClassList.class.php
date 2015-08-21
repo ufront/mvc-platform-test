@@ -47,4 +47,4 @@ class CompileTimeClassList {
 	}
 	function __toString() { return 'CompileTimeClassList'; }
 }
-CompileTimeClassList::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("classLists" => (new _hx_array(array((new _hx_array(array("null,true,ufront.web.Controller", "testsite.Routes,ufront.web.DefaultUfrontController"))), (new _hx_array(array("null,true,ufront.api.UFApi", ""))))))))));
+CompileTimeClassList::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("classLists" => (new _hx_array(array((new _hx_array(array("null,true,ufront.web.Controller", "testsite.Routes,ufront.app.DefaultUfrontController"))), (new _hx_array(array("null,true,ufront.api.UFApi", ""))))))))));

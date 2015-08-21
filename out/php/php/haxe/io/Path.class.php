@@ -3,6 +3,13 @@
 class haxe_io_Path {
 	public function __construct($path) {
 		if(!php_Boot::$skip_constructor) {
+		switch($path) {
+		case ".":case "..":{
+			$this->dir = $path;
+			$this->file = "";
+			return;
+		}break;
+		}
 		$c1 = _hx_last_index_of($path, "/", null);
 		$c2 = _hx_last_index_of($path, "\\", null);
 		if($c1 < $c2) {
@@ -90,13 +97,17 @@ class haxe_io_Path {
 	static function removeTrailingSlashes($path) {
 		while(true) {
 			$_g = _hx_char_code_at($path, strlen($path) - 1);
-			switch($_g) {
-			case 47:case 92:{
-				$path = _hx_substr($path, 0, -1);
-			}break;
-			default:{
-				break 2;
-			}break;
+			if($_g !== null) {
+				switch($_g) {
+				case 47:case 92:{
+					$path = _hx_substr($path, 0, -1);
+				}break;
+				default:{
+					break 2;
+				}break;
+				}
+			} else {
+				break;
 			}
 			unset($_g);
 		}

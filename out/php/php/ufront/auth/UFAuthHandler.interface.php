@@ -1,6 +1,7 @@
 <?php
 
 interface ufront_auth_UFAuthHandler {
+	function get_currentUser();
 	function isLoggedIn();
 	function requireLogin();
 	function isLoggedInAs($user);
@@ -9,8 +10,6 @@ interface ufront_auth_UFAuthHandler {
 	function hasPermissions($permissions);
 	function requirePermission($permission);
 	function requirePermissions($permissions);
-	function getUserByID($id);
-	function setCurrentUser($user);
 	function toString();
 	//;
 }

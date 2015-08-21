@@ -40,7 +40,7 @@ class tink_core_FutureTrigger {
 function tink_core_FutureTrigger_0(&$_g, $callback) {
 	{
 		if($_g->{"list"} === null) {
-			call_user_func_array($callback, array($_g->result));
+			$callback($_g->result);
 			return null;
 		} else {
 			return tink_core__Callback_CallbackList_Impl_::add($_g->{"list"}, $callback);

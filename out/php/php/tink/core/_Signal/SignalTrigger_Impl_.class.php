@@ -11,6 +11,9 @@ class tink_core__Signal_SignalTrigger_Impl_ {
 	static function getLength($this1) {
 		return $this1->length;
 	}
+	static function clear($this1) {
+		tink_core__Callback_CallbackList_Impl_::clear($this1);
+	}
 	static function asSignal($this1) {
 		return tink_core__Signal_SignalTrigger_Impl__0($this1);
 	}

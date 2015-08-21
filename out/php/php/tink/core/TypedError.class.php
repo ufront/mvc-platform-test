@@ -25,7 +25,8 @@ class tink_core_TypedError {
 		return $ret;
 	}
 	public function throwSelf() {
-		throw new HException($this);
+		php_Lib::rethrow($this);
+		return $this;
 	}
 	public function __call($m, $a) {
 		if(isset($this->$m) && is_callable($this->$m))
@@ -38,12 +39,38 @@ class tink_core_TypedError {
 			throw new HException('Unable to call <'.$m.'>');
 	}
 	static function withData($code = null, $message, $data, $pos = null) {
-		if($code === null) {
-			$code = 500;
-		}
+		return tink_core_TypedError::typed($code, $message, $data, $pos);
+	}
+	static function typed($code = null, $message, $data, $pos = null) {
 		$ret = new tink_core_TypedError($code, $message, $pos);
 		$ret->data = $data;
 		return $ret;
 	}
+	static function catchExceptions($f, $report = null) {
+		try {
+			return tink_core_Outcome::Success(call_user_func($f));
+		}catch(Exception $__hx__e) {
+			$_ex_ = ($__hx__e instanceof HException) ? $__hx__e->e : $__hx__e;
+			if(($e = $_ex_) instanceof tink_core_TypedError){
+				return tink_core_Outcome::Failure($e);
+			}
+			else { $e1 = $_ex_;
+			{
+				return tink_core_Outcome::Failure((($report === null) ? tink_core_TypedError::withData(null, "Unexpected Error", $e1, _hx_anonymous(array("fileName" => "Error.hx", "lineNumber" => 97, "className" => "tink.core.TypedError", "methodName" => "catchExceptions"))) : call_user_func_array($report, array($e1))));
+			}}
+		}
+	}
+	static function reporter($code = null, $message, $pos = null) {
+		return array(new _hx_lambda(array(&$code, &$message, &$pos), "tink_core_TypedError_0"), 'execute');
+	}
+	static function rethrow($any) {
+		php_Lib::rethrow($any);
+		return $any;
+	}
 	function __toString() { return $this->toString(); }
+}
+function tink_core_TypedError_0(&$code, &$message, &$pos, $e) {
+	{
+		return tink_core_TypedError::withData($code, $message, $e, $pos);
+	}
 }

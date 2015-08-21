@@ -1,22 +1,21 @@
 <?php
 
 class ufront_api_UFApi {
-	public function __construct() {
-		;
-	}
+	public function __construct() {}
 	public $auth;
 	public $messages;
 	public function ufTrace($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Trace)));
-	}
+		if(!php_Boot::$skip_constructor) {
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MTrace)));
+	}}
 	public function ufLog($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Log)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MLog)));
 	}
 	public function ufWarn($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Warning)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MWarning)));
 	}
 	public function ufError($msg, $pos = null) {
-		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$Error)));
+		$this->messages->push(_hx_anonymous(array("msg" => $msg, "pos" => $pos, "type" => ufront_log_MessageType::$MError)));
 	}
 	public function toString() {
 		return Type::getClassName(Type::getClass($this));
@@ -35,4 +34,4 @@ class ufront_api_UFApi {
 	static $__meta__;
 	function __toString() { return $this->toString(); }
 }
-ufront_api_UFApi::$__meta__ = _hx_anonymous(array("fields" => _hx_anonymous(array("auth" => _hx_anonymous(array("name" => (new _hx_array(array("auth"))), "type" => (new _hx_array(array("ufront.auth.UFAuthHandler"))), "inject" => null)), "messages" => _hx_anonymous(array("name" => (new _hx_array(array("messages"))), "type" => (new _hx_array(array("ufront.log.MessageList"))), "inject" => null))))));
+ufront_api_UFApi::$__meta__ = _hx_anonymous(array("obj" => _hx_anonymous(array("rtti" => (new _hx_array(array((new _hx_array(array("auth", "ufront.auth.UFAuthHandler", ""))), (new _hx_array(array("messages", "ufront.log.MessageList", ""))))))))));

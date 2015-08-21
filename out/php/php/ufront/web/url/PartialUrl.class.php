@@ -4,7 +4,7 @@ class ufront_web_url_PartialUrl {
 	public function __construct() {
 		if(!php_Boot::$skip_constructor) {
 		$this->segments = (new _hx_array(array()));
-		$this->query = new ufront_core_OrderedStringMap();
+		$this->query = (new _hx_array(array()));
 		$this->fragment = null;
 	}}
 	public $segments;
@@ -12,13 +12,21 @@ class ufront_web_url_PartialUrl {
 	public $fragment;
 	public function queryString() {
 		$params = (new _hx_array(array()));
-		if(null == $this->query) throw new HException('null iterable');
-		$__hx__it = $this->query->keys();
-		while($__hx__it->hasNext()) {
-			$param = $__hx__it->next();
-			$item = $this->query->get($param);
-			$params->push(_hx_string_or_null($param) . "=" . _hx_string_or_null((ufront_web_url_PartialUrl_0($this, $item, $param, $params))));
-			unset($item);
+		{
+			$_g = 0;
+			$_g1 = $this->query;
+			while($_g < $_g1->length) {
+				$param = $_g1[$_g];
+				++$_g;
+				$value = null;
+				if($param->encoded) {
+					$value = $param->value;
+				} else {
+					$value = rawurlencode($param->value);
+				}
+				$params->push(_hx_string_or_null($param->name) . "=" . _hx_string_or_null($value));
+				unset($value,$param);
+			}
 		}
 		return $params->join("&");
 	}
@@ -62,7 +70,7 @@ class ufront_web_url_PartialUrl {
 					$s = $pairs[$_g];
 					++$_g;
 					$pair = _hx_explode("=", $s);
-					$u->query->set($pair[0], _hx_anonymous(array("value" => $pair[1], "encoded" => true)));
+					$u->query->push(_hx_anonymous(array("name" => $pair[0], "value" => $pair[1], "encoded" => true)));
 					unset($s,$pair);
 				}
 			}
@@ -77,11 +85,4 @@ class ufront_web_url_PartialUrl {
 		$u->segments = $segments;
 	}
 	function __toString() { return $this->toString(); }
-}
-function ufront_web_url_PartialUrl_0(&$__hx__this, &$item, &$param, &$params) {
-	if($item->encoded) {
-		return $item->value;
-	} else {
-		return rawurlencode($item->value);
-	}
 }
