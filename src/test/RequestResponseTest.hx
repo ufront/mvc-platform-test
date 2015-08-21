@@ -7,6 +7,7 @@ import sys.io.File;
 import sys.net.Host;
 import utest.Assert;
 using haxe.io.Path;
+using StringTools;
 
 class RequestResponseTest {
 
@@ -113,20 +114,22 @@ class RequestResponseTest {
 
 		// Test UTF8 characters
 		var h = new Http( base()+'/post' );
-		h.setParameter( 'name', 'J%C3%A5%C2%A7%C3%B4%C5%86' );
+		h.setParameter( 'name', 'Jå§ôņ' );
 		assertResponseEquals( "name=Jå§ôņ", h, true );
 
 		// Test multipart data
 		var h = new Http( base()+'/post' );
 		h.setParameter( "group", "Team Winner" );
 		h.setParameter( "names[]", "Larry" );
-		h.addParameter( "names[]", "%C3%A7h%C3%A5%C5%97%C4%BC%C3%AE%C3%AA" );
+		h.addParameter( "names[]", "çhåŗļîê" );
 		var filename = "test.json";
 		var fileInput = File.read( filename );
 		var size = sys.FileSystem.stat( filename ).size;
 		h.fileTransfer( "upload", "data.json", fileInput, size, "application/json" );
 		var expected = 'group=Team Winner\nnames=Larry,çhåŗļîê\nupload=data.json';
 		assertResponseEquals( expected, h, true );
+
+		// TODO: test the contents of the uploaded file are correct.
 	}
 
 	public function testCookies() {
@@ -268,9 +271,9 @@ class RequestResponseTest {
 
 			// Displaying a semicolon at the end is optional and differs between platforms
 			var cookieHeader = http.responseHeaders.get("Set-Cookie");
-			var semiColonAtEnd = StringTools.endsWith(cookieHeader,";") ? ";" : "";
-			var expectedCookieHeader = '${expected.cookieName}=${expected.cookieVal}; expires=Thu, 01-Jan-2015 00:00:00 GMT; domain=/testresponse/'+semiColonAtEnd;
-			Assert.equals( expectedCookieHeader, cookieHeader );
+			Assert.isTrue( cookieHeader.startsWith('${expected.cookieName}=${expected.cookieVal}; ') );
+			Assert.isTrue( cookieHeader.indexOf('expires=Thu, 01-Jan-2015 00:00:00 GMT;')>-1 );
+			Assert.isTrue( cookieHeader.indexOf('; domain=/testresponse/')>-1 );
 		});
 		http.onStatus = function(s) {
 			status = s;
