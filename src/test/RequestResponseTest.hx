@@ -43,10 +43,13 @@ class RequestResponseTest {
 		assertResponseEquals( "query", h );
 
 		var h = new Http( base()+'/querystring?J%C3%A5%C2%A7%C3%B4%C5%86' );
-		assertResponseEquals( "Jå§ôņ", h );
+		assertResponseEquals( "J%C3%A5%C2%A7%C3%B4%C5%86", h );
 
 		var h = new Http( base()+'/querystring?a=1&b=2&b=3' );
 		assertResponseEquals( "a=1&b=2&b=3", h );
+
+		var h = new Http( base()+'/querystring?name[]=Kevin%26Jason&name[]=Theo' );
+		assertResponseEquals( "name[]=Kevin%26Jason&name[]=Theo", h );
 
 		var h = new Http( base()+'/querystring?includeshash#nohash' );
 		assertResponseEquals( "includeshash", h );
@@ -68,6 +71,12 @@ class RequestResponseTest {
 
 		var h = new Http( base()+'/poststring' );
 		assertResponseEquals( "", h, true );
+
+		// Test ampersands in a parameter value
+		var h = new Http( base()+'/poststring' );
+		h.addParameter( 'drink', 'bourbon&coke' );
+		h.addParameter( 'drink', 'coffee' );
+		assertResponseEquals( "drink=coffee&drink=bourbon%26coke", h, true );
 
 		var h = new Http( base()+'/poststring?drink=cola' );
 		h.setParameter( 'drink', 'coffee' );
@@ -91,6 +100,9 @@ class RequestResponseTest {
 
 		var h = new Http( base()+'/query?page=home#nohash' );
 		assertResponseEquals( "page=home", h );
+
+		var h = new Http( base()+'/query?name[]=Kevin%26Jason&name[]=Theo' );
+		assertResponseEquals( "name=Kevin&Jason,Theo", h );
 
 		var h = new Http( base()+'/query' );
 		h.setParameter( 'drink', 'coffee' );
@@ -116,6 +128,20 @@ class RequestResponseTest {
 		var h = new Http( base()+'/post' );
 		h.setParameter( 'name', 'Jå§ôņ' );
 		assertResponseEquals( "name=Jå§ôņ", h, true );
+
+		// Test ampersands in a parameter value
+		var h = new Http( base()+'/post' );
+		h.addParameter( 'drink', 'coffee' );
+		h.addParameter( 'drink', 'bourbon&coke' );
+		assertResponse( function(response) {
+			// The order these post variables come through seems undefined.
+			// I'm not sure if the issue is our Neko HTTP engine, or the servers, or ufront.
+			// For now I'm leaving the order as "unspecified".
+			Assert.isTrue( response.startsWith("drink=") );
+			var values = response.substr( 6 ).split(",");
+			Assert.isTrue( values.indexOf("coffee")>-1 );
+			Assert.isTrue( values.indexOf("bourbon&coke")>-1 );
+		}, h, true );
 
 		// Test multipart data
 		var h = new Http( base()+'/post' );
