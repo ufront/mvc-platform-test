@@ -17,6 +17,7 @@ addons:
 
 install:
   - yes | haxelib install all
+  - haxelib git ufront-mvc https://github.com/ufront/ufront-mvc.git
   # minject 2.0.0-rc.1 is required... can be removed once minject 2.0.0 loses its rc tag
   - yes | haxelib install minject 2.0.0-rc.1 && haxelib set minject 2.0.0-rc.1
   # https://github.com/ufront/erazor/commit/b2a110587ea42b0874f8dc4f947078d4d334e1bd
