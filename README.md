@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ufront/mvc-platform-test.svg?branch=master)](https://travis-ci.org/ufront/mvc-platform-test)
+
 This repository provides a basic Ufront project that can be used to test that ufront's HttpRequest and HttpResponse objects behave reliably across different platforms.  Once these are known to be working for a platform, all other tests can be set up to use mock request and response objects for easier testing.
 
 ### Current Status
