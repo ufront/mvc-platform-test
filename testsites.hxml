@@ -2,42 +2,20 @@
 # Main compile
 #
 
-###
-
--lib ufront-mvc
--cp src
--D server
-
--main testsite.Server
-
---each
-
 # Neko, no caching
-
---remap php:neko
--neko out/neko_nocache/index.n
+testsites-neko.hxml
 
 --next
 
 # Neko, with caching
-
---remap php:neko
--neko out/neko_cache/index.n
--D cachemodule
+testsites-neko-cache.hxml
 
 --next
 
 # PHP
-
---remap neko:php
---php-lib php/
--php out/php/
+testsites-php.hxml
 
 --next
 
 # NodeJS
-
--lib hxnodejs
--lib express
---macro allowPackage("sys")
--js out/node/server.js
+testsites-node.hxml

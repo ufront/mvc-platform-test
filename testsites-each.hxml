@@ -1,0 +1,5 @@
+-lib ufront-mvc
+-cp src
+-D server
+
+-main testsite.Server

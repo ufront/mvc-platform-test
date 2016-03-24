@@ -1,0 +1,37 @@
+language: haxe
+
+haxe:
+  - "development"
+  - "3.2.1"
+
+os:
+  - linux
+  - osx
+
+sudo: required
+dist: trusty
+addons:
+  apt:
+    packages:
+      - php5-cli
+
+install:
+  - yes | haxelib install all
+  # minject 2.0.0-rc.1 is required... can be removed once minject 2.0.0 loses its rc tag
+  - yes | haxelib install minject 2.0.0-rc.1 && haxelib set minject 2.0.0-rc.1
+  # https://github.com/ufront/erazor/commit/b2a110587ea42b0874f8dc4f947078d4d334e1bd
+  - haxelib git erazor https://github.com/ufront/erazor.git
+  - haxelib list
+
+script:
+  - haxe requestresponsetester.hxml
+  - haxe testsites-neko.hxml
+  - haxe testsites-neko-cache.hxml
+  - haxe testsites-php.hxml
+  - haxe testsites-node.hxml &&
+    pushd out/node &&
+      npm install &&
+      (node server.js &) &&
+      sleep 2 &&
+    popd &&
+    neko out/requestresponsetester.n http://localhost:2987/ out/node/

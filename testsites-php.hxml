@@ -1,0 +1,6 @@
+# PHP
+
+testsites-each.hxml
+--remap neko:php
+--php-lib php/
+-php out/php/

@@ -1,0 +1,7 @@
+# NodeJS
+
+testsites-each.hxml
+-lib hxnodejs
+-lib express
+--macro allowPackage("sys")
+-js out/node/server.js
