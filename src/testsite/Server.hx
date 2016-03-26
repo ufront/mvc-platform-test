@@ -10,6 +10,13 @@ class Server
 
 	static function main() {
 		#if (neko && cachemodule) neko.Web.cacheModule(run); #end
+		
+		#if nodejs
+		var sourceMapSupport = untyped require('source-map-support');
+		sourceMapSupport.install();
+		haxe.CallStack.wrapCallSite = sourceMapSupport.wrapCallSite;
+		#end
+		
 		run();
 	}
 
@@ -21,6 +28,7 @@ class Server
 				contentDirectory:'../uf-content/',
 				authImplementation: ufront.auth.NobodyAuthHandler,
 				sessionImplementation: ufront.web.session.VoidSession,
+				requestMiddleware: [new tink.ufront.web.middleware.BodyMiddleware()],
 				basePath:
 					#if (neko && cachemodule) "/neko_cache/"
 					#elseif neko "/neko_nocache/"

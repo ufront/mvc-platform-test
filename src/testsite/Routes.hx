@@ -101,6 +101,10 @@ class Routes extends Controller {
 		context.response.setHeader( "X-Powered-By", "Ufront" );
 		context.response.setHeader( "Content-Language", args.language );
 
+#if !nodejs
 		return Utf8.encode( args.content );
+#else
+		return args.content;
+#end
 	}
 }

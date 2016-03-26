@@ -3,5 +3,6 @@
 testsites-each.hxml
 -lib hxnodejs
 -lib express
+-lib tink_http
 --macro allowPackage("sys")
 -js out/node/server.js
