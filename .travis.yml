@@ -20,6 +20,7 @@ install:
   - yes | haxelib git ufront-mvc https://github.com/ufront/ufront-mvc.git feature/tink_http
   # minject 2.0.0-rc.1 is required... can be removed once minject 2.0.0 loses its rc tag
   - yes | haxelib install minject 2.0.0-rc.1 && haxelib set minject 2.0.0-rc.1
+  - yes | haxelib git tink_http https://github.com/haxetink/tink_http.git
   # https://github.com/ufront/erazor/commit/b2a110587ea42b0874f8dc4f947078d4d334e1bd
   - haxelib git erazor https://github.com/ufront/erazor.git
   - haxelib list

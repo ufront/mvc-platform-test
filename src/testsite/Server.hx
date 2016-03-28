@@ -28,7 +28,7 @@ class Server
 				contentDirectory:'../uf-content/',
 				authImplementation: ufront.auth.NobodyAuthHandler,
 				sessionImplementation: ufront.web.session.VoidSession,
-				requestMiddleware: [new tink.ufront.web.middleware.BodyMiddleware()],
+				#if tink_http requestMiddleware: [new tink.ufront.web.middleware.BodyMiddleware()], #end
 				basePath:
 					#if (neko && cachemodule) "/neko_cache/"
 					#elseif neko "/neko_nocache/"
