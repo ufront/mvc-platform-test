@@ -154,7 +154,7 @@ class RequestResponseTest {
 		var size = sys.FileSystem.stat( filename ).size;
 		h.fileTransfer( "upload", "data.json", fileInput, size, "application/json" );
 		var expected = 'group=Team Winner\nnames=Larry,çhåŗļîê\nupload=data.json';
-		// assertResponseEquals( expected, h, true );
+		assertResponseEquals( expected, h, true );
 
 		// TODO: test the contents of the uploaded file are correct.
 	}
