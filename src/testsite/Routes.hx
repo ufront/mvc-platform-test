@@ -90,7 +90,7 @@ class Routes extends Controller {
 		context.response.charset = charset;
 		context.response.contentType = args.contentType;
 
-		var expiryDate = new Date(2015,0,1,0,0,0);
+		var expiryDate = DateTools.delta(new Date(2015,0,1,0,0,0), -Date.fromString( "1970-01-01 00:00:00" ).getTime());
 		var c1 = new HttpCookie( args.cookieName, args.cookieVal, expiryDate, '/testresponse/' );
 		context.response.setCookie( c1 );
 
